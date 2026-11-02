@@ -22,6 +22,7 @@ DAY_END = time(22, 0)
 AIRPORT_TRANSFER = timedelta(minutes=45)
 AIRPORT_BUFFER = timedelta(hours=2)
 CHECKOUT = time(12, 0)
+EARLY_ARRIVAL_START = time(13, 0)  # ponytail: 새벽 도착일 일정 시작. 고정값, 필요하면 config로
 
 REQUIRED_TRIP_FIELDS = ["destination", "tz", "start", "end", "travelers"]
 
@@ -99,6 +100,8 @@ def timeline(trip: dict) -> tuple[list[dict], list[str]]:
             if arrival_local is not None and d == arrival_local.date():
                 arrived_ready = (arrival_local + AIRPORT_TRANSFER).time()
                 start = max(DAY_START, arrived_ready)
+                if time(0, 0) <= arrival_local.time() < time(6, 0):
+                    start = max(start, EARLY_ARRIVAL_START)  # 새벽 도착: 수면 후 낮부터
             if cutoff is not None and d == cutoff.date():
                 end = min(DAY_END, cutoff.time())
             if start >= end:
