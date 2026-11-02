@@ -1,11 +1,13 @@
 :root {
-  color-scheme: light dark;
+  /* SEED 플러그인이 light-only라 브라우저 다크모드 기본색(흰 글씨)이 섞이지 않게 고정 */
+  color-scheme: light;
 }
 
 body {
   margin: 0;
   font-family: var(--seed-font-family, system-ui, -apple-system, sans-serif);
   background: var(--seed-color-bg-layer-basement);
+  color: var(--seed-color-fg-neutral);
 }
 
 .page {
