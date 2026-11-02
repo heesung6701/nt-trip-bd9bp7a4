@@ -336,3 +336,9 @@ body {
 .sheet td.text {
   color: var(--seed-color-fg-neutral-muted);
 }
+
+@media (min-width: 1024px) {
+  .page {
+    max-width: 1200px;
+  }
+}
