@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.gstack/
+private/
+web/src/data/itinerary.json
+itinerary.html
+docs/
+test_timeline.py
+deploy.sh

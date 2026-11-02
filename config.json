@@ -1,0 +1,15 @@
+{
+  "model": "haiku",
+  "ollama": {
+    "model": "qwen3",
+    "base_url": "http://localhost:11434"
+  },
+  "nodes": {
+    "stay_agent": "claude",
+    "activity_agent": "claude",
+    "food_agent": "claude",
+    "transport_agent": "claude",
+    "prep_agent": "claude",
+    "planner": "claude"
+  }
+}
