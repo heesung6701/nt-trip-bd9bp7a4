@@ -587,6 +587,7 @@ def node_planner(state: TripState) -> dict:
             f"이동: {state.get('transport')}\n"
             f"준비물: {state.get('prep')}\n"
             f"요청사항: {trip['request']}\n"
+            f"비행·숙박 제약(반드시 지킬 것): {_read_requirements_section('비행 일정')}\n"
             f"{retry_note}\n\n"
             "일자별 일정표를 만들어줘. 각 항목 시각은 현지시각(HH:MM), 가용 시간 안에서 "
             "서로 겹치지 않게 배치하고, 우천 대안과 예산 합계(인원 기준 KRW)도 포함해줘."
