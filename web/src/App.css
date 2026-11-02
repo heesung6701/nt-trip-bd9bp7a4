@@ -262,3 +262,77 @@ body {
   color: var(--seed-color-fg-neutral);
   font-weight: 700;
 }
+
+.sheet-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--seed-color-stroke-neutral-muted);
+  border-radius: 12px;
+}
+
+.sheet {
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 1100px;
+}
+
+.sheet th,
+.sheet td {
+  border-bottom: 1px solid var(--seed-color-stroke-neutral-muted);
+  border-right: 1px solid var(--seed-color-stroke-neutral-muted);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.sheet th {
+  position: sticky;
+  top: 0;
+  background: var(--seed-color-bg-neutral-weak);
+  white-space: nowrap;
+  padding: 0;
+}
+
+.sheet th button {
+  all: unset;
+  display: block;
+  padding: 10px;
+  min-height: 24px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sheet td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.sheet td.name,
+.sheet th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--seed-color-bg-layer-default);
+  font-weight: 700;
+}
+
+.sheet th:first-child {
+  background: var(--seed-color-bg-neutral-weak);
+  z-index: 2;
+}
+
+/* 엑셀처럼 한 줄 셀. 잘린 내용은 title 툴팁으로 */
+.sheet td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
+}
+
+.sheet td.name {
+  max-width: 150px;
+}
+
+.sheet td.text {
+  color: var(--seed-color-fg-neutral-muted);
+}

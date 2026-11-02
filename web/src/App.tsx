@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Badge, Callout, ImageFrame, Text } from "@seed-design/react";
 import { HOTELS, type HotelInfo } from "./data/hotels";
+import { AIRPORT_HOTELS, type AirportHotel } from "./data/airportHotels";
 import type { Activity, Food, StayCandidate, TripData } from "./types";
 import itinerary from "./data/itinerary.json";
 import "./App.css";
@@ -290,6 +291,72 @@ function FoodList({ items }: { items: Food[] }) {
   );
 }
 
+type SortKey = keyof AirportHotel;
+const HOTEL_COLS: { key: SortKey; label: string; num?: boolean; fmt?: (v: number) => string }[] = [
+  { key: "name", label: "호텔" },
+  { key: "priceManwon", label: "1박(만원)", num: true },
+  { key: "rating", label: "평점/10", num: true },
+  { key: "airportMin", label: "공항 분", num: true },
+  { key: "airportKm", label: "공항 km", num: true },
+  { key: "cityMin", label: "시내 분", num: true },
+  { key: "cityKm", label: "시내 km", num: true },
+  { key: "cityFareManDong", label: "시내 Grab(만동)", num: true },
+  { key: "area", label: "지역" },
+  { key: "priceNote", label: "가격 메모" },
+  { key: "ratingSource", label: "평점 출처" },
+  { key: "safety", label: "치안·주변" },
+  { key: "note", label: "비고" },
+];
+
+function AirportHotelSheet() {
+  const [sort, setSort] = useState<{ key: SortKey; asc: boolean }>({ key: "priceManwon", asc: true });
+  const rows = [...AIRPORT_HOTELS].sort((a, b) => {
+    const x = a[sort.key];
+    const y = b[sort.key];
+    if (x === null || x === "") return 1; // 미확인 값은 항상 아래로
+    if (y === null || y === "") return -1;
+    const c = typeof x === "number" && typeof y === "number" ? x - y : String(x).localeCompare(String(y), "ko");
+    return sort.asc ? c : -c;
+  });
+  const toggle = (key: SortKey) => setSort((s) => ({ key, asc: s.key === key ? !s.asc : true }));
+  return (
+    <div className="sheet-wrap">
+      <table className="sheet">
+        <thead>
+          <tr>
+            {HOTEL_COLS.map((c) => (
+              <th key={c.key} aria-sort={sort.key === c.key ? (sort.asc ? "ascending" : "descending") : "none"}>
+                <button onClick={() => toggle(c.key)}>
+                  {c.label}
+                  {sort.key === c.key ? (sort.asc ? " ▲" : " ▼") : ""}
+                </button>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.name}>
+              {HOTEL_COLS.map((c) => {
+                const v = r[c.key];
+                return (
+                  <td
+                    key={c.key}
+                    className={c.num ? "num" : c.key === "name" ? "name" : "text"}
+                    title={v === null ? undefined : String(v)}
+                  >
+                    {v === null || v === "" ? "–" : String(v)}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 const TABS = [
   { id: "plan", label: "일정", icon: "🗓" },
   { id: "stay", label: "숙소", icon: "🏨" },
@@ -351,6 +418,12 @@ function App() {
 
         {tab === "stay" && (
           <>
+            <Section title="도착 밤 숙소 후보 (공항 근처, 1박 20만원 이하)">
+              <Text textStyle="t4Regular" color="fg.neutral-subtle">
+                열 제목을 누르면 정렬돼요. 가격·평점은 검색 시점 추정치라 예약 전 재확인.
+              </Text>
+              <AirportHotelSheet />
+            </Section>
             {data.stay && data.stay.length > 0 && (
               <Section title="내 숙소">
                 <StayRecommendations data={data} />
