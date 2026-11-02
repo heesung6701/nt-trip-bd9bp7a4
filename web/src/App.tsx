@@ -301,6 +301,7 @@ const HOTEL_COLS: { key: SortKey; label: string; num?: boolean; fmt?: (v: number
   { key: "cityMin", label: "시내 분", num: true },
   { key: "cityKm", label: "시내 km", num: true },
   { key: "cityFareManDong", label: "시내 Grab(만동)", num: true },
+  { key: "lateCheckin", label: "늦은 체크인" },
   { key: "area", label: "지역" },
   { key: "priceNote", label: "가격 메모" },
   { key: "ratingSource", label: "평점 출처" },
