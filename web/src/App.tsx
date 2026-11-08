@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Badge, Callout, ImageFrame, Text } from "@seed-design/react";
 import { HOTELS, type HotelInfo } from "./data/hotels";
 import { AIRPORT_HOTELS, type AirportHotel } from "./data/airportHotels";
-import type { Activity, Food, StayCandidate, TripData } from "./types";
+import type { Activity, Day, Food, StayCandidate, TripData } from "./types";
 import itinerary from "./data/itinerary.json";
 import "./App.css";
 
@@ -71,19 +71,37 @@ function DayTabs({ days, value, onChange }: { days: { date: string }[]; value: n
           className={i === value ? "chip active" : "chip"}
           onClick={() => onChange(i)}
         >
-          {d.date}
+          Day {i + 1} · {d.date.slice(5)}
         </button>
       ))}
     </div>
   );
 }
 
-function Timeline({ data, dayIndex }: { data: TripData; dayIndex: number }) {
-  const day = (data.itinerary?.days ?? [])[dayIndex];
+// 여행 전체 날짜(start~end). 플래너는 가용 시간 있는 날만 내보내므로 빈 날은 items: [] 로 채움.
+function allDays(data: TripData): Day[] {
+  const byDate = new Map((data.itinerary?.days ?? []).map((d) => [d.date, d]));
+  const out: Day[] = [];
+  for (let t = Date.parse(data.trip.start); t <= Date.parse(data.trip.end); t += 86_400_000) {
+    const date = new Date(t).toISOString().slice(0, 10);
+    out.push(byDate.get(date) ?? { date, items: [] });
+  }
+  return out;
+}
+
+function Timeline({ data, day }: { data: TripData; day: Day | undefined }) {
   if (!day) return null;
   const total = day.items.reduce((sum, i) => sum + i.cost_krw, 0);
+  // ponytail: 항공 시각은 KST 기준 날짜로 매칭
+  const flights = data.trip.flights.filter((f) => f.depart.startsWith(day.date) || f.arrive.startsWith(day.date));
   return (
     <div className="day">
+      {flights.map((f) => (
+        <Text key={f.depart} textStyle="t5Regular" color="fg.neutral">
+          ✈️ {f.airline} {f.no} {f.from} → {f.to} · KST {f.depart.replace("T", " ").slice(5, 16)} 출발 →{" "}
+          {f.arrive.replace("T", " ").slice(5, 16)} 도착
+        </Text>
+      ))}
       <Text textStyle="t4Regular" color="fg.neutral-subtle">
         일정 {day.items.length}개 · 예상 {won(total)}
       </Text>
@@ -372,7 +390,7 @@ function App() {
   const [tab, setTab] = useState<TabId>("plan");
   const [dayIndex, setDayIndex] = useState(0);
 
-  const days = data.itinerary?.days ?? [];
+  const days = allDays(data);
   const budget = data.itinerary?.budget_total_krw;
   const rain = data.itinerary?.rain_alternatives ?? [];
   const transport = data.transport ? Object.values(data.transport) : [];
@@ -398,7 +416,7 @@ function App() {
             <Notices data={data} />
             <DayTabs days={days} value={dayIndex} onChange={setDayIndex} />
             <section className="section">
-              <Timeline data={data} dayIndex={dayIndex} />
+              <Timeline data={data} day={days[dayIndex]} />
             </section>
             {rain.length > 0 && (
               <details className="section fold">
