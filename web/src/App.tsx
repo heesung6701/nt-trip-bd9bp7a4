@@ -71,7 +71,7 @@ function DayTabs({ days, value, onChange }: { days: { date: string }[]; value: n
           className={i === value ? "chip active" : "chip"}
           onClick={() => onChange(i)}
         >
-          Day {i + 1} · {d.date.slice(5)}
+          {d.date.startsWith("Day") ? `Day ${i + 1}` : `Day ${i + 1} · ${d.date.slice(5)}`}
         </button>
       ))}
     </div>
@@ -81,13 +81,15 @@ function DayTabs({ days, value, onChange }: { days: { date: string }[]; value: n
 // 여행 전체 날짜(start~end). 플래너는 가용 시간 있는 날만 내보내므로 빈 날은 items: [] 로 채움.
 function allDays(data: TripData): Day[] {
   const byDate = new Map((data.itinerary?.days ?? []).map((d) => [d.date, d]));
-  const out: Day[] = [];
-  for (let t = Date.parse(data.trip.start); t <= Date.parse(data.trip.end); t += 86_400_000) {
-    const date = new Date(t).toISOString().slice(0, 10);
-    out.push(byDate.get(date) ?? { date, items: [] });
-  }
-  return out;
+  const { start, end } = data.trip;
+  const dates: string[] = [];
+  const ms = start.match(/^Day(\d+)$/), me = end.match(/^Day(\d+)$/); // deploy.sh 마스킹: 날짜 → DayN
+  if (ms && me) for (let n = +ms[1]; n <= +me[1]; n++) dates.push(`Day${n}`);
+  else for (let t = Date.parse(start); t <= Date.parse(end); t += 86_400_000) dates.push(new Date(t).toISOString().slice(0, 10));
+  return dates.map((date) => byDate.get(date) ?? { date, items: [] });
 }
+
+const dt = (s: string) => s.replace("T", " ").replace(/:\d\d$/, "");
 
 function Timeline({ data, day }: { data: TripData; day: Day | undefined }) {
   if (!day) return null;
@@ -98,8 +100,7 @@ function Timeline({ data, day }: { data: TripData; day: Day | undefined }) {
     <div className="day">
       {flights.map((f) => (
         <Text key={f.depart} textStyle="t5Regular" color="fg.neutral">
-          ✈️ {f.airline} {f.no} {f.from} → {f.to} · KST {f.depart.replace("T", " ").slice(5, 16)} 출발 →{" "}
-          {f.arrive.replace("T", " ").slice(5, 16)} 도착
+          ✈️ {f.airline} {f.no} {f.from} → {f.to} · KST {dt(f.depart)} 출발 → {dt(f.arrive)} 도착
         </Text>
       ))}
       <Text textStyle="t4Regular" color="fg.neutral-subtle">
