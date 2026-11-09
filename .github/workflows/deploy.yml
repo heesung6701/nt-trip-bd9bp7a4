@@ -1,0 +1,35 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write # gh-pages 브랜치 force push
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+        working-directory: web
+      # itinerary.json은 날짜·편명 원본이라 gitignore — 시크릿에서 복원. 마스킹은 deploy.sh가 함.
+      - run: printf '%s' "$ITINERARY_JSON" > web/src/data/itinerary.json
+        env:
+          ITINERARY_JSON: ${{ secrets.ITINERARY_JSON }}
+      - run: |
+          git config --global url."https://x-access-token:${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+          sh deploy.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
