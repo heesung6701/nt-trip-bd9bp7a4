@@ -2,7 +2,7 @@ import sheratonRoom from "../assets/hotels/sheraton-a.jpg";
 
 export interface HotelInfo {
   name: string;
-  tier: "marriott" | "budget" | "flex";
+  tier: "marriott" | "flex";
   address: string;
   listingUrl: string;
   galleryUrl?: string;
@@ -62,29 +62,5 @@ export const HOTELS: HotelInfo[] = [
     listingUrl: "https://halalbooking.com/en-us/the-westin-resort-spa-cam-ranh/p/506760",
     facilities: ["오션프런트 리조트", "탁 트인 전망"],
     priceNote: "스냅샷 약 $103~134/박 (≈14~19만원 추정), 평점 4.4 (171개 후기)",
-  },
-  {
-    name: "Havana Nha Trang (Premier Havana)",
-    tier: "budget",
-    address: "38 Tran Phu, 해변 바로 앞",
-    listingUrl: "https://id.hotels.com/en/ho642136/premier-havana-hotel-nha-trang-vietnam/",
-    facilities: ["~1000실", "식당 4곳", "풀·풀바", "스파", "가라오케"],
-    priceNote: "1박 7~8만원대 (스냅샷)",
-  },
-  {
-    name: "Regalia Gold Hotel",
-    tier: "budget",
-    address: "Nguyen Thi Minh Khai, 야시장 도보 5분",
-    listingUrl: "https://au.hotels.com/ho1356342720/regalia-gold-hotel-nha-trang-vietnam",
-    facilities: ["661실", "아웃도어풀·키즈풀", "스파", "24시 짐"],
-    priceNote: "가격 미확인 (추정 9만원대)",
-  },
-  {
-    name: "December Hotel",
-    tier: "budget",
-    address: "나트랑 시내",
-    listingUrl: "https://sp.booking.com/hotel/vn/december-nha-trang.html",
-    facilities: ["신축", "아웃도어풀", "루프탑 테라스", "피트니스"],
-    priceNote: "가격 미확인 (추정 6~7만원대), 등급 사이트마다 상이",
   },
 ];

@@ -294,21 +294,6 @@ body {
   padding: 0;
 }
 
-.sheet th button {
-  all: unset;
-  display: block;
-  padding: 10px;
-  min-height: 24px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.sheet td.num {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
 .sheet td.name,
 .sheet th:first-child {
   position: sticky;
@@ -353,10 +338,6 @@ body {
   margin-top: 6px;
   font-size: 12px;
   font-weight: 400;
-  color: var(--seed-color-fg-neutral-muted);
-}
-
-.sheet td.text {
   color: var(--seed-color-fg-neutral-muted);
 }
 
