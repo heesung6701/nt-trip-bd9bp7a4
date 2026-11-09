@@ -10,6 +10,7 @@ export interface HotelInfo {
   roomImage?: string;
   facilities: string[];
   priceNote: string;
+  costs?: string[]; // 호텔 내 식사·스파 대략 비용 (1 USD ≈ 1,400원, 1 AUD ≈ 900원)
 }
 
 export const HOTELS: HotelInfo[] = [
@@ -47,6 +48,12 @@ export const HOTELS: HotelInfo[] = [
     listingUrl: "https://www.marriott.com/en-gb/hotels/cxrjw-jw-cam-ranh-vietnam/overview",
     facilities: ["오션뷰 인피니티 메인 풀", "랩 풀", "올데이 다이닝", "주니어 스위트·킹 디럭스 오션뷰", "공항 픽업 가능 (Trip.com 기준)"],
     priceNote: "표시가 304,901원/박 (날짜별 변동), 평점 4.6 (97개 후기)",
+    costs: [
+      "조식 뷔페: 객실 요금 포함이 보통, 별도면 1인 약 AUD 35(≈3.2만원) · 06:30~10:30",
+      "Seafood Grill 저녁: 공식가 없음, 1인 약 5~8만원 추정 (출처 불확실)",
+      "Spa by JW 60분 마사지: 공식가 미공개, 지역 리조트 스파 $35~60(≈5~8.5만원) — JW는 상단 이상 예상, 사전 예약 필수",
+      "비교: 깜라인 외부 스파(Himalaya) 60분 47만동(≈2.6만원)",
+    ],
   },
   {
     name: "The Westin Resort & Spa Cam Ranh",

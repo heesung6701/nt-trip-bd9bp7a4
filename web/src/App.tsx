@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Badge, Callout, ImageFrame, Text } from "@seed-design/react";
 import { HOTELS, type HotelInfo } from "./data/hotels";
 import { AIRPORT_HOTELS, type AirportHotel } from "./data/airportHotels";
+import { STAY_MOVES } from "./data/stayMoves";
 import type { Activity, Day, Food, StayCandidate, TripData } from "./types";
 import itinerary from "./data/itinerary.json";
 import "./App.css";
@@ -91,9 +92,10 @@ function allDays(data: TripData): Day[] {
 
 const dt = (s: string) => s.replace("T", " ").replace(/:\d\d$/, "");
 
-function Timeline({ data, day }: { data: TripData; day: Day | undefined }) {
+function Timeline({ data, day, dayNo }: { data: TripData; day: Day | undefined; dayNo: number }) {
   if (!day) return null;
-  const total = day.items.reduce((sum, i) => sum + i.cost_krw, 0);
+  const items = [...day.items, ...STAY_MOVES.filter((m) => m.day === dayNo)].sort((a, b) => a.start.localeCompare(b.start));
+  const total = items.reduce((sum, i) => sum + i.cost_krw, 0);
   // ponytail: 항공 시각은 KST 기준 날짜로 매칭
   const flights = data.trip.flights.filter((f) => f.depart.startsWith(day.date) || f.arrive.startsWith(day.date));
   return (
@@ -104,15 +106,15 @@ function Timeline({ data, day }: { data: TripData; day: Day | undefined }) {
         </Text>
       ))}
       <Text textStyle="t4Regular" color="fg.neutral-subtle">
-        일정 {day.items.length}개 · 예상 {won(total)}
+        일정 {items.length}개 · 예상 {won(total)}
       </Text>
-      {day.items.length === 0 && (
+      {items.length === 0 && (
         <Text textStyle="t5Regular" color="fg.neutral-subtle">
           이날은 잡힌 일정이 없어요 (이동·휴식)
         </Text>
       )}
       <ol className="timeline">
-        {day.items.map((item) => (
+        {items.map((item) => (
           <li key={`${item.start}-${item.title}`}>
             <div className="time">
               {hhmm(item.start)}
@@ -192,6 +194,13 @@ function HotelComparison() {
                 <li key={f}>{f}</li>
               ))}
             </ul>
+            {h.costs && (
+              <ul className="bullets">
+                {h.costs.map((c) => (
+                  <li key={c}>{c}</li>
+                ))}
+              </ul>
+            )}
             <div className="links">
               <a href={h.listingUrl} target="_blank" rel="noreferrer">
                 예약 페이지
@@ -417,7 +426,7 @@ function App() {
             <Notices data={data} />
             <DayTabs days={days} value={dayIndex} onChange={setDayIndex} />
             <section className="section">
-              <Timeline data={data} day={days[dayIndex]} />
+              <Timeline data={data} day={days[dayIndex]} dayNo={dayIndex + 1} />
             </section>
             {rain.length > 0 && (
               <details className="section fold">
