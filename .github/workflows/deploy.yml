@@ -25,7 +25,9 @@ jobs:
       - run: npm ci
         working-directory: web
       # itinerary.json은 날짜·편명 원본이라 gitignore — 시크릿에서 복원. 마스킹은 deploy.sh가 함.
-      - run: printf '%s' "$ITINERARY_JSON" > web/src/data/itinerary.json
+      - run: |
+          test -n "$ITINERARY_JSON" || { echo "::error::ITINERARY_JSON 시크릿 없음 — gh secret set ITINERARY_JSON < web/src/data/itinerary.json"; exit 1; }
+          printf '%s' "$ITINERARY_JSON" > web/src/data/itinerary.json
         env:
           ITINERARY_JSON: ${{ secrets.ITINERARY_JSON }}
       - run: |

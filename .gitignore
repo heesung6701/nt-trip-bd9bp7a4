@@ -8,5 +8,4 @@ web/src/data/itinerary.json
 itinerary.html
 docs/
 test_timeline.py
-deploy.sh
 .DS_Store
