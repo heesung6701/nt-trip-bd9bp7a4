@@ -9,6 +9,9 @@ export const STAY_MOVES: (Item & { day: number })[] = [
   { day: 2, start: "01:05", end: "01:20", title: "Navy Hotel 체크인 (06시까지 가능, 프런트 24시간)", kind: "숙소", place: "Navy Hotel Cam Ranh", cost_krw: 0 },
   { day: 2, start: "10:45", end: "11:00", title: "Navy Hotel 체크아웃 (정규 12:00, 조식 포함)", kind: "숙소", place: "Navy Hotel Cam Ranh", cost_krw: 0 },
   { day: 2, start: "11:00", end: "11:30", title: "Navy → JW Marriott (약 17km, 25~30만동)", kind: "이동", place: "Grab", cost_krw: 15000 },
-  { day: 2, start: "11:30", end: "11:45", title: "JW 도착 · 짐 맡기고 플래티넘 얼리 체크인 요청 (정규 15:00)", kind: "숙소", place: "JW Marriott Cam Ranh Bay", cost_krw: 0 },
-  { day: 3, start: "16:00", end: "16:05", title: "JW 레이트 체크아웃 (플래티넘 최대 16:00) · 짐은 프런트 보관", kind: "숙소", place: "JW Marriott Cam Ranh Bay", cost_krw: 0 },
+  { day: 2, start: "11:30", end: "11:45", title: "JW 도착 · 짐 맡기고 얼리 체크인 요청 (Platinum 보장 혜택 아님, 공실 시) — 안 되면 바로 수영장으로", kind: "숙소", place: "JW Marriott Cam Ranh Bay", cost_krw: 0 },
+  { day: 2, start: "15:00", end: "15:10", title: "얼리 체크인 실패 시: 정규 체크인 15:00 — 수영장 중간에 프런트에서 키 받기", kind: "숙소", place: "JW Marriott Cam Ranh Bay", cost_krw: 0 },
+  // ponytail: JW 정규 체크아웃 12:00은 가정 — 예약 확인서로 확인
+  { day: 3, start: "08:30", end: "08:45", title: "레이트 체크아웃 거절 시: 보트 출발 전 체크아웃·짐 프런트 보관 (정규 12:00 가정)", kind: "숙소", place: "JW Marriott Cam Ranh Bay", cost_krw: 0 },
+  { day: 3, start: "16:00", end: "16:05", title: "JW 레이트 체크아웃 16:00 (전날 체크인 때 확정 요청 — 리조트라 보장 아님) · 짐은 프런트 보관", kind: "숙소", place: "JW Marriott Cam Ranh Bay", cost_krw: 0 },
 ];
