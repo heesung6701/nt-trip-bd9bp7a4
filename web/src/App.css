@@ -335,6 +335,27 @@ body {
   max-width: 150px;
 }
 
+/* 근거 링크 달린 비교표: 줄바꿈 허용 */
+.sheet.wrap th {
+  padding: 10px;
+}
+
+.sheet.wrap td {
+  white-space: normal;
+  min-width: 160px;
+  max-width: 260px;
+}
+
+.sheet .src {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--seed-color-fg-neutral-muted);
+}
+
 .sheet td.text {
   color: var(--seed-color-fg-neutral-muted);
 }

@@ -3,6 +3,7 @@ import { Badge, Callout, ImageFrame, Text } from "@seed-design/react";
 import { HOTELS, type HotelInfo } from "./data/hotels";
 import { AIRPORT_HOTELS, type AirportHotel } from "./data/airportHotels";
 import { STAY_MOVES } from "./data/stayMoves";
+import { RESORTS, type ResortRow } from "./data/resortCompare";
 import type { Activity, Day, Food, StayCandidate, TripData } from "./types";
 import itinerary from "./data/itinerary.json";
 import "./App.css";
@@ -386,6 +387,58 @@ function AirportHotelSheet() {
   );
 }
 
+const RESORT_COLS: { key: Exclude<keyof ResortRow, "name" | "marriott">; label: string }[] = [
+  { key: "room", label: "숙박비/박" },
+  { key: "dining", label: "식당" },
+  { key: "spa", label: "호텔 스파 60분" },
+  { key: "massage", label: "외부 마사지" },
+  { key: "rain", label: "비 올 때·비고" },
+];
+
+function ResortSheet() {
+  return (
+    <div className="sheet-wrap">
+      <table className="sheet wrap">
+        <thead>
+          <tr>
+            <th>호텔</th>
+            {RESORT_COLS.map((c) => (
+              <th key={c.key}>{c.label}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {RESORTS.map((r) => (
+            <tr key={r.name}>
+              <td className="name">
+                {r.name}
+                {r.marriott && <div className="src">Marriott · Platinum</div>}
+              </td>
+              {RESORT_COLS.map((c) => {
+                const cell = r[c.key];
+                return (
+                  <td key={c.key}>
+                    {cell.t}
+                    {cell.src && (
+                      <div className="src">
+                        {cell.src.map((s) => (
+                          <a key={s.url + s.label} href={s.url} target="_blank" rel="noreferrer">
+                            {s.label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 const TABS = [
   { id: "plan", label: "일정", icon: "🗓" },
   { id: "stay", label: "숙소", icon: "🏨" },
@@ -458,6 +511,12 @@ function App() {
                 <StayRecommendations data={data} />
               </Section>
             )}
+            <Section title="JW 대안 호캉스 비교 (비 올 때)">
+              <Text textStyle="t4Regular" color="fg.neutral-subtle">
+                숙박비는 예약사이트 스냅샷(Day2 실요금 아님), 식당·스파는 후기·프로모션가 위주. 셀 아래 링크가 근거. 1 USD ≈ 1,400원, 1만동 ≈ 550원.
+              </Text>
+              <ResortSheet />
+            </Section>
             <Section title="숙소 후보 비교">
               <HotelComparison />
             </Section>
