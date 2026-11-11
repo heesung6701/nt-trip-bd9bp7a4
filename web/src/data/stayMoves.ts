@@ -4,8 +4,8 @@ import type { Item } from "../types";
 // 시각은 현지 기준. 요금은 Grab 4인승 추정(1만동 ≈ 550원).
 export const STAY_MOVES: (Item & { day: number })[] = [
   { day: 1, start: "—", end: "—", title: "Navy Hotel 체크인 날짜 (예약상) — 실제 입실은 Day2 새벽", kind: "숙소", place: "Navy Hotel Cam Ranh", cost_krw: 0 },
-  { day: 2, start: "00:10", end: "00:50", title: "입국·수하물 → Grab/공항 택시 잡기", kind: "이동", place: "깜라인 공항 CXR T2", cost_krw: 0 },
-  { day: 2, start: "00:50", end: "01:05", title: "공항 → Navy Hotel (4~5km, 10~15만동)", kind: "이동", place: "Grab 또는 공항 택시", cost_krw: 7000 },
+  { day: 2, start: "00:10", end: "00:50", title: "입국·수하물 → 예약한 Grab 기사 만나기 (픽업 지점 앱에서 확인)", kind: "이동", place: "깜라인 공항 CXR T2", cost_krw: 0 },
+  { day: 2, start: "00:50", end: "01:05", title: "공항 → Navy Hotel (4~5km, 10~15만동) — Grab 사전 예약 (예정) · 안 되면 호텔 픽업 약 1.6만원 / 공항 택시", kind: "이동", place: "Grab 사전 예약 (예정)", cost_krw: 7000 },
   { day: 2, start: "01:05", end: "01:20", title: "Navy Hotel 체크인 (06시까지 가능, 프런트 24시간)", kind: "숙소", place: "Navy Hotel Cam Ranh", cost_krw: 0 },
   { day: 2, start: "10:45", end: "11:00", title: "Navy Hotel 체크아웃 (정규 12:00, 조식 포함)", kind: "숙소", place: "Navy Hotel Cam Ranh", cost_krw: 0 },
   { day: 2, start: "11:00", end: "11:30", title: "Navy → JW Marriott (약 17km, 25~30만동)", kind: "이동", place: "Grab", cost_krw: 15000 },
