@@ -8,27 +8,29 @@ type NodeKind = "airport" | "stay" | "spot";
 const ICON: Record<NodeKind, string> = { airport: "✈️", stay: "🏨", spot: "📍" };
 
 const NODES: Record<string, { label: string; kind: NodeKind; x: number; y: number }> = {
-  thapba: { label: "Thap Ba 온천", kind: "spot", x: 70, y: 40 },
+  thapba: { label: "Thap Ba 온천", kind: "spot", x: 50, y: 40 },
   honchong: { label: "혼쫑 해변", kind: "spot", x: 200, y: 40 },
-  ocean: { label: "해양학연구소", kind: "spot", x: 70, y: 135 },
-  port: { label: "나트랑 항구", kind: "spot", x: 170, y: 135 },
-  honmun: { label: "몬섬 해상", kind: "spot", x: 295, y: 190 },
-  jw: { label: "JW Marriott", kind: "stay", x: 150, y: 260 },
-  cxr: { label: "깜라인 공항", kind: "airport", x: 260, y: 345 },
-  navy: { label: "Navy Hotel", kind: "stay", x: 90, y: 400 },
+  ocean: { label: "해양학연구소", kind: "spot", x: 40, y: 150 },
+  port: { label: "나트랑 항구", kind: "spot", x: 170, y: 150 },
+  honmun: { label: "몬섬 해상", kind: "spot", x: 300, y: 110 },
+  jw: { label: "JW Marriott", kind: "stay", x: 150, y: 275 },
+  cxr: { label: "깜라인 공항", kind: "airport", x: 260, y: 355 },
+  navy: { label: "Navy Hotel", kind: "stay", x: 90, y: 410 },
 };
 type NodeId = keyof typeof NODES;
 
-const EDGES: { a: NodeId; b: NodeId; km: string; mode: string }[] = [
-  { a: "cxr", b: "navy", km: "4~5km", mode: "Grab" },
-  { a: "navy", b: "jw", km: "≈17km", mode: "Grab" },
-  { a: "jw", b: "cxr", km: "≈15km", mode: "Grab" },
-  { a: "jw", b: "port", km: "≈35km", mode: "Grab" },
-  { a: "port", b: "honmun", km: "≈10km", mode: "보트" },
+// 교통수단은 아이콘으로 — 라벨에 거리·시간까지 넣으면 길어서
+const MODE_ICON = { Grab: "🚕", 보트: "⛴️", 도보: "🚶" } as const;
+const EDGES: { a: NodeId; b: NodeId; km: string; min: string; mode: keyof typeof MODE_ICON; t?: number }[] = [
+  { a: "cxr", b: "navy", km: "4~5km", min: "10~15분", mode: "Grab", t: 0.6 },
+  { a: "navy", b: "jw", km: "≈17km", min: "≈30분", mode: "Grab" },
+  { a: "jw", b: "cxr", km: "≈15km", min: "15~30분", mode: "Grab", t: 0.6 },
+  { a: "jw", b: "port", km: "≈35km", min: "≈50분", mode: "Grab" },
+  { a: "port", b: "honmun", km: "≈10km", min: "≈30분", mode: "보트", t: 0.45 },
   // 우천 대안·미배정 장소
-  { a: "port", b: "ocean", km: "≈0.5km", mode: "도보" },
-  { a: "port", b: "honchong", km: "≈8km", mode: "Grab" },
-  { a: "honchong", b: "thapba", km: "≈3km", mode: "Grab" },
+  { a: "port", b: "ocean", km: "≈0.5km", min: "≈5분", mode: "도보" },
+  { a: "port", b: "honchong", km: "≈8km", min: "≈20분", mode: "Grab" },
+  { a: "honchong", b: "thapba", km: "≈3km", min: "≈10분", mode: "Grab" },
 ];
 const edgeKey = (a: string, b: string) => [a, b].sort().join("-");
 
@@ -74,13 +76,14 @@ export function RouteGraph({ dayNo }: { dayNo: number }) {
 
   return (
     <div className="route-graph">
-      <svg viewBox="0 0 340 440" role="img" aria-label={`Day ${dayNo} 이동 그래프`}>
+      <svg viewBox="0 0 340 450" role="img" aria-label={`Day ${dayNo} 이동 그래프`}>
         {EDGES.map((e) => {
           const A = NODES[e.a], B = NODES[e.b];
           const nos = stepNos.get(edgeKey(e.a, e.b));
           const on = !!nos;
-          const label = `${on ? nos.map(circled).join("") + " " : ""}${e.km} · ${e.mode}`;
-          const mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2;
+          const label = `${on ? nos.map(circled).join("") + " " : ""}${MODE_ICON[e.mode]} ${e.km} · ${e.min}`;
+          const t = e.t ?? 0.5; // 라벨 위치(간선 위 비율) — 노드와 겹치면 조정
+          const mx = A.x + (B.x - A.x) * t, my = A.y + (B.y - A.y) * t;
           return (
             <g key={edgeKey(e.a, e.b)}>
               <line x1={A.x} y1={A.y} x2={B.x} y2={B.y} stroke={on ? route.color : GRAY} strokeWidth={on ? 4 : 2}
@@ -121,7 +124,7 @@ export function RouteGraph({ dayNo }: { dayNo: number }) {
         </ol>
       )}
       <Text textStyle="t4Regular" color="fg.neutral-subtle">
-        개략도(실제 지도 아님) · 거리는 추정 · 점선 회색 = 이날 안 가는 곳(우천 대안 포함)
+        간선 = 거리 · 소요시간 (🚕 Grab ⛴️ 보트 🚶 도보) · 개략도(실제 지도 아님) · 거리·시간은 추정 · 점선 회색 = 이날 안 가는 곳(우천 대안 포함)
       </Text>
     </div>
   );
