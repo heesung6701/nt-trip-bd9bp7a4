@@ -3,6 +3,7 @@ import { Badge, Callout, ImageFrame, Text } from "@seed-design/react";
 import { HOTELS, type HotelInfo } from "./data/hotels";
 import { STAY_MOVES } from "./data/stayMoves";
 import { RESORTS, type ResortRow } from "./data/resortCompare";
+import { RouteGraph } from "./RouteGraph";
 import type { Activity, Day, Food, StayCandidate, TripData } from "./types";
 import itinerary from "./data/itinerary.json";
 import "./App.css";
@@ -411,6 +412,10 @@ function App() {
             <section className="section">
               <Timeline data={data} day={days[dayIndex]} dayNo={dayIndex + 1} />
             </section>
+            <details className="section fold" open>
+              <summary>🗺 이동 그래프</summary>
+              <RouteGraph dayNo={dayIndex + 1} />
+            </details>
             {rain.length > 0 && (
               <details className="section fold">
                 <summary>☔ 비 오면 이렇게</summary>

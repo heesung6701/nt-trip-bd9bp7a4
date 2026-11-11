@@ -346,3 +346,72 @@ body {
     max-width: 1200px;
   }
 }
+
+.route-graph {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+.route-graph svg {
+  width: 100%;
+  max-width: 420px;
+  align-self: center;
+}
+.edge-label {
+  font-size: 10px;
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: #fff;
+  stroke-width: 4px;
+}
+.edge-label.on {
+  font-weight: 700;
+  font-size: 11px;
+}
+.node-icon {
+  font-size: 15px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+.node-label {
+  font-size: 11px;
+  text-anchor: middle;
+  fill: #8a919c;
+}
+.node-label.on {
+  fill: var(--seed-color-fg-neutral);
+  font-weight: 700;
+}
+.route-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+}
+.route-steps li {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+.step-no {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-time {
+  flex: none;
+  width: 52px;
+  color: var(--seed-color-fg-neutral-subtle);
+  font-variant-numeric: tabular-nums;
+}
