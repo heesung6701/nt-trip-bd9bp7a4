@@ -359,7 +359,7 @@ function FoodList({ items }: { items: Food[] }) {
             {f.name}
           </Text>
           <Text textStyle="t4Regular" color="fg.neutral-subtle">
-            {f.region} · {f.meal_type} · {f.cost_krw > 0 ? won(f.cost_krw) : "가격 미확인"}
+            {f.region} · {f.meal_type}{!f.guide && ` · ${f.cost_krw > 0 ? won(f.cost_krw) : "가격 미확인"}`}
           </Text>
           {f.note && (
             <Text textStyle="t4Regular" color="fg.neutral">
@@ -460,15 +460,51 @@ function App() {
 
         {tab === "eat" && (
           <>
+            {data.food?.some((f) => f.delivery) && (
+              <Section title="🛵 배달·주문 안내 (Westin 숙박 중 · Day2~3)">
+                <Text textStyle="t4Regular" color="fg.neutral">
+                  ① Grab 해외 카드 등록은 베트남 도착 후(한국 카드 사례 못 찾음), 현금 준비. 배달K는 현금·동 계좌이체만
+                </Text>
+                <Text textStyle="t4Regular" color="fg.neutral">
+                  ② 수령 위치는 못 찾음 — 프런트에 로비·게이트 수령 가능한지, 버기 되는지 확인(인근 리조트는 로비·정문 수령 사례)
+                </Text>
+                <Text textStyle="t4Regular" color="fg.neutral">
+                  ③ 안 되면 Westin 인룸다이닝 (룸서비스 24/7 여부는 Marriott 페이지에 상충, 확인 필요)
+                </Text>
+                <Text textStyle="t3Regular" color="fg.neutral-subtle">
+                  평점·리뷰 수는 못 찾음.
+                </Text>
+                <FoodList items={data.food.filter((f) => f.guide)} />
+                {data.food.some((f) => f.delivery_mention) && (
+                  <>
+                    <Text as="h3" textStyle="t5Bold" color="fg.neutral">
+                      배달 언급 있음 (블로그·공지 기준, 확인 필요)
+                    </Text>
+                    <FoodList items={data.food.filter((f) => f.delivery_mention)} />
+                  </>
+                )}
+                {data.food.some((f) => f.delivery && !f.guide && !f.delivery_mention) && (
+                  <>
+                    <Text as="h3" textStyle="t5Bold" color="fg.neutral">
+                      배달 여부 미확인 — 카톡·전화 주문·앱에서 직접 확인
+                    </Text>
+                    <Text textStyle="t3Regular" color="fg.neutral-subtle">
+                      순서는 우선순위 아님.
+                    </Text>
+                    <FoodList items={data.food.filter((f) => f.delivery && !f.guide && !f.delivery_mention)} />
+                  </>
+                )}
+              </Section>
+            )}
             <Section title="일정에 잡힌 식사">
               <Scheduled days={days} kinds={["meal"]} />
             </Section>
             <Section title="Westin 식당·바">
               <FacilityList items={WESTIN_EAT} />
             </Section>
-            {data.food && data.food.length > 0 && (
+            {data.food && data.food.some((f) => !f.delivery) && (
               <Section title="식당 후보">
-                <FoodList items={data.food} />
+                <FoodList items={data.food.filter((f) => !f.delivery)} />
               </Section>
             )}
           </>

@@ -60,6 +60,9 @@ export interface Food {
   meal_type: string;
   cost_krw: number;
   note: string;
+  delivery?: boolean; // 먹기 탭 "배달·주문 추천" 섹션에 표시
+  delivery_mention?: boolean; // 블로그·공지에 배달 언급이 있는 곳
+  guide?: boolean; // 섹션 맨 앞 안내 카드
 }
 
 export interface TransportLeg {
