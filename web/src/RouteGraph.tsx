@@ -33,7 +33,7 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
       { time: "00:50", at: "cxr", to: "navy", text: "Grab 사전 예약 (예정) · 10~15분 · 10~15만동" },
       { time: "01:05", at: "navy", text: "체크인 · 취침" },
       { time: "11:00", at: "navy", to: "westin", text: "Grab · ≈30분 · 25~30만동" },
-      { time: "11:30", at: "westin", text: "얼리 체크인 요청 · 수영장 · 스파 · 해산물 저녁" },
+      { time: "11:30", at: "westin", text: "얼리 체크인 요청 · 수영장 · 16:00 가슨 스파 120분 (위치 미확인, 노드 없음) · 해산물 저녁" },
     ],
   },
   3: {
@@ -43,7 +43,7 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
       { time: "09:00", at: "port", to: "honmun", text: "선상 관광 보트 (입수 없음)" },
       { time: "~12:30", at: "honmun", to: "port", text: "귀항" },
       { time: "13:00", at: "port", to: "westin", text: "Grab ≈50분" },
-      { time: "14:00", at: "westin", text: "해산물 점심 · 16:00 레이트 체크아웃 · 저녁" },
+      { time: "14:00", at: "westin", text: "해산물 점심 · 16:00 레이트 체크아웃 (확정) · 저녁" },
       { time: "20:00", at: "westin", to: "cxr", text: "Grab 사전 예약 · 15~30분" },
     ],
   },
