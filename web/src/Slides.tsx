@@ -80,6 +80,30 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
         </div>
       </div>
     </S>,
+    <S kicker="리스크 · Navy Hotel" title="Navy 욕실 어메니티 — 로션·클렌징폼 없음">
+      <div className="grid g2">
+        <div className="card">
+          <span className="tag leaf">✅ 제공</span>
+          <p>샴푸 · 바디워시</p>
+          <p className="sub">수건 · 헤어드라이어 · 슬리퍼는 예약 사이트 표기 (직접 확인 못 함)</p>
+        </div>
+        <div className="card">
+          <span className="tag warn">⚠️ 제공 안 함</span>
+          <p><b>바디로션 · 클렌징폼</b></p>
+          <p className="sub">M·W 확인 (샴푸·바디워시만 있음). 챙겨야 함</p>
+        </div>
+        <div className="card">
+          <span className="tag">❓ 미확인</span>
+          <p>칫솔 · 치약 · 면도기 · 빗</p>
+          <p className="sub">출처에 없음 → 챙기거나 체크인 때 프런트 확인</p>
+        </div>
+        <div className="card">
+          <span className="tag">🧳 기내 휴대만</span>
+          <p><b>로션·클렌징폼은 100ml 이하 용기</b></p>
+          <p className="sub">위탁 수하물이 없어서 액체 규정에 걸림. 소분해서 챙기기</p>
+        </div>
+      </div>
+    </S>,
     <S kicker={`${d(2)} · 첫날`} title="새벽 도착 → 늦잠 → 리조트">
       <Tl rows={[
         ["00:10", "깜라인 도착 · 입국심사"],
