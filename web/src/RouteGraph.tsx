@@ -2,6 +2,7 @@ import { Text } from "@seed-design/react";
 import { NODES, type NodeKind } from "./data/routeNodes";
 
 // 숙소·관광지·공항 = 노드, 이동 = 간선. 선택한 Day의 경로만 색칠.
+// 하루 = 아침 기준: 자정~새벽 이동은 전날 Day에 "+1"로 붙임.
 // 날짜 대신 Day 번호 — deploy.sh 마스킹은 itinerary.json만 처리하므로 여기 날짜·편명 쓰면 안 됨.
 // ponytail: 배치는 동서남북만 실제와 맞춘 개략도(routeNodes.ts), 거리는 stayMoves/itinerary 소요시간 기반 추정 — 실측 아님.
 
@@ -56,9 +57,10 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
       { time: "13:00", at: "port", to: "westin", text: "Grab ≈50분" },
       { time: "14:00", at: "westin", text: "해산물 점심 · 16:00 레이트 체크아웃 (확정) · 저녁" },
       { time: "20:00", at: "westin", to: "cxr", text: "Grab 사전 예약 · 15~30분" },
+      { time: "00:30+1", at: "cxr", text: "출국 (현지 시각) — 새벽이라 이날 일정으로 표시" },
     ],
   },
-  4: { color: "#8b5cf6", steps: [{ time: "00:30", at: "cxr", text: "출국 (현지 시각)" }] },
+  4: { color: "#8b5cf6", note: "귀국일 — 새벽 출국은 Day3에 표시, 인천 07:25(KST) 도착. 현지 이동 없음", steps: [] },
 };
 
 const GRAY = "#c9ced6";
