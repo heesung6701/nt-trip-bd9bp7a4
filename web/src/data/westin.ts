@@ -1,4 +1,4 @@
-// Westin Cam Ranh 부대시설·식당 (researcher 조사 2026-11-20, 공식 marriott.com 페이지·PDF 우선).
+// Westin Cam Ranh 부대시설·식당 — 출처는 공식 marriott.com 페이지·PDF만 (2026-11-20 확인, 여행사 정보 제외).
 // 날짜 대신 Day 번호 — deploy.sh 마스킹은 itinerary.json만 처리. 가격 "++" = VAT 8% + 봉사료 5% 별도(실제 ≈ ×1.134 추정).
 export interface Facility {
   name: string;
@@ -13,16 +13,18 @@ const PDF = "https://www.marriott.com/content/dam/marriott-digital/wi/apec/hws/c
 export const WESTIN_TAX_NOTE = "가격 뒤 ++ = VAT 8% + 봉사료 5% 별도 (실제 약 ×1.13). Bonvoy 회원 참여 업장 F&B 10% 할인. 문의: +84 258 399 3888 · Bonvoy 앱 채팅";
 
 export const WESTIN_PLAY: Facility[] = [
-  { name: "수영장 3개 (리조트·인피니티·키즈)", detail: "운영시간 출처마다 다름(07~19시 / 06:30~20시) — 체크인 때 확인. 카바나 이용 포함", price: "투숙객 무료", src: `${M}/experiences/` },
-  { name: "무료 액티비티 (24시간 전 등록)", detail: "Day2: 16~17 비치발리볼, 19~20:30 야외영화 · Day3: 07~08 RunWESTIN, 08:30~09:30 모닝 스트레칭", price: "무료", src: `${PDF}/wi-cxrwi-free-weekly-activities-40688.pdf` },
+  { name: "수영장 3개 (리조트·인피니티·키즈)", detail: "Fitness Pool·Kids Pool·Resort Pool · 운영시간 Marriott 미표기 — 체크인 때 확인. 카바나 있음", price: "투숙객 무료", src: `${M}/experiences/` },
+  { name: "무료 액티비티 (24시간 전 등록)", detail: "Day2(일): 08:30 필라테스, 10~11 풀 미니게임, 16~17 비치발리볼, 19~20:30 야외영화 · Day3(월): 07~08 RunWESTIN, 08:30~09:30 모닝 스트레칭, 10~11 카약 · 상시 06~17 스노클링·비치발리볼·프리스비 등 (07·08:30 수업만 24시간 전 등록)", price: "무료", src: `${PDF}/wi-cxrwi-free-weekly-activities-40688.pdf` },
   { name: "Heavenly Spa", detail: "시그니처 Bamboo Body Therapy · 트리트먼트룸 6개(커플 2) · 객실 전화 0번 예약. 60/90/120분 가격은 공식 미공개", price: "가격 미확인", src: `${M}/experiences/` },
-  { name: "WestinWORKOUT 피트니스", detail: "24시간 · 스팀/사우나 정보 없음", price: "투숙객 무료", src: `${M}/experiences/` },
+  { name: "WestinWORKOUT 피트니스", detail: "24시간 · 요가 스튜디오 · 스팀/사우나 정보 없음", price: "투숙객 무료", src: `${M}/experiences/` },
   { name: "테니스 · 피클볼", detail: "06~17시 / 17~21시 요금 다름", price: "테니스 20만동++/시 (17시 이후 30만) · 피클볼 15만동++ (17시 이후 25만)", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
+  { name: "카약 · 바디보드 · SUP 대여", detail: "06~16시 · 워터 액티비티 센터 06~18시. 무료 카약 시간은 월·금 10~11시뿐 (무료 액티비티 참고)", price: "카약 1인 15만동++/시 · 2인 20만동++/시 · 바디보드 10만동++ · SUP 20만동++", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
   { name: "자전거 대여", detail: "06~17시", price: "10만동++/시 (≈5,500원)", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
   { name: "개인 강습 (요가·테니스·PT)", detail: "예약제", price: "80만동++/시 (≈4.4만원)", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
-  { name: "시내 셔틀", detail: "리조트→나트랑 시내 주말 11:30·14:30 / 복귀 15:30·18:15 · 5일 전 예약. 공항 무료 셔틀은 2박 이상만 — 1박이라 해당 없음 (한국 여행사 페이지 출처, 호텔 확인 필요)", price: "미확인", src: "https://tripon.kr/accommodation/490" },
-  { name: "데이패스 · 데이유즈 룸", detail: "상품 존재만 확인 — 체크아웃 후 시설 이용·샤워 대안. 가격 미확인", price: "미확인", src: `${M}/experiences/` },
-  { name: "체크아웃 후 스파 샤워실", detail: "Heavenly Spa(2층) 샤워실 체크아웃 후 무료, 21:00 마감 · 부대시설도 체크아웃 후 이용 가능. 호텔 제공 정보라고 여행사가 게재(날짜 없음), 공식 marriott.com엔 없음 — 체크인 때 확인", price: "무료 (여행사 표기)", src: "https://www.tourpik.com/item.php?id=TC55430355" },
+  { name: "공항 셔틀", detail: "공항→리조트 10:45 · 리조트→공항 21:20, 21:45 · 24시간 전 예약 필수(예약 없으면 운행 취소) · +84 258-3993888 내선 5410 · 출발 10분 전 픽업 장소 대기. 숙박일수 조건 표기 없음", price: "무료 (Complimentary)", src: `${M}/overview/` },
+  { name: "시내 셔틀 (나트랑 Gold Coast 몰)", detail: "리조트→시내 11:30 매일, 14:30 토·일 / 시내→리조트 18:15 매일, 15:30 토·일 · 24시간 전 예약 · 시내 기사 연락 +84 915-499-601", price: "Marriott 미표기", src: `${M}/overview/` },
+  { name: "데이패스 · 데이유즈 룸", detail: "해변·수영장·피트니스·레크리에이션 낮 시간 이용 상품. 가격 Marriott 미표기", price: "미확인", src: `${M}/experiences/` },
+  { name: "체크아웃 후 수영장·피트니스·샤워", detail: "Marriott에 정책 없음 (정규 체크아웃 12:00). 체크인 때 프런트에 문의", price: "—" },
 ];
 
 export const WESTIN_EAT: Facility[] = [
