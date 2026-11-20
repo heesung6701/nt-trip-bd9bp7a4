@@ -11,7 +11,7 @@ tools: Read, Grep, Glob, Bash
 1. `docs/client-requirements.md` — **최우선 기준**. 여기와 어긋나면 무조건 문제. 이 문서 자체는 수정 제안만, 직접 고치지 말 것 (사용자 확인 필요).
 2. `private/trip.toml` — 입력 원본 (요청·예산·숙소 구간).
 3. `web/src/data/itinerary.json` — 생성된 일정 (gitignore, 날짜·편명 원본).
-4. `web/src/data/stayMoves.ts`, `hotels.ts`, `resortCompare.ts` — 숙소 이동·체크인/아웃·비용.
+4. `web/src/data/stayMoves.ts`, `budget.ts` — 숙소 이동·체크인/아웃·날짜별 예산.
 5. `web/src/RouteGraph.tsx` (EDGES/ROUTES), `web/src/data/routeNodes.ts` (노드 좌표) — 이동 그래프.
 6. 필요하면 `docs/research/*`, `main.py` 상수 (AIRPORT_BUFFER, AIRPORT_TRANSFER, CHECKOUT 등).
 

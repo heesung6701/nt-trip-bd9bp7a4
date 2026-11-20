@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Badge, Callout, ImageFrame, Text } from "@seed-design/react";
-import { HOTELS, type HotelInfo } from "./data/hotels";
+import { Badge, Callout, Text } from "@seed-design/react";
 import { STAY_MOVES } from "./data/stayMoves";
-import { RESORTS, type ResortRow } from "./data/resortCompare";
+import { BUDGET, VND_PER_KRW, cashToWithdraw, type BudgetLine } from "./data/budget";
 import { RouteGraph } from "./RouteGraph";
-import type { Activity, Day, Food, StayCandidate, TripData, WeatherDay } from "./types";
+import type { Activity, Day, Food, Item, TripData, WeatherDay } from "./types";
 import itinerary from "./data/itinerary.json";
 import "./App.css";
 
@@ -38,11 +37,6 @@ function WeatherCard({ w, fetchedAt, place }: { w: WeatherDay; fetchedAt: string
       </Text>
     </div>
   );
-}
-
-function matchHotel(name: string): HotelInfo | undefined {
-  const n = name.toLowerCase();
-  return HOTELS.find((h) => n.includes(h.name.toLowerCase()) || h.name.toLowerCase().includes(n));
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -183,140 +177,113 @@ function Timeline({ data, day, dayNo }: { data: TripData; day: Day | undefined; 
   );
 }
 
-function HotelRoomImage({ hotel }: { hotel: HotelInfo }) {
-  if (hotel.roomImage) {
-    return (
-      <ImageFrame
-        ratio={16 / 9}
-        src={hotel.roomImage}
-        alt={`${hotel.name} 객실`}
-        loading="lazy"
-        fallback={<div className="img-fallback">객실 사진 준비 중</div>}
-      />
-    );
-  }
-  return <div className="img-fallback">객실 사진 미확보 · 갤러리에서 확인</div>;
-}
-
-const TIER_LABEL: Record<HotelInfo["tier"], string> = {
-  marriott: "Marriott",
-  flex: "플렉스",
+// 확정 숙소 공식 페이지 (Navy는 공식 사이트 없음)
+const STAY_LINKS: Record<string, string> = {
+  "The Westin Resort & Spa Cam Ranh": "https://www.marriott.com/en-us/hotels/cxrwi-the-westin-resort-and-spa-cam-ranh/overview/",
 };
 
-const TIER_TONE: Record<HotelInfo["tier"], "brand" | "neutral" | "warning"> = {
-  marriott: "brand",
-  flex: "warning",
-};
-
-function HotelComparison() {
+function StayRecommendations({ data }: { data: TripData }) {
   return (
-    <div className="hotel-grid">
-      {HOTELS.map((h) => (
-        <article className="hotel-card" key={h.name}>
-          <HotelRoomImage hotel={h} />
-          <div className="hotel-body">
-            <div className="meta">
-              <Badge.Root size="medium" variant="outline" tone={TIER_TONE[h.tier]}>
-                <Badge.Label>{TIER_LABEL[h.tier]}</Badge.Label>
-              </Badge.Root>
-            </div>
-            <Text as="h4" textStyle="t5Bold" color="fg.neutral">
-              {h.name}
+    <div className="stay-segments">
+      {(data.stay ?? []).map((seg) => (
+        <div className="segment" key={`${seg.check_in}-${seg.check_out}`}>
+          <Text as="h3" textStyle="t5Bold" color="fg.neutral">
+            {seg.check_in} ~ {seg.check_out}
+          </Text>
+          {seg.name && (
+            <Text textStyle="t5Bold" color="fg.neutral">
+              확정: {seg.name}
             </Text>
-            <Text textStyle="t4Regular" color="fg.neutral-subtle">
-              {h.address}
-            </Text>
-            <Text textStyle="t4Regular" color="fg.neutral">
-              {h.priceNote}
-            </Text>
-            <ul className="facilities">
-              {h.facilities.map((f) => (
-                <li key={f}>{f}</li>
-              ))}
-            </ul>
-            {h.costs && (
-              <ul className="bullets">
-                {h.costs.map((c) => (
-                  <li key={c}>{c}</li>
-                ))}
-              </ul>
-            )}
+          )}
+          {seg.name && STAY_LINKS[seg.name] && (
             <div className="links">
-              <a href={h.listingUrl} target="_blank" rel="noreferrer">
-                예약 페이지
+              <a href={STAY_LINKS[seg.name]} target="_blank" rel="noreferrer">
+                공식 페이지
               </a>
-              {h.galleryUrl && (
-                <a href={h.galleryUrl} target="_blank" rel="noreferrer">
-                  갤러리
-                </a>
-              )}
             </div>
-          </div>
-        </article>
+          )}
+        </div>
       ))}
     </div>
   );
 }
 
-function StayRecommendations({ data }: { data: TripData }) {
-  const segments = data.stay ?? [];
+// 일정표에 잡힌 항목 중 kind가 맞는 것만 Day별로 (먹기·놀기 탭)
+function Scheduled({ days, kinds }: { days: Day[]; kinds: string[] }) {
+  const rows = days.flatMap((d, i) => d.items.filter((it) => kinds.includes(it.kind)).map((it) => ({ dayNo: i + 1, it })));
+  if (rows.length === 0) return <Text textStyle="t4Regular" color="fg.neutral-subtle">일정에 잡힌 항목 없음</Text>;
   return (
-    <div className="stay-segments">
-      {segments.map((seg) => {
-        const confirmed = seg.name ? matchHotel(seg.name) : undefined;
+    <ul className="card-list">
+      {rows.map(({ dayNo, it }: { dayNo: number; it: Item }) => (
+        <li className="card" key={`${dayNo}-${it.start}-${it.title}`}>
+          <Text textStyle="t5Bold" color="fg.neutral">
+            Day {dayNo} {hhmm(it.start)} · {it.title}
+          </Text>
+          <Text textStyle="t4Regular" color="fg.neutral-subtle">
+            {it.place}
+            {it.cost_krw > 0 && ` · ${won(it.cost_krw)}`}
+          </Text>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+const vnd = (n: number) => `${(n / 10000).toLocaleString("ko-KR")}만동`;
+const krw = (n: number) => won(Math.round(n / VND_PER_KRW / 1000) * 1000);
+const sum = (ls: BudgetLine[], pay?: BudgetLine["pay"]) => ls.filter((l) => !pay || l.pay === pay).reduce((a, l) => a + l.vnd, 0);
+
+function BudgetTab({ days, travelers }: { days: Day[]; travelers: number }) {
+  const cash = sum(BUDGET, "현금"), total = sum(BUDGET);
+  const withdraw = cashToWithdraw(cash);
+  return (
+    <>
+      <Section title="환전·ATM">
+        <Text textStyle="t6Bold" color="fg.neutral">
+          현금 {vnd(withdraw)} 출금 추천 (≈{krw(withdraw)})
+        </Text>
+        <Text textStyle="t4Regular" color="fg.neutral-subtle">
+          현금 예상 {vnd(cash)} + 여유 20% · 카드(트래블카드·Grab 앱) {vnd(total - cash)} · VPBank ATM 1회 500만동 이하 수수료 없음 (2025 후기 기준, 현장 확인)
+        </Text>
+        <Text textStyle="t4Regular" color="fg.neutral-subtle">
+          {travelers}명 합계 {vnd(total)} ≈ {krw(total)} · 1인 ≈ {krw(total / travelers)} (숙박·항공 제외) · 1만동 ≈ 550원
+        </Text>
+      </Section>
+      {days.map((d, i) => {
+        const ls = BUDGET.filter((l) => l.day === i + 1);
+        if (ls.length === 0) return null;
         return (
-          <div className="segment" key={`${seg.check_in}-${seg.check_out}`}>
-            <Text as="h3" textStyle="t5Bold" color="fg.neutral">
-              {seg.check_in} ~ {seg.check_out}
-            </Text>
-            {seg.name && (
-              <Text textStyle="t5Bold" color="fg.neutral">
-                확정: {seg.name}
-              </Text>
-            )}
-            {seg.recommended_region && (
-              <Text textStyle="t4Regular" color="fg.neutral-subtle">
-                {seg.recommended_region}
-              </Text>
-            )}
-            {confirmed && (
-              <div className="links">
-                <a href={confirmed.listingUrl} target="_blank" rel="noreferrer">
-                  예약 페이지
-                </a>
-              </div>
-            )}
-            {(seg.candidates ?? []).length > 0 && (
-              <div className="candidate-list">
-                {seg.candidates!.map((c: StayCandidate) => {
-                  const hotel = matchHotel(c.name);
-                  return (
-                    <div className="candidate" key={c.name}>
-                      <Text textStyle="t5Bold" color="fg.neutral">
-                        {c.name}
-                      </Text>
-                      <Text textStyle="t4Regular" color="fg.neutral-subtle">
-                        {c.region} · {won(c.price_krw_per_night)}/박
-                      </Text>
-                      <Text textStyle="t4Regular" color="fg.neutral">
-                        {c.reason}
-                      </Text>
-                      {hotel && (
-                        <div className="links">
-                          <a href={hotel.listingUrl} target="_blank" rel="noreferrer">
-                            예약 페이지
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
+          <Section key={d.date} title={`Day ${i + 1} · ${vnd(sum(ls))} (현금 ${vnd(sum(ls, "현금"))})`}>
+            <div className="sheet-wrap">
+              <table className="sheet budget">
+                <thead>
+                  <tr>
+                    <th>항목</th>
+                    <th>금액</th>
+                    <th>결제</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ls.map((l) => (
+                    <tr key={l.title}>
+                      <td>
+                        {l.title}
+                        {l.note && <div className="src">{l.note}</div>}
+                      </td>
+                      <td className="num">
+                        {vnd(l.vnd)}
+                        <div className="src">≈{krw(l.vnd)}</div>
+                      </td>
+                      <td>{l.pay}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Section>
         );
       })}
-    </div>
+    </>
   );
 }
 
@@ -359,63 +326,12 @@ function FoodList({ items }: { items: Food[] }) {
   );
 }
 
-const RESORT_COLS: { key: Exclude<keyof ResortRow, "name" | "marriott">; label: string }[] = [
-  { key: "room", label: "숙박비/박" },
-  { key: "dining", label: "식당" },
-  { key: "spa", label: "호텔 스파 60분" },
-  { key: "massage", label: "외부 마사지" },
-  { key: "rain", label: "비 올 때·비고" },
-];
-
-function ResortSheet() {
-  return (
-    <div className="sheet-wrap">
-      <table className="sheet wrap">
-        <thead>
-          <tr>
-            <th>호텔</th>
-            {RESORT_COLS.map((c) => (
-              <th key={c.key}>{c.label}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {RESORTS.map((r) => (
-            <tr key={r.name}>
-              <td className="name">
-                {r.name}
-                {r.marriott && <div className="src">Marriott · Platinum</div>}
-              </td>
-              {RESORT_COLS.map((c) => {
-                const cell = r[c.key];
-                return (
-                  <td key={c.key}>
-                    {cell.t}
-                    {cell.src && (
-                      <div className="src">
-                        {cell.src.map((s) => (
-                          <a key={s.url + s.label} href={s.url} target="_blank" rel="noreferrer">
-                            {s.label}
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
 const TABS = [
   { id: "plan", label: "일정", icon: "🗓" },
-  { id: "stay", label: "숙소", icon: "🏨" },
-  { id: "spots", label: "먹고 놀기", icon: "🍤" },
+  { id: "eat", label: "먹기", icon: "🍤" },
+  { id: "play", label: "놀기", icon: "💆" },
   { id: "move", label: "이동", icon: "🚕" },
+  { id: "budget", label: "예산", icon: "💵" },
   { id: "prep", label: "준비", icon: "🎒" },
 ] as const;
 type TabId = (typeof TABS)[number]["id"];
@@ -426,7 +342,6 @@ function App() {
   const [dayIndex, setDayIndex] = useState(0);
 
   const days = allDays(data);
-  const budget = data.itinerary?.budget_total_krw;
   const rain = data.itinerary?.rain_alternatives ?? [];
   const transport = data.transport ? Object.values(data.transport) : [];
   const select = (id: TabId) => {
@@ -474,34 +389,26 @@ function App() {
           </>
         )}
 
-        {tab === "stay" && (
+        {tab === "eat" && (
           <>
-            {data.stay && data.stay.length > 0 && (
-              <Section title="내 숙소">
-                <StayRecommendations data={data} />
-              </Section>
-            )}
-            <Section title="Westin 대안 호캉스 비교 (비 올 때)">
-              <Text textStyle="t4Regular" color="fg.neutral-subtle">
-                숙박비는 예약사이트 스냅샷(Day2 실요금 아님), 식당·스파는 후기·프로모션가 위주. 셀 아래 링크가 근거. 1 USD ≈ 1,400원, 1만동 ≈ 550원.
-              </Text>
-              <ResortSheet />
+            <Section title="일정에 잡힌 식사">
+              <Scheduled days={days} kinds={["meal"]} />
             </Section>
-            <Section title="숙소 후보 비교">
-              <HotelComparison />
-            </Section>
-          </>
-        )}
-
-        {tab === "spots" && (
-          <>
             {data.food && data.food.length > 0 && (
-              <Section title="식당">
+              <Section title="식당 후보">
                 <FoodList items={data.food} />
               </Section>
             )}
+          </>
+        )}
+
+        {tab === "play" && (
+          <>
+            <Section title="일정에 잡힌 것">
+              <Scheduled days={days} kinds={["spa", "activity", "rest"]} />
+            </Section>
             {data.activities && data.activities.length > 0 && (
-              <Section title="할 것">
+              <Section title="추천·대안">
                 <ActivityList items={data.activities} />
               </Section>
             )}
@@ -509,29 +416,38 @@ function App() {
         )}
 
         {tab === "move" && (
-          <Section title="이동">
-            <ul className="card-list">
-              {transport.map((leg) => (
-                <li className="card" key={leg.description}>
-                  <Text textStyle="t5Bold" color="fg.neutral">
-                    {leg.description}
-                  </Text>
-                  <Text textStyle="t4Regular" color="fg.neutral-subtle">
-                    {leg.method} · {won(leg.cost_krw)}
-                  </Text>
-                </li>
-              ))}
-            </ul>
-          </Section>
+          <>
+            <DayTabs days={days} value={dayIndex} onChange={setDayIndex} />
+            <section className="section">
+              <RouteGraph dayNo={dayIndex + 1} />
+            </section>
+            {transport.length > 0 && (
+              <details className="section fold">
+                <summary>🚕 이동 수단 메모</summary>
+                <ul className="card-list">
+                  {transport.map((leg) => (
+                    <li className="card" key={leg.description}>
+                      <Text textStyle="t5Bold" color="fg.neutral">
+                        {leg.description}
+                      </Text>
+                      <Text textStyle="t4Regular" color="fg.neutral-subtle">
+                        {leg.method} · {won(leg.cost_krw)}
+                      </Text>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
+          </>
         )}
+
+        {tab === "budget" && <BudgetTab days={days} travelers={data.trip.travelers} />}
 
         {tab === "prep" && data.prep && (
           <>
-            {budget !== undefined && (
-              <Section title="예산 합계">
-                <Text textStyle="t6Bold" color="fg.neutral">
-                  {data.trip.travelers}명 기준 {won(budget)}
-                </Text>
+            {data.stay && data.stay.length > 0 && (
+              <Section title="내 숙소">
+                <StayRecommendations data={data} />
               </Section>
             )}
             <Section title="준비물">

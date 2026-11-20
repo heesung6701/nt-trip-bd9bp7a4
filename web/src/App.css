@@ -114,34 +114,9 @@ body {
   flex-wrap: wrap;
 }
 
-.hotel-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
-}
 
-.hotel-card {
-  border: 1px solid var(--seed-color-stroke-neutral-muted);
-  border-radius: 14px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  background: var(--seed-color-bg-layer-default);
-}
 
-.hotel-body {
-  padding: 14px 16px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
 
-.facilities {
-  margin: 4px 0 0;
-  padding-left: 18px;
-  color: var(--seed-color-fg-neutral-muted);
-  font-size: 15px;
-}
 
 .links {
   display: flex;
@@ -154,17 +129,6 @@ body {
   font-size: 15px;
 }
 
-.img-fallback {
-  aspect-ratio: 16 / 9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--seed-color-bg-neutral-weak);
-  color: var(--seed-color-fg-neutral-subtle);
-  font-size: 13px;
-  text-align: center;
-  padding: 8px;
-}
 
 .stay-segments,
 .candidate-list,
@@ -246,7 +210,7 @@ body {
   bottom: 0;
   z-index: 20;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   padding-bottom: env(safe-area-inset-bottom);
   background: var(--seed-color-bg-layer-default);
   border-top: 1px solid var(--seed-color-stroke-neutral-muted);
@@ -423,5 +387,17 @@ body {
   flex: none;
   width: 52px;
   color: var(--seed-color-fg-neutral-subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+.sheet.budget {
+  min-width: 0;
+  width: 100%;
+}
+.sheet.budget td:first-child {
+  white-space: normal;
+}
+.sheet .num {
+  text-align: right;
   font-variant-numeric: tabular-nums;
 }
