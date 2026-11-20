@@ -14,11 +14,11 @@ export const WESTIN_TAX_NOTE = "가격 뒤 ++ = VAT 8% + 봉사료 5% 별도 (�
 
 export const WESTIN_PLAY: Facility[] = [
   { name: "수영장 3개 (리조트·인피니티·키즈)", detail: "Fitness Pool·Kids Pool·Resort Pool · 운영시간 Marriott 미표기 — 체크인 때 확인. 카바나 있음", price: "투숙객 무료", src: `${M}/experiences/` },
-  { name: "무료 액티비티 (24시간 전 등록)", detail: "Day2(일): 08:30 필라테스, 10~11 풀 미니게임, 16~17 비치발리볼, 19~20:30 야외영화 · Day3(월): 07~08 RunWESTIN, 08:30~09:30 모닝 스트레칭, 10~11 카약 · 상시 06~17 스노클링·비치발리볼·프리스비 등 (07·08:30 수업만 24시간 전 등록)", price: "무료", src: `${PDF}/wi-cxrwi-free-weekly-activities-40688.pdf` },
+  { name: "무료 액티비티 (24시간 전 등록)", detail: "Day2(일): 08:30 필라테스, 10~11 풀 미니게임, 16~17 비치발리볼, 19~20:30 야외영화 · Day3(월): 07~08 RunWESTIN, 08:30~09:30 모닝 스트레칭 · 상시 06~17 스노클링·비치발리볼·프리스비 등 (07·08:30 수업만 24시간 전 등록)", price: "무료", src: `${PDF}/wi-cxrwi-free-weekly-activities-40688.pdf` },
   { name: "Heavenly Spa", detail: "시그니처 Bamboo Body Therapy · 트리트먼트룸 6개(커플 2) · 객실 전화 0번 예약. 60/90/120분 가격은 공식 미공개", price: "가격 미확인", src: `${M}/experiences/` },
   { name: "WestinWORKOUT 피트니스", detail: "24시간 · 요가 스튜디오 · 스팀/사우나 정보 없음", price: "투숙객 무료", src: `${M}/experiences/` },
   { name: "테니스 · 피클볼", detail: "06~17시 / 17~21시 요금 다름", price: "테니스 20만동++/시 (17시 이후 30만) · 피클볼 15만동++ (17시 이후 25만)", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
-  { name: "카약 · 바디보드 · SUP 대여", detail: "06~16시 · 워터 액티비티 센터 06~18시. 무료 카약 시간은 월·금 10~11시뿐 (무료 액티비티 참고)", price: "카약 1인 15만동++/시 · 2인 20만동++/시 · 바디보드 10만동++ · SUP 20만동++", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
+  { name: "카약 · 바디보드 · SUP 대여", detail: "06~16시 · 워터 액티비티 센터 06~18시. 주간 프로그램 PDF에 월·금 10~11시 카약이 있으나 무료인지 불명 — 유료로 보고 계획", price: "카약 1인 15만동++/시 · 2인 20만동++/시 · 바디보드 10만동++ · SUP 20만동++", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
   { name: "자전거 대여", detail: "06~17시", price: "10만동++/시 (≈5,500원)", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
   { name: "개인 강습 (요가·테니스·PT)", detail: "예약제", price: "80만동++/시 (≈4.4만원)", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
   { name: "공항 셔틀", detail: "공항→리조트 10:45 · 리조트→공항 21:20, 21:45 (하나만 예약 가능) · 21:20 예약 완료 · 24시간 전 예약 필수 · +84 258-3993888 내선 5410 · 출발 10분 전 픽업 장소 대기. 숙박일수 조건 표기 없음", price: "무료 (Complimentary)", src: `${M}/overview/` },
