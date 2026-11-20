@@ -4,12 +4,41 @@ import { HOTELS, type HotelInfo } from "./data/hotels";
 import { STAY_MOVES } from "./data/stayMoves";
 import { RESORTS, type ResortRow } from "./data/resortCompare";
 import { RouteGraph } from "./RouteGraph";
-import type { Activity, Day, Food, StayCandidate, TripData } from "./types";
+import type { Activity, Day, Food, StayCandidate, TripData, WeatherDay } from "./types";
 import itinerary from "./data/itinerary.json";
 import "./App.css";
 
 const won = (n: number) => `${n.toLocaleString("ko-KR")}원`;
 const hhmm = (t: string) => t.slice(0, 5);
+
+// WMO weather code → 아이콘·라벨 (Open-Meteo)
+function wx(code: number): string {
+  if (code === 0) return "☀️ 맑음";
+  if (code <= 2) return "🌤 구름 조금";
+  if (code === 3) return "☁️ 흐림";
+  if (code <= 48) return "🌫 안개";
+  if (code <= 57) return "🌦 이슬비";
+  if (code <= 67) return "🌧 비";
+  if (code <= 77) return "🌨 눈";
+  if (code <= 82) return "🌦 소나기";
+  return "⛈ 뇌우";
+}
+
+function WeatherCard({ w, fetchedAt, place }: { w: WeatherDay; fetchedAt: string; place: string }) {
+  return (
+    <div className="weather">
+      <Text textStyle="t5Bold" color="fg.neutral">
+        {wx(w.code)} · {Math.round(w.t_min)}~{Math.round(w.t_max)}°C
+      </Text>
+      <Text textStyle="t4Regular" color={w.rain_prob >= 60 ? "fg.critical" : "fg.neutral-subtle"}>
+        강수 {w.rain_prob}% · {w.rain_mm}mm · 바람 {Math.round(w.wind_kmh)}km/h · UV {w.uv}
+      </Text>
+      <Text textStyle="t3Regular" color="fg.neutral-muted">
+        {place} 예보 · Open-Meteo · {fetchedAt} 기준
+      </Text>
+    </div>
+  );
+}
 
 function matchHotel(name: string): HotelInfo | undefined {
   const n = name.toLowerCase();
@@ -99,8 +128,10 @@ function Timeline({ data, day, dayNo }: { data: TripData; day: Day | undefined; 
   const total = items.reduce((sum, i) => sum + i.cost_krw, 0);
   // ponytail: 항공 시각은 KST 기준 날짜로 매칭
   const flights = data.trip.flights.filter((f) => f.depart.startsWith(day.date) || f.arrive.startsWith(day.date));
+  const w = data.weather?.days.find((d) => d.date === day.date);
   return (
     <div className="day">
+      {w && data.weather && <WeatherCard w={w} fetchedAt={data.weather.fetched_at} place={data.weather.place} />}
       {flights.map((f) => (
         <Text key={f.depart} textStyle="t5Regular" color="fg.neutral">
           ✈️ {f.airline} {f.no} {f.from} → {f.to} · KST {dt(f.depart)} 출발 → {dt(f.arrive)} 도착
@@ -115,7 +146,9 @@ function Timeline({ data, day, dayNo }: { data: TripData; day: Day | undefined; 
         </Text>
       )}
       <ol className="timeline">
-        {items.map((item) => (
+        {items.map((item) => {
+          const h = w?.hourly[parseInt(item.start, 10)];
+          return (
           <li key={`${item.start}-${item.title}`}>
             <div className="time">
               {hhmm(item.start)}
@@ -130,13 +163,21 @@ function Timeline({ data, day, dayNo }: { data: TripData; day: Day | undefined; 
                 <Badge.Root size="medium" variant="weak" tone="neutral">
                   <Badge.Label>{item.kind}</Badge.Label>
                 </Badge.Root>
+                {h && (
+                  <Badge.Root size="medium" variant="weak" tone={h.rain_prob >= 60 ? "warning" : "neutral"}>
+                    <Badge.Label>
+                      {wx(h.code).split(" ")[0]} {Math.round(h.temp)}° · 비 {h.rain_prob}%
+                    </Badge.Label>
+                  </Badge.Root>
+                )}
                 <Text textStyle="t4Regular" color="fg.neutral-subtle">
                   {item.place} · {won(item.cost_krw)}
                 </Text>
               </div>
             </div>
           </li>
-        ))}
+          );
+        })}
       </ol>
     </div>
   );

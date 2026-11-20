@@ -15,6 +15,8 @@ from langchain_ollama import ChatOllama
 from langgraph.graph import END, StateGraph
 from pydantic import BaseModel
 
+from weather import fetch_weather
+
 KST = ZoneInfo("Asia/Seoul")
 
 DAY_START = time(9, 0)
@@ -625,6 +627,11 @@ WEB_DATA_PATH = os.path.join(WEB_DIR, "src", "data", "itinerary.json")
 
 def node_render(state: TripState) -> dict:
     trip = state["trip"]
+    try:
+        weather = fetch_weather(trip)
+    except Exception as e:  # 예보 범위 밖(약 16일 전)·네트워크 실패는 날씨 없이 진행
+        print(f"날씨 못 가져옴: {e}", file=sys.stderr)
+        weather = None
     payload = {
         "trip": {
             "destination": trip["destination"],
@@ -643,6 +650,7 @@ def node_render(state: TripState) -> dict:
         "food": state.get("food"),
         "transport": state.get("transport"),
         "prep": state.get("prep"),
+        "weather": weather,
     }
     os.makedirs(os.path.dirname(WEB_DATA_PATH), exist_ok=True)
     with open(WEB_DATA_PATH, "w", encoding="utf-8") as f:

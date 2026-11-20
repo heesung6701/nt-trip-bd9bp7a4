@@ -71,6 +71,32 @@ export interface Prep {
   weather_note: string;
 }
 
+export interface WeatherHour {
+  code: number;
+  temp: number;
+  rain_prob: number;
+  rain_mm: number;
+}
+
+export interface WeatherDay {
+  date: string;
+  code: number;
+  t_max: number;
+  t_min: number;
+  rain_prob: number;
+  rain_mm: number;
+  wind_kmh: number;
+  uv: number;
+  hourly: WeatherHour[]; // 인덱스 = 현지 시(0~23)
+}
+
+export interface Weather {
+  place: string;
+  source: string;
+  fetched_at: string;
+  days: WeatherDay[];
+}
+
 export interface TripData {
   trip: {
     destination: string;
@@ -89,4 +115,5 @@ export interface TripData {
   food: Food[] | null;
   transport: Record<string, TransportLeg> | null;
   prep: Prep | null;
+  weather?: Weather | null;
 }
