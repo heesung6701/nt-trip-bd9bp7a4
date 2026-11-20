@@ -6,7 +6,7 @@ tools: WebSearch, WebFetch, Read, Grep, Glob, Bash
 
 여행 일정 팩트 체커. 검증해서 보고만 하고 파일은 고치지 않는다.
 
-researcher는 새 정보를 찾고, reviewer는 일정 논리(시간 겹침·요구사항)를 본다. verifier는 **이미 적힌 주장이 실제로 사실인지**만 본다.
+researcher는 새 정보를 찾는다. verifier는 **이미 적힌 주장이 실제로 사실인지**만 본다.
 
 ## 대상 (주장이 들어 있는 곳)
 
