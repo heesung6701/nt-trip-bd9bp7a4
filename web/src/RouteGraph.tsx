@@ -25,7 +25,7 @@ const EDGES: { a: NodeId; b: NodeId; km: string; min: string; cost: string; mode
   // 우천 대안·미배정 장소
   { a: "port", b: "ocean", km: "≈0.5km", min: "≈5분", cost: "무료", mode: "도보", t: 0.45 },
   { a: "port", b: "honchong", km: "≈8km", min: "≈20분", cost: "≈10만동", mode: "Grab", t: 0.65 },
-  { a: "honchong", b: "thapba", km: "≈3km", min: "≈10분", cost: "≈5만동", mode: "Grab" },
+  { a: "honchong", b: "thapba", km: "≈4.1km", min: "≈8분", cost: "≈5만동", mode: "Grab" },
 ];
 const edgeKey = (a: string, b: string) => [a, b].sort().join("-");
 
@@ -35,7 +35,7 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
     color: "#2f6fed",
     note: "인천 20:35(KST) 출발 → 현지 00:10(+1) 도착. 시각은 현지 기준",
     steps: [
-      { time: "00:10+1", at: "cxr", text: "T2 도착 · 입국심사 30~60분 · 짐 찾기 · T2 24시간 ATM 있음 (은행 미확인 — 수수료 비싸면 Day2 모벤픽 VPBank에서)" },
+      { time: "00:10+1", at: "cxr", text: "T2 도착 · 입국심사 30~60분 · 기내 휴대만 · T2 24시간 ATM 있음 (은행 미확인 — 수수료 비싸면 Day2 모벤픽 VPBank에서)" },
       { time: "01:00+1", at: "cxr", to: "navy", text: "Grab 예약 완료 (01:00 픽업) · 10~15분 · 10~15만동" },
       { time: "01:20+1", at: "navy", text: "체크인 · 취침" },
     ],
@@ -44,20 +44,20 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
     color: "#2f6fed",
     steps: [
       { time: "11:00", at: "navy", to: "westin", text: "Grab · ≈8.7km · 10~15분 · 10~20만동" },
-      { time: "11:30", at: "westin", text: "도착 · 짐 맡기고 얼리 체크인 요청 · 레이트 체크아웃 16:00 가능 여부 확인 · Day3 21:20 공항 셔틀 프런트 예약 (24시간 전 필수)" },
+      { time: "11:30", at: "westin", text: "도착 · 짐 맡기고 얼리 체크인 요청 (안 돼도 체크인 전 수영장·Haven Lounge 이용 가능, Westin 확인) · 레이트 체크아웃 16:00 가능 여부 확인 · Day3 공항 셔틀 21:20 하나만 예약 가능 (요금·24시간 전 규칙·픽업 장소 직원 확인)" },
       { time: "12:00", at: "westin", to: "atmMovenpick", text: "Grab ≈5분 · VPBank ATM 현금 출금 (예산 탭 추천액, 수수료 없음)" },
-      { time: "12:20", at: "atmMovenpick", to: "westin", text: "Grab 복귀 → 점심 · 수영장 · 16:10 아내 가든 스파 120분 (Westin 200m 도보, 지도 노드 생략) · 그동안 남편 해변 산책 → 비치바 · 해산물 저녁" },
+      { time: "12:20", at: "atmMovenpick", to: "westin", text: "Grab 복귀 → 점심 · 수영장 · 해변 물가 발 담그기(발목 아래, 아내) · 16:10 아내 가든 스파 120분 (Westin 200m 도보, 지도 노드 생략) · 그동안 남편 해변 산책 → 비치바 · 해산물 저녁" },
     ],
   },
   3: {
     color: "#f26b1d",
     steps: [
       { time: "07:45", at: "westin", to: "port", text: "Grab ≈50분 · 투어 픽업 포함이면 생략 · 투어사 집결 시각 확인" },
-      { time: "09:00", at: "port", to: "honmun", text: "선상 관광 보트 (입수 없음)" },
+      { time: "09:00", at: "port", to: "honmun", text: "선상 관광 보트 (몸 잠기는 입수 없음)" },
       { time: "13:00", at: "honmun", to: "port", text: "귀항 (실제 상품 귀항 시각 확인 필요)" },
       { time: "13:10", at: "port", to: "westin", text: "Grab ≈50분 → 14:00 Westin" },
       { time: "14:00", at: "westin", text: "해산물 점심 · 레이트 체크아웃 16:00까지 가능 (공실 시, 보장 아님 — 07:40까지 못 받으면 보트 전 체크아웃·짐 보관) · 저녁" },
-      { time: "21:20", at: "westin", to: "cxr", text: "Westin 무료 공항 셔틀 (21:10 픽업 장소 대기) · 15~30분 · 21:50쯤 도착 — 21:20 셔틀 탑승 안 되면 21:45편 기다리지 말고 바로 프런트에 Grab·택시 요청 (≈15만동)" },
+      { time: "21:20", at: "westin", to: "cxr", text: "Westin 공항 셔틀 (무료는 Marriott 표기, 요금 예약 때 재확인 · 21:10 픽업 장소 대기) · 15~30분 · 21:50쯤 도착 — 21:20 놓치면 바로 Grab·택시가 기본 (≈15만동) · 21:45편은 자리 있으면 탑승(예약 불가·보장 아님)" },
       { time: "00:30+1", at: "cxr", text: "출국 (현지 시각) — 새벽이라 이날 일정으로 표시" },
     ],
   },

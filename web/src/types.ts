@@ -26,6 +26,7 @@ export interface Itinerary {
   days: Day[];
   rain_alternatives: string[];
   budget_total_krw: number;
+  budget_total_note?: string;
 }
 
 export interface StayCandidate {
@@ -50,6 +51,7 @@ export interface Activity {
   cost_krw: number;
   indoor: boolean;
   recommended_time: string;
+  note?: string;
 }
 
 export interface Food {

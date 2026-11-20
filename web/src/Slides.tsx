@@ -56,7 +56,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
       <div className="grid g4">
         <div className="card"><span className="tag">{d(1)}</span><b className="big">출발</b><p>{hm(out.depart)} 인천 출발 (KST)</p><p className="sub">현지 00:10 도착</p></div>
         <div className="card"><span className="tag sun">{d(2)}</span><b className="big">리조트 + 스파</b><p>Navy에서 자고 → Westin</p><p>수영장 · <b>가든 스파</b> · 해산물 저녁</p></div>
-        <div className="card"><span className="tag leaf">{d(3)}</span><b className="big">보트 + 늦은 체크아웃</b><p>오전 보트 (입수 없음)</p><p>16시까지 방 쓰기 (방 있으면) → 저녁 → 공항</p></div>
+        <div className="card"><span className="tag leaf">{d(3)}</span><b className="big">보트 + 늦은 체크아웃</b><p>오전 보트 (몸 잠기는 입수 없음)</p><p>16시까지 방 쓰기 (방 있으면) → 저녁 → 공항</p></div>
         <div className="card"><span className="tag">{d(4)}</span><b className="big">귀국</b><p>현지 00:30 출발</p><p className="sub">인천 {hm(back.arrive)} 도착</p></div>
       </div>
     </S>,
@@ -82,13 +82,13 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
     </S>,
     <S kicker={`${d(2)} · 첫날`} title="새벽 도착 → 늦잠 → 리조트">
       <Tl rows={[
-        ["00:10", "깜라인 도착 · 입국 · 짐 찾기"],
+        ["00:10", "깜라인 도착 · 입국심사"],
         ["01:00", <>Grab 기사님 만나기 (<b>예약 완료</b>) → Navy Hotel 15분</>],
-        ["01:15", "체크인 · 바로 잠"],
+        ["01:20", "체크인 · 바로 잠"],
         ["~10:45", "조식 · 체크아웃"],
         ["11:00", "Grab으로 Westin (10~15분)"],
         ["12:00", "현금 뽑기 — 모벤픽 리조트 VPBank ATM (Grab 5분, 수수료 없음)"],
-        ["13:00", "점심 후 수영장 · 비치 라운지"],
+        ["13:00", "점심 후 수영장 · 해변 물가 발 담그기 (발목 아래) · 체크인 전에도 수영장 이용 가능, Haven Lounge는 14시 이후 (Westin 확인)"],
         ["16:10", <><b>가든 스파 120분</b> · 스파 동안 해변 산책 → 비치바 (다음 장)</>, true],
         ["19:00", "Westin 해산물 저녁"],
       ]} />
@@ -98,7 +98,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
         <div className="card">
           <span className="tag sun">16:10 ~ 18:10</span>
           <p>허브찜질 포함 전신 120분</p>
-          <p><b>84만동 ($36)</b> · 팁 약 10만동 · 현금</p>
+          <p><b>84만동~93만동 ($36)</b> · 가격 확인 필요(카톡 문의) · 팁 약 10만동 · 현금</p>
           <p className="sub">Westin에서 200m — 걸어서 3분</p>
           <p className="sub">영업 10~22시 · 카톡 "가든스파 깜란"</p>
         </div>
@@ -119,9 +119,9 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
         ["09:00", <>몬섬 쪽 선상 관광 보트 · <b>탑승만, 물엔 안 들어감</b></>],
         ["13:10", "Grab으로 Westin 복귀 (14:00 도착)"],
         ["14:00", "Westin 해산물 점심"],
-        ["16:00", <><b>레이트 체크아웃</b> (방 있으면 · 안 되면 보트 전 아침에 체크아웃) · 짐 맡기고 Haven Lounge(유료)에서 쉬기</>, true],
+        ["16:00", <><b>레이트 체크아웃</b> (방 있으면 · 안 되면 보트 전 아침에 체크아웃) · 짐 맡기고 쉬기 (체크아웃 후 수영장·Haven Lounge 이용 가능 여부·요금 확인 필요) · 17:15 일몰 전 해변 발 담그기(발목 아래)</>, true],
         ["18:00", "리조트 저녁"],
-        ["21:20", "Westin 무료 공항 셔틀 (21:10 픽업 장소 · 못 타면 21:45편 기다리지 말고 바로 Grab) → 00:30 출발"],
+        ["21:20", "Westin 공항 셔틀 (21:10 픽업 장소 · 무료는 Marriott 표기, 요금 예약 때 재확인) · 놓치면 바로 Grab이 기본 (21:45편은 자리 있으면, 보장 아님) → 00:30 출발"],
       ]} />
     </S>,
     <S kicker="날씨 · 비 오면" title="소나기 확률 높음 — 실내 플랜 B 있음">
@@ -161,8 +161,8 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
         <li className="done">공항 → Navy Grab 01:00 예약</li>
         <li><b>가든 스파 카톡 예약 + 예약금</b> (1인 예약 · 1인 가격 확인)</li>
         <li><b>보트 투어 예약</b> — 혼문 정박하는지 · 항구 픽업 포함인지 물어보기</li>
-        <li>{d(2)} Westin 체크인 때 {d(3)} 21:20 공항 셔틀 프런트 예약 (무료 · 24시간 전 필수 · 만석·취소면 Grab)</li>
-        <li>eSIM 설치 · e-Customs QR · 여권</li>
+        <li>{d(2)} Westin 체크인 때 {d(3)} 21:20 셔틀 하나만 예약 가능 (요금·24시간 전 규칙·픽업 장소 직원 확인 · 무료는 Marriott 표기) · 놓치면 바로 Grab이 기본 (21:45편은 자리 있으면 탑승, 예약 불가)</li>
+        <li>eSIM 설치 · 사전입국신고 QR(도착 72시간 전부터 등록 · 2026-06-22부터 CXR 적용 · VietJet 의무·싱가포르 외교부 강력 권고, 공식 사이트 재확인) · 여권</li>
         <li>선크림 · 우산/우비 · 220V 그대로</li>
       </ul>
     </S>,
