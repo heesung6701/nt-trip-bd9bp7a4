@@ -258,7 +258,7 @@ function BudgetTab({ days, travelers }: { days: Day[]; travelers: number }) {
           현금 {vnd(withdraw)} 출금 추천 (≈{krw(withdraw)})
         </Text>
         <Text textStyle="t4Regular" color="fg.neutral-subtle">
-          현금 예상 {vnd(cash)} + 여유 20% · 카드(트래블카드·Grab 앱) {vnd(total - cash)} · VPBank ATM 외국 카드 수수료 없음, 1회 한도 500만~1,000만동 (2026 블로그 기준) — Westin 근처는 모벤픽 리조트 안, 항구 근처는 Vinmec
+          💵 현금성 {vnd(cash)} + 여유 20% → 환전·출금 필요 · 💳 카드성 {vnd(total - cash)} → 환전 불필요 (Grab·보트·식사. 항공·숙박도 카드 결제, 이 예산엔 미포함) · VPBank ATM 외국 카드 수수료 없음, 1회 한도 500만~1,000만동 (2026 블로그 기준) — Westin 근처는 모벤픽 리조트 안, 항구 근처는 Vinmec
         </Text>
         <Text textStyle="t4Regular" color="fg.neutral-subtle">
           {travelers}명 합계 {vnd(total)} ≈ {krw(total)} · 1인 ≈ {krw(total / travelers)} (숙박·항공 제외) · 1만동 ≈ 550원
@@ -268,7 +268,7 @@ function BudgetTab({ days, travelers }: { days: Day[]; travelers: number }) {
         const ls = BUDGET.filter((l) => l.day === i + 1);
         if (ls.length === 0) return null;
         return (
-          <Section key={d.date} title={`Day ${i + 1} · ${vnd(sum(ls))} (현금 ${vnd(sum(ls, "현금"))})`}>
+          <Section key={d.date} title={`Day ${i + 1} · ${vnd(sum(ls))} (💵 현금 ${vnd(sum(ls, "현금"))} · 💳 카드 ${vnd(sum(ls, "카드"))})`}>
             <div className="sheet-wrap">
               <table className="sheet budget">
                 <thead>
@@ -279,19 +279,30 @@ function BudgetTab({ days, travelers }: { days: Day[]; travelers: number }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {ls.map((l) => (
-                    <tr key={l.title}>
-                      <td>
-                        {l.title}
-                        {l.note && <div className="src">{l.note}</div>}
-                      </td>
-                      <td className="num">
-                        {vnd(l.vnd)}
-                        <div className="src">≈{krw(l.vnd)}</div>
-                      </td>
-                      <td>{l.pay}</td>
-                    </tr>
-                  ))}
+                  {(["현금", "카드"] as const).flatMap((pay) => {
+                    const g = ls.filter((l) => l.pay === pay);
+                    if (g.length === 0) return [];
+                    return [
+                      <tr key={`h-${pay}`}>
+                        <th colSpan={3}>
+                          {pay === "현금" ? "💵 현금 · 환전 필요" : "💳 카드 · 환전 불필요"} · {vnd(sum(g))}
+                        </th>
+                      </tr>,
+                      ...g.map((l) => (
+                        <tr key={l.title}>
+                          <td>
+                            {l.title}
+                            {l.note && <div className="src">{l.note}</div>}
+                          </td>
+                          <td className="num">
+                            {vnd(l.vnd)}
+                            <div className="src">≈{krw(l.vnd)}</div>
+                          </td>
+                          <td>{l.pay}</td>
+                        </tr>
+                      )),
+                    ];
+                  })}
                 </tbody>
               </table>
             </div>
