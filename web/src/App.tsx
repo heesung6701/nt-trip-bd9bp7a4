@@ -123,6 +123,9 @@ function allDays(data: TripData): Day[] {
 
 const dt = (s: string) => s.replace("T", " ").replace(/:\d\d$/, "");
 
+// 일출·일몰 (Westin 좌표, Open-Meteo 예보 + 천문식 교차 확인) — Day N 기준
+const SUN: Record<number, { rise: string; set: string }> = { 2: { rise: "05:43", set: "17:15" }, 3: { rise: "05:44", set: "17:15" } };
+
 function Timeline({ data, day, dayNo }: { data: TripData; day: Day | undefined; dayNo: number }) {
   if (!day) return null;
   const items = [...day.items, ...STAY_MOVES.filter((m) => m.day === dayNo)].sort((a, b) => a.start.localeCompare(b.start));
@@ -133,6 +136,11 @@ function Timeline({ data, day, dayNo }: { data: TripData; day: Day | undefined; 
   return (
     <div className="day">
       {w && data.weather && <WeatherCard w={w} fetchedAt={data.weather.fetched_at} place={data.weather.place} />}
+      {SUN[dayNo] && (
+        <Text textStyle="t4Regular" color="fg.neutral-subtle">
+          🌅 일출 {SUN[dayNo].rise} · 🌇 일몰 {SUN[dayNo].set} (현지 시각)
+        </Text>
+      )}
       {flights.map((f) => (
         <Text key={f.depart} textStyle="t5Regular" color="fg.neutral">
           ✈️ {f.airline} {f.no} {f.from} → {f.to} · KST {dt(f.depart)} 출발 → {dt(f.arrive)} 도착
