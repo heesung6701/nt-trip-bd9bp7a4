@@ -13,7 +13,7 @@ export interface BudgetLine {
 }
 
 export const BUDGET: BudgetLine[] = [
-  { day: 2, title: "Grab 공항 → Navy (01:00 예약)", vnd: 150_000, pay: "카드", note: "Grab 앱 결제. 앱에서 현금 선택했으면 현금" },
+  { day: 1, title: "Grab 공항 → Navy (01:00 예약)", vnd: 150_000, pay: "카드", note: "Grab 앱 결제. 앱에서 현금 선택했으면 현금" },
   { day: 2, title: "Grab Navy → Westin", vnd: 300_000, pay: "카드", note: "Grab 앱" },
   { day: 2, title: "Westin 점심", vnd: 1_000_000, pay: "카드", note: "추정 1인 50만동, 룸차지" },
   { day: 2, title: "Grab Westin ↔ 모벤픽 VPBank ATM 왕복", vnd: 100_000, pay: "카드", note: "편도 ≈5만동 추정" },

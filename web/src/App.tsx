@@ -9,7 +9,11 @@ import itinerary from "./data/itinerary.json";
 import "./App.css";
 
 const won = (n: number) => `${n.toLocaleString("ko-KR")}원`;
-const hhmm = (t: string) => t.slice(0, 5);
+// 자정 넘긴 항목은 24:xx로 저장(정렬용) → "00:xx+1"로 표시
+const hhmm = (t: string) => {
+  const h = parseInt(t, 10);
+  return h >= 24 ? `${String(h - 24).padStart(2, "0")}${t.slice(2, 5)}+1` : t.slice(0, 5);
+};
 
 // WMO weather code → 아이콘·라벨 (Open-Meteo)
 function wx(code: number): string {
@@ -142,7 +146,7 @@ function Timeline({ data, day, dayNo }: { data: TripData; day: Day | undefined; 
       )}
       <ol className="timeline">
         {items.map((item) => {
-          const h = w?.hourly[parseInt(item.start, 10)];
+          const h = item.title.startsWith("[KST]") ? undefined : w?.hourly[parseInt(item.start, 10)]; // 예보는 깜라인 현지 시각 기준 — 인천(KST) 항목엔 안 붙임
           return (
           <li key={`${item.start}-${item.title}`}>
             <div className="time">

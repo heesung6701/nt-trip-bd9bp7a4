@@ -29,13 +29,18 @@ const edgeKey = (a: string, b: string) => [a, b].sort().join("-");
 
 type Step = { time: string; at: NodeId; to?: NodeId; text: string };
 const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = {
-  1: { color: "#2f6fed", note: "출국일 — 인천 출발, 현지 이동 없음 (Day2 00:10 도착)", steps: [] },
+  1: {
+    color: "#2f6fed",
+    note: "인천 20:35(KST) 출발 → 현지 00:10(+1) 도착. 시각은 현지 기준",
+    steps: [
+      { time: "00:10+1", at: "cxr", text: "T2 도착 · 입국심사 30~60분 · 짐 찾기 · T2 24시간 ATM 있음 (은행 미확인 — 수수료 비싸면 Day2 모벤픽 VPBank에서)" },
+      { time: "01:00+1", at: "cxr", to: "navy", text: "Grab 예약 완료 (01:00 픽업) · 10~15분 · 10~15만동" },
+      { time: "01:20+1", at: "navy", text: "체크인 · 취침" },
+    ],
+  },
   2: {
     color: "#2f6fed",
     steps: [
-      { time: "00:10", at: "cxr", text: "T2 도착 · 입국·수하물 · T2 24시간 ATM 있음 (은행 미확인 — 수수료 화면 확인, 비싸면 Day2 모벤픽 VPBank에서)" },
-      { time: "01:00", at: "cxr", to: "navy", text: "Grab 예약 완료 (01:00 픽업) · 10~15분 · 10~15만동" },
-      { time: "01:15", at: "navy", text: "체크인 · 취침" },
       { time: "11:00", at: "navy", to: "westin", text: "Grab · ≈30분 · 25~30만동" },
       { time: "11:30", at: "westin", text: "도착 · 짐 맡기고 얼리 체크인 요청" },
       { time: "12:00", at: "westin", to: "atmMovenpick", text: "Grab ≈5분 · VPBank ATM 현금 출금 (예산 탭 추천액, 수수료 없음)" },
