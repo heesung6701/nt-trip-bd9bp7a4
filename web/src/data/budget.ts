@@ -28,7 +28,7 @@ export const BUDGET: BudgetLine[] = [
   { day: 3, title: "Grab 항구 → Westin", vnd: 500_000, pay: "트래블월렛", note: "Grab 앱" },
   { day: 3, title: "Westin 해산물 점심", vnd: 1_000_000, pay: "카드", note: "추정" },
   { day: 3, title: "Westin 저녁", vnd: 1_500_000, pay: "카드", note: "추정" },
-  { day: 3, title: "Westin 무료 공항 셔틀 → 공항 (21:20)", vnd: 0, pay: "카드", note: "무료 (Marriott 공식 표기, 요금은 예약 때 직원 재확인). Day2 체크인 때 21:20 하나만 예약 가능 — 24시간 전 안 하면 운행 취소. 21:20 놓치면 바로 Grab ≈15만동이 기본 (21:45편은 자리 있으면 탑승, 예약 불가·보장 아님). 레이트 체크아웃 거절 시 Haven Lounge 이용 가능 여부·요금 미확인 — 예산 별도" },
+  { day: 3, title: "Westin 무료 공항 셔틀 → 공항 (21:20)", vnd: 0, pay: "카드", note: "무료 (Marriott 표기), 21:20 예약 완료. 놓치면 Grab ≈15만동. Haven Lounge 유료 이용은 가격 미공개 — 예산 별도" },
   // 21:20 셔틀을 놓칠 때의 Grab ≈15만동은 최악 케이스라 별도 줄로 넣지 않고 위 셔틀 줄 note에만 둠(합계·현금 추천액에 섞이지 않게)
   { day: 3, title: "물·간식·팁 · 공항 간식", vnd: 400_000, pay: "현금" },
 ];

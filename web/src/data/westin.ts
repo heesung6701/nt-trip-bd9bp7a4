@@ -21,7 +21,7 @@ export const WESTIN_PLAY: Facility[] = [
   { name: "카약 · 바디보드 · SUP 대여", detail: "06~16시 · 워터 액티비티 센터 06~18시. 무료 카약 시간은 월·금 10~11시뿐 (무료 액티비티 참고)", price: "카약 1인 15만동++/시 · 2인 20만동++/시 · 바디보드 10만동++ · SUP 20만동++", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
   { name: "자전거 대여", detail: "06~17시", price: "10만동++/시 (≈5,500원)", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
   { name: "개인 강습 (요가·테니스·PT)", detail: "예약제", price: "80만동++/시 (≈4.4만원)", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
-  { name: "공항 셔틀", detail: "공항→리조트 10:45 · 리조트→공항 21:20, 21:45 (하나만 예약 가능 — Westin 문의 결과. 21:20 예약, 21:45는 자리 있으면 탑승·보장 아님) · 24시간 전 예약 필수(예약 없으면 운행 취소) · 요금은 예약 때 직원 재확인 · +84 258-3993888 내선 5410 · 출발 10분 전 픽업 장소 대기. 숙박일수 조건 표기 없음", price: "무료 (Complimentary)", src: `${M}/overview/` },
+  { name: "공항 셔틀", detail: "공항→리조트 10:45 · 리조트→공항 21:20, 21:45 (하나만 예약 가능) · 21:20 예약 완료 · 24시간 전 예약 필수 · +84 258-3993888 내선 5410 · 출발 10분 전 픽업 장소 대기. 숙박일수 조건 표기 없음", price: "무료 (Complimentary)", src: `${M}/overview/` },
   { name: "시내 셔틀 (나트랑 Gold Coast 몰)", detail: "Westin 안내 기준 — 리조트→시내 11:30 매일, 14:30 토·일 추가 / 시내→리조트 18:15 매일, 15:30 토·일 추가 · Day2=주말 시간표, Day3=평일 시간표 · 24시간 전 예약(Marriott 페이지 표기) · 시내 기사 연락 +84 915-499-601 · 요금·예약 필요 여부·소요시간(미확인, Grab 약 50분 기준 50분 안팎 추정)·11월 운행 여부는 안내에 없음 — 확인 필요 · 승·하차 장소는 GOLD COAST SHOPPING MALL (01 Tran Hung Dao Street, Loc Tho Ward, Nha Trang City, Westin 안내 기준, 실내 몰이라 비 올 때 대기·구경 가능)", price: "확인 필요", src: `${M}/overview/` },
   { name: "데이패스 · 데이유즈 룸", detail: "해변·수영장·피트니스·레크리에이션 낮 시간 이용 상품. 가격 Marriott 미표기", price: "미확인", src: `${M}/experiences/` },
   { name: "체크아웃 후 수영장·피트니스·샤워", detail: "Marriott에 정책 없음 (정규 체크아웃 12:00). 체크인 때 프런트에 문의", price: "—" },
