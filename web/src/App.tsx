@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge, Callout, Text } from "@seed-design/react";
 import { STAY_MOVES } from "./data/stayMoves";
 import { BUDGET, VND_PER_KRW, cashToWithdraw, type BudgetLine } from "./data/budget";
 import { RouteGraph } from "./RouteGraph";
+import { Slides } from "./Slides";
 import type { Activity, Day, Food, Item, TripData, WeatherDay } from "./types";
 import itinerary from "./data/itinerary.json";
 import "./App.css";
@@ -340,6 +341,14 @@ function App() {
   const data = itinerary as TripData;
   const [tab, setTab] = useState<TabId>("plan");
   const [dayIndex, setDayIndex] = useState(0);
+  // 브리핑 슬라이드: #slides 또는 로컬 사본 private/briefing.html로 열면 바로 슬라이드
+  const isSlides = () => location.hash.startsWith("#slides") || location.pathname.endsWith("briefing.html");
+  const [slides, setSlides] = useState(isSlides);
+  useEffect(() => {
+    const onHash = () => setSlides(isSlides());
+    addEventListener("hashchange", onHash);
+    return () => removeEventListener("hashchange", onHash);
+  }, []);
 
   const days = allDays(data);
   const rain = data.itinerary?.rain_alternatives ?? [];
@@ -348,6 +357,18 @@ function App() {
     setTab(id);
     window.scrollTo({ top: 0 });
   };
+
+  if (slides)
+    return (
+      <Slides
+        data={data}
+        days={days}
+        onExit={() => {
+          history.replaceState(null, "", location.pathname);
+          setSlides(false);
+        }}
+      />
+    );
 
   return (
     <>
@@ -358,6 +379,9 @@ function App() {
         <Text textStyle="t4Regular" color="fg.neutral-subtle">
           {data.trip.start} ~ {data.trip.end} · {data.trip.travelers}명
         </Text>
+        <a className="slides-link" href="#slides">
+          📽 브리핑
+        </a>
       </header>
 
       <main className="page">
