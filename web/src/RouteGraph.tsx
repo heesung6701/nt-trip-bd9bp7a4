@@ -39,7 +39,7 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
       { time: "11:00", at: "navy", to: "westin", text: "Grab · ≈30분 · 25~30만동" },
       { time: "11:30", at: "westin", text: "도착 · 짐 맡기고 얼리 체크인 요청" },
       { time: "12:00", at: "westin", to: "atmMovenpick", text: "Grab ≈5분 · VPBank ATM 현금 출금 (예산 탭 추천액, 수수료 없음)" },
-      { time: "12:20", at: "atmMovenpick", to: "westin", text: "Grab 복귀 → 점심 · 수영장 · 16:10 아내 가든 스파 120분 (Westin 200m 도보, 지도 노드 생략) · 해산물 저녁" },
+      { time: "12:20", at: "atmMovenpick", to: "westin", text: "Grab 복귀 → 점심 · 수영장 · 16:10 아내 가든 스파 120분 (Westin 200m 도보, 지도 노드 생략) · 그동안 남편 해변 산책 → 비치바 · 해산물 저녁" },
     ],
   },
   3: {

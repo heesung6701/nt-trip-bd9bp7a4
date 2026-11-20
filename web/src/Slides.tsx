@@ -89,7 +89,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
         ["11:00", "Grab으로 Westin (30분)"],
         ["12:00", "현금 뽑기 — 모벤픽 리조트 VPBank ATM (Grab 5분, 수수료 없음)"],
         ["13:00", "점심 후 수영장 · 비치 라운지"],
-        ["16:10", <><b>당신은 가든 스파 120분</b> · 나는 근처 구경 (다음 장)</>, true],
+        ["16:10", <><b>당신은 가든 스파 120분</b> · 나는 해변 산책 → 비치바 (다음 장)</>, true],
         ["19:00", "Westin 해산물 저녁"],
       ]} />
     </S>,
@@ -104,7 +104,10 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
         </div>
         <div className="card">
           <span className="tag">그동안 나는</span>
-          <p className="sub">근처 산책·일몰·카페 후보 조사 중 — 정리되면 여기 채움</p>
+          <p><b>16:10</b> 스파 앞 길로 150m → Bai Dai 해변 산책</p>
+          <p className="sub">17:15 일몰 — 해가 리조트 뒤로 져서 바다 노을빛</p>
+          <p><b>17:15</b> Westin 비치바(Hang Ten)에서 한 잔</p>
+          <p><b>18:10</b> 스파로 마중 → 같이 Westin 복귀</p>
         </div>
       </div>
       <p className="sub">⚠ 예약금 입금해야 확정 → <b>오늘 밤 카톡 예약</b> · 1인 가격도 같이 확인</p>
