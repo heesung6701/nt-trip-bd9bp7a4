@@ -440,7 +440,7 @@ function App() {
                 <StayRecommendations data={data} />
               </Section>
             )}
-            <Section title="JW 대안 호캉스 비교 (비 올 때)">
+            <Section title="Westin 대안 호캉스 비교 (비 올 때)">
               <Text textStyle="t4Regular" color="fg.neutral-subtle">
                 숙박비는 예약사이트 스냅샷(Day2 실요금 아님), 식당·스파는 후기·프로모션가 위주. 셀 아래 링크가 근거. 1 USD ≈ 1,400원, 1만동 ≈ 550원.
               </Text>

@@ -13,7 +13,7 @@ const NODES: Record<string, { label: string; kind: NodeKind; x: number; y: numbe
   ocean: { label: "해양학연구소", kind: "spot", x: 40, y: 150 },
   port: { label: "나트랑 항구", kind: "spot", x: 170, y: 150 },
   honmun: { label: "몬섬 해상", kind: "spot", x: 300, y: 110 },
-  jw: { label: "JW Marriott", kind: "stay", x: 150, y: 275 },
+  westin: { label: "Westin", kind: "stay", x: 150, y: 275 },
   cxr: { label: "깜라인 공항", kind: "airport", x: 260, y: 355 },
   navy: { label: "Navy Hotel", kind: "stay", x: 90, y: 410 },
 };
@@ -23,9 +23,9 @@ type NodeId = keyof typeof NODES;
 const MODE_ICON = { Grab: "🚕", 보트: "⛴️", 도보: "🚶" } as const;
 const EDGES: { a: NodeId; b: NodeId; km: string; min: string; mode: keyof typeof MODE_ICON; t?: number }[] = [
   { a: "cxr", b: "navy", km: "4~5km", min: "10~15분", mode: "Grab", t: 0.6 },
-  { a: "navy", b: "jw", km: "≈17km", min: "≈30분", mode: "Grab" },
-  { a: "jw", b: "cxr", km: "≈15km", min: "15~30분", mode: "Grab", t: 0.6 },
-  { a: "jw", b: "port", km: "≈35km", min: "≈50분", mode: "Grab" },
+  { a: "navy", b: "westin", km: "≈17km", min: "≈30분", mode: "Grab" },
+  { a: "westin", b: "cxr", km: "≈15km", min: "15~30분", mode: "Grab", t: 0.6 },
+  { a: "westin", b: "port", km: "≈35km", min: "≈50분", mode: "Grab" },
   { a: "port", b: "honmun", km: "≈10km", min: "≈30분", mode: "보트", t: 0.45 },
   // 우천 대안·미배정 장소
   { a: "port", b: "ocean", km: "≈0.5km", min: "≈5분", mode: "도보" },
@@ -43,19 +43,19 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
       { time: "00:10", at: "cxr", text: "T2 도착 · 입국·수하물" },
       { time: "00:50", at: "cxr", to: "navy", text: "Grab 사전 예약 (예정) · 10~15분 · 10~15만동" },
       { time: "01:05", at: "navy", text: "체크인 · 취침" },
-      { time: "11:00", at: "navy", to: "jw", text: "Grab · ≈30분 · 25~30만동" },
-      { time: "11:30", at: "jw", text: "얼리 체크인 요청 · 수영장 · 스파 · 해산물 저녁" },
+      { time: "11:00", at: "navy", to: "westin", text: "Grab · ≈30분 · 25~30만동" },
+      { time: "11:30", at: "westin", text: "얼리 체크인 요청 · 수영장 · 스파 · 해산물 저녁" },
     ],
   },
   3: {
     color: "#f26b1d",
     steps: [
-      { time: "~08:00", at: "jw", to: "port", text: "Grab ≈50분 · 일정표에 없음 — 보트 투어 픽업 포함인지 확인" },
+      { time: "~08:00", at: "westin", to: "port", text: "Grab ≈50분 · 일정표에 없음 — 보트 투어 픽업 포함인지 확인" },
       { time: "09:00", at: "port", to: "honmun", text: "선상 관광 보트 (입수 없음)" },
       { time: "~12:30", at: "honmun", to: "port", text: "귀항" },
-      { time: "13:00", at: "port", to: "jw", text: "Grab ≈50분" },
-      { time: "14:00", at: "jw", text: "해산물 점심 · 16:00 레이트 체크아웃 · 저녁" },
-      { time: "20:00", at: "jw", to: "cxr", text: "Grab 사전 예약 · 15~30분" },
+      { time: "13:00", at: "port", to: "westin", text: "Grab ≈50분" },
+      { time: "14:00", at: "westin", text: "해산물 점심 · 16:00 레이트 체크아웃 · 저녁" },
+      { time: "20:00", at: "westin", to: "cxr", text: "Grab 사전 예약 · 15~30분" },
     ],
   },
   4: { color: "#8b5cf6", steps: [{ time: "00:30", at: "cxr", text: "출국 (현지 시각)" }] },

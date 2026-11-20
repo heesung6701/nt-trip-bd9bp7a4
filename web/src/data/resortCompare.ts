@@ -1,4 +1,4 @@
-// JW 대안 호캉스 비교 (2026년 11월 09일 검색). 1 USD ≈ 1,400원, 1만동 ≈ 550원.
+// 호캉스 비교 (현재 예약: Westin) (2026년 11월 09일 검색). 1 USD ≈ 1,400원, 1만동 ≈ 550원.
 // 숙박비는 예약사이트 스냅샷(Day2 실요금 아님), 식당·스파는 후기·프로모션가 위주 — 예약 전 재확인.
 
 export interface Src {
@@ -26,7 +26,7 @@ const CAMRANH_LOCAL = "Grab 필요. 근처 Himalaya 60분 47만동(≈2.6만원)
 
 export const RESORTS: ResortRow[] = [
   {
-    name: "JW Marriott Cam Ranh (현재 예약)",
+    name: "JW Marriott Cam Ranh",
     marriott: true,
     room: {
       t: "$210~245 ≈ 29~34만원",
@@ -50,7 +50,7 @@ export const RESORTS: ResortRow[] = [
     rain: { t: "리조트 단지 고립 → 비 오면 리조트 가격으로 갇힘" },
   },
   {
-    name: "Westin Cam Ranh",
+    name: "Westin Cam Ranh (현재 예약)",
     marriott: true,
     room: {
       t: "$99~141 ≈ 14~20만원",
