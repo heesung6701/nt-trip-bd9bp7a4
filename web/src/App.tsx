@@ -4,6 +4,7 @@ import { STAY_MOVES } from "./data/stayMoves";
 import { BUDGET, VND_PER_KRW, cashToWithdraw, type BudgetLine } from "./data/budget";
 import { WESTIN_EAT, WESTIN_PLAY, WESTIN_TAX_NOTE, type Facility } from "./data/westin";
 import { RouteGraph } from "./RouteGraph";
+import { SightMap } from "./SightMap";
 import { Slides } from "./Slides";
 import type { Activity, Day, Food, Item, TripData, WeatherDay } from "./types";
 import itinerary from "./data/itinerary.json";
@@ -528,6 +529,10 @@ function App() {
 
         {tab === "move" && (
           <>
+            <details className="section fold" open>
+              <summary>🏛 관광지도</summary>
+              <SightMap />
+            </details>
             <DayTabs days={days} value={dayIndex} onChange={setDayIndex} />
             <section className="section">
               <RouteGraph dayNo={dayIndex + 1} />
