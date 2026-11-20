@@ -2,7 +2,7 @@
 // 북쪽이면 위(y 작음), 동쪽이면 오른쪽(x 큼).
 import { NODES } from "./routeNodes.ts";
 
-// ponytail: 0.005°(≈550m) 미만 차이는 같은 위치로 봄 — 붙어 있는 항구·연구소·Westin·공항 경도까지 줄 세우면 배치 불가
+// ponytail: 0.005°(≈550m) 미만 차이는 같은 위치로 봄 — 붙어 있는 Westin·ATM·공항 경도까지 줄 세우면 배치 불가
 const TOL = 0.005;
 const list = Object.entries(NODES);
 const bad = [];

@@ -10,22 +10,15 @@ const ICON: Record<NodeKind, string> = { airport: "✈️", stay: "🏨", spot: 
 type NodeId = keyof typeof NODES;
 
 // 교통수단은 아이콘으로 — 라벨에 거리·시간까지 넣으면 길어서
-const MODE_ICON = { Grab: "🚕", 셔틀: "🚐", 보트: "⛴️", 도보: "🚶" } as const;
-// cost = Grab 4인승 1대 요금(2인 합계), stayMoves·budget.ts와 같은 추정치. 보트는 투어 요금에 포함, 셔틀은 Westin 무료(탑승 못 하면 Grab ≈15만동)
+const MODE_ICON = { Grab: "🚕", 셔틀: "🚐" } as const;
+// cost = Grab 4인승 1대 요금(2인 합계), stayMoves·budget.ts와 같은 추정치. 셔틀은 Westin 무료(탑승 못 하면 Grab ≈15만동)
 // navy↔westin·westin↔cxr 거리는 OSRM 도로 경로(OSM 좌표) 기준, westin↔cxr 시간은 OSRM 9분에 여유 둔 값
 const EDGES: { a: NodeId; b: NodeId; km: string; min: string; cost: string; mode: keyof typeof MODE_ICON; t?: number }[] = [
   { a: "cxr", b: "navy", km: "4~5km", min: "10~15분", cost: "10~15만동", mode: "Grab", t: 0.6 },
   { a: "navy", b: "westin", km: "≈8.7km", min: "10~15분", cost: "10~20만동", mode: "Grab" },
   { a: "westin", b: "cxr", km: "≈7km", min: "15~30분", cost: "무료", mode: "셔틀", t: 0.6 },
-  { a: "westin", b: "port", km: "≈35km", min: "≈50분", cost: "≈50만동", mode: "Grab" },
-  { a: "port", b: "honmun", km: "≈10km", min: "≈30분", cost: "투어 포함", mode: "보트" },
   // ATM — VPBank는 외국 카드 출금 수수료 없음(2026 블로그 기준). 공항 T2 24시간 ATM은 은행 미확인이라 노드 없음
   { a: "westin", b: "atmMovenpick", km: "≈1.5km", min: "≈5분", cost: "≈5만동", mode: "Grab" },
-  { a: "port", b: "atmVinmec", km: "≈0.9km", min: "≈12분", cost: "무료", mode: "도보", t: 0.4 },
-  // 우천 대안·미배정 장소
-  { a: "port", b: "ocean", km: "≈0.5km", min: "≈5분", cost: "무료", mode: "도보", t: 0.45 },
-  { a: "port", b: "honchong", km: "≈8km", min: "≈20분", cost: "≈10만동", mode: "Grab", t: 0.65 },
-  { a: "honchong", b: "thapba", km: "≈4.1km", min: "≈8분", cost: "≈5만동", mode: "Grab" },
 ];
 const edgeKey = (a: string, b: string) => [a, b].sort().join("-");
 
@@ -52,11 +45,9 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
   3: {
     color: "#f26b1d",
     steps: [
-      { time: "07:45", at: "westin", to: "port", text: "Grab ≈50분 · 투어 픽업 포함이면 생략 · 투어사 집결 시각 확인" },
-      { time: "09:00", at: "port", to: "honmun", text: "선상 관광 보트 (몸 잠기는 입수 없음)" },
-      { time: "13:00", at: "honmun", to: "port", text: "귀항 (실제 상품 귀항 시각 확인 필요)" },
-      { time: "13:10", at: "port", to: "westin", text: "Grab ≈50분 → 14:00 Westin" },
-      { time: "14:00", at: "westin", text: "해산물 점심 · 레이트 체크아웃 16:00까지 가능 (공실 시, 보장 아님 — 07:40까지 못 받으면 보트 전 체크아웃·짐 보관) · 저녁" },
+      { time: "08:00", at: "westin", text: "조식 · 서두르지 않음 · 프런트에 레이트 체크아웃 16:00 요청 (공실 시, 보장 아님 — 안 되면 12:00 체크아웃·짐 보관)" },
+      { time: "09:30", at: "westin", text: "수영장 · 해변 물가 발 담그기(발목 아래, W) · 비치발리볼·프리스비 (상시 무료) · 원하면 10~11시 카약 (프런트 예약)" },
+      { time: "12:30", at: "westin", text: "해산물 점심 · 오후 휴식 · 해변 발 담그기 · 저녁 · 비 오면 Haven Lounge·스파 등 리조트 실내" },
       { time: "21:20", at: "westin", to: "cxr", text: "Westin 공항 셔틀 (예약 완료, 21:10 픽업 장소 대기) · 15~30분 · 21:50쯤 도착 — 놓치면 바로 Grab (≈15만동)" },
       { time: "00:30+1", at: "cxr", text: "출국 (현지 시각) — 새벽이라 이날 일정으로 표시" },
     ],
@@ -83,7 +74,7 @@ export function RouteGraph({ dayNo }: { dayNo: number }) {
 
   return (
     <div className="route-graph">
-      <svg viewBox="0 0 400 470" role="img" aria-label={`Day ${dayNo} 이동 그래프`}>
+      <svg viewBox="0 0 400 270" role="img" aria-label={`Day ${dayNo} 이동 그래프`}>
         <defs>
           <marker id={arrow} viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" fill={route.color} />
@@ -144,7 +135,7 @@ export function RouteGraph({ dayNo }: { dayNo: number }) {
         </ol>
       )}
       <Text textStyle="t4Regular" color="fg.neutral-subtle">
-        간선 = 순서 · 소요시간 · 요금(2인 1대) / 거리 · 화살표 = 이동 방향 (🚕 Grab ⛴️ 보트 🚶 도보 · 🏧 VPBank ATM 수수료 없음) · 개략도(실제 지도 아님) · 거리·시간·요금은 추정 · 점선 회색 = 이날 안 가는 곳(우천 대안 포함)
+        간선 = 순서 · 소요시간 · 요금(2인 1대) / 거리 · 화살표 = 이동 방향 (🚕 Grab 🚐 셔틀 · 🏧 VPBank ATM 수수료 없음) · 개략도(실제 지도 아님) · 거리·시간·요금은 추정 · 점선 회색 = 이날 안 가는 곳(우천 대안 포함)
       </Text>
     </div>
   );

@@ -4,7 +4,6 @@ import { STAY_MOVES } from "./data/stayMoves";
 import { BUDGET, VND_PER_KRW, cashToWithdraw, walletToCharge, type BudgetLine } from "./data/budget";
 import { WESTIN_EAT, WESTIN_PLAY, WESTIN_TAX_NOTE, type Facility } from "./data/westin";
 import { RouteGraph } from "./RouteGraph";
-import { SightMap } from "./SightMap";
 import { Slides } from "./Slides";
 import type { Activity, Day, Food, Item, TripData, WeatherDay } from "./types";
 import itinerary from "./data/itinerary.json";
@@ -258,7 +257,7 @@ function BudgetTab({ days, travelers }: { days: Day[]; travelers: number }) {
           💵 현금 {vnd(withdraw)} 출금 (≈{krw(withdraw)}) + 👛 트래블월렛 {vnd(charge)} 충전 (≈{krw(charge)}) = 환전 {vnd(withdraw + charge)} (≈{krw(withdraw + charge)})
         </Text>
         <Text textStyle="t4Regular" color="fg.neutral-subtle">
-          💵 현금성 {vnd(cash)} + 여유 20% · 👛 트래블월렛(Grab) {vnd(wallet)} + 여유 20% · 💳 카드 {vnd(total - cash - wallet)} → 환전 불필요 (Westin 룸차지·보트 사전결제. 숙박·항공도 카드, 이 예산엔 미포함) · VPBank ATM 외국 카드 수수료 없음, 1회 한도 500만~1,000만동 (2026 블로그 기준) — Westin 근처는 모벤픽 리조트 안, 항구 근처는 Vinmec
+          💵 현금성 {vnd(cash)} + 여유 20% · 👛 트래블월렛(Grab) {vnd(wallet)} + 여유 20% · 💳 카드 {vnd(total - cash - wallet)} → 환전 불필요 (Westin 룸차지. 숙박·항공도 카드, 이 예산엔 미포함) · VPBank ATM 외국 카드 수수료 없음, 1회 한도 500만~1,000만동 (2026 블로그 기준) — Westin 근처는 모벤픽 리조트 안
         </Text>
         <Text textStyle="t4Regular" color="fg.neutral-subtle">
           {travelers}명 합계 {vnd(total)} ≈ {krw(total)} · 1인 ≈ {krw(total / travelers)} (숙박·항공 제외) · 1만동 ≈ 550원
@@ -548,10 +547,6 @@ function App() {
 
         {tab === "move" && (
           <>
-            <details className="section fold" open>
-              <summary>🏛 관광지도</summary>
-              <SightMap />
-            </details>
             <DayTabs days={days} value={dayIndex} onChange={setDayIndex} />
             <section className="section">
               <RouteGraph dayNo={dayIndex + 1} />

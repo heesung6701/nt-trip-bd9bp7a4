@@ -1,6 +1,6 @@
 // 날짜별 현지 지출 예산 (2인 합계, 동). 환전·ATM 출금액 잡는 용도.
 // 날짜 대신 Day 번호 — deploy.sh 마스킹은 itinerary.json만 처리. 숙박비(예약 결제분)·항공 제외.
-// Grab은 RouteGraph EDGES와 같은 추정치, 스파·보트·입장료는 researcher 조사(2026-11-20), 식사는 후기 기반 추정.
+// Grab은 RouteGraph EDGES와 같은 추정치, 스파는 researcher 조사(2026-11-20), 식사는 후기 기반 추정.
 export const VND_PER_KRW = 10000 / 550; // 1만동 ≈ 550원
 
 export type Pay = "현금" | "트래블월렛" | "카드";
@@ -22,10 +22,6 @@ export const BUDGET: BudgetLine[] = [
   { day: 2, title: "M 비치바 한 잔 (스파 대기)", vnd: 200_000, pay: "카드", note: "Westin Hang Ten·Haven Lounge 가격 미공개 — 리조트 칵테일 세금 포함 추정. 할인 미적용 가정(Bonvoy 베트남 F&B 등급 할인은 약관상 미확인, 호텔 자체 할인 확인 필요)" },
   { day: 2, title: "Westin 해산물 저녁", vnd: 1_500_000, pay: "카드", note: "추정 (60만동++는 Verandah Hot Pot Night 세트(금·토만) 가격이라 일·월 저녁엔 해당 없음, 뷔페 가격은 Marriott 공식에 없음) · 세금·봉사료 별도" },
   { day: 2, title: "물·간식·잔돈 팁", vnd: 200_000, pay: "현금" },
-  { day: 3, title: "Grab Westin → 나트랑 항구", vnd: 500_000, pay: "트래블월렛", note: "보트 투어 픽업 포함이면 0" },
-  { day: 3, title: "선상 관광 보트 × 2", vnd: 1_300_000, pay: "카드", note: "OTA 사전 결제 (Klook $24.7/인~). 혼문 핵심구역 폐쇄 보도(2025.8) — 정박 여부 운영사 확인" },
-  { day: 3, title: "나트랑 만 입장료 (혼문) × 2", vnd: 20_000, pay: "현금", note: "2025.9.25부터 1회 1만동, 항구 현장 결제 추정" },
-  { day: 3, title: "Grab 항구 → Westin", vnd: 500_000, pay: "트래블월렛", note: "Grab 앱" },
   { day: 3, title: "Westin 해산물 점심", vnd: 1_000_000, pay: "카드", note: "추정" },
   { day: 3, title: "Westin 저녁", vnd: 1_500_000, pay: "카드", note: "추정" },
   { day: 3, title: "Westin 무료 공항 셔틀 → 공항 (21:20)", vnd: 0, pay: "카드", note: "무료 (Marriott 표기), 21:20 예약 완료. 놓치면 Grab ≈15만동. Haven Lounge 유료 이용은 가격 미공개 — 예산 별도" },
