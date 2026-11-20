@@ -10,16 +10,17 @@ type NodeId = keyof typeof NODES;
 
 // 교통수단은 아이콘으로 — 라벨에 거리·시간까지 넣으면 길어서
 const MODE_ICON = { Grab: "🚕", 보트: "⛴️", 도보: "🚶" } as const;
-const EDGES: { a: NodeId; b: NodeId; km: string; min: string; mode: keyof typeof MODE_ICON; t?: number }[] = [
-  { a: "cxr", b: "navy", km: "4~5km", min: "10~15분", mode: "Grab", t: 0.6 },
-  { a: "navy", b: "westin", km: "≈17km", min: "≈30분", mode: "Grab" },
-  { a: "westin", b: "cxr", km: "≈15km", min: "15~30분", mode: "Grab", t: 0.6 },
-  { a: "westin", b: "port", km: "≈35km", min: "≈50분", mode: "Grab" },
-  { a: "port", b: "honmun", km: "≈10km", min: "≈30분", mode: "보트" },
+// cost = Grab 4인승 1대 요금(2인 합계), stayMoves·budget.ts와 같은 추정치. 보트는 투어 요금에 포함
+const EDGES: { a: NodeId; b: NodeId; km: string; min: string; cost: string; mode: keyof typeof MODE_ICON; t?: number }[] = [
+  { a: "cxr", b: "navy", km: "4~5km", min: "10~15분", cost: "10~15만동", mode: "Grab", t: 0.6 },
+  { a: "navy", b: "westin", km: "≈17km", min: "≈30분", cost: "25~30만동", mode: "Grab" },
+  { a: "westin", b: "cxr", km: "≈15km", min: "15~30분", cost: "≈25만동", mode: "Grab", t: 0.6 },
+  { a: "westin", b: "port", km: "≈35km", min: "≈50분", cost: "≈50만동", mode: "Grab" },
+  { a: "port", b: "honmun", km: "≈10km", min: "≈30분", cost: "투어 포함", mode: "보트" },
   // 우천 대안·미배정 장소
-  { a: "port", b: "ocean", km: "≈0.5km", min: "≈5분", mode: "도보", t: 0.45 },
-  { a: "port", b: "honchong", km: "≈8km", min: "≈20분", mode: "Grab", t: 0.65 },
-  { a: "honchong", b: "thapba", km: "≈3km", min: "≈10분", mode: "Grab" },
+  { a: "port", b: "ocean", km: "≈0.5km", min: "≈5분", cost: "무료", mode: "도보", t: 0.45 },
+  { a: "port", b: "honchong", km: "≈8km", min: "≈20분", cost: "≈10만동", mode: "Grab", t: 0.65 },
+  { a: "honchong", b: "thapba", km: "≈3km", min: "≈10분", cost: "≈5만동", mode: "Grab" },
 ];
 const edgeKey = (a: string, b: string) => [a, b].sort().join("-");
 
@@ -30,8 +31,8 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
     color: "#2f6fed",
     steps: [
       { time: "00:10", at: "cxr", text: "T2 도착 · 입국·수하물" },
-      { time: "00:50", at: "cxr", to: "navy", text: "Grab 사전 예약 (예정) · 10~15분 · 10~15만동" },
-      { time: "01:05", at: "navy", text: "체크인 · 취침" },
+      { time: "01:00", at: "cxr", to: "navy", text: "Grab 예약 완료 (01:00 픽업) · 10~15분 · 10~15만동" },
+      { time: "01:15", at: "navy", text: "체크인 · 취침" },
       { time: "11:00", at: "navy", to: "westin", text: "Grab · ≈30분 · 25~30만동" },
       { time: "11:30", at: "westin", text: "얼리 체크인 요청 · 수영장 · 16:10 가든 스파 120분 (Westin 근처, 좌표 없어 노드 없음) · 해산물 저녁" },
     ],
@@ -57,28 +58,45 @@ export function RouteGraph({ dayNo }: { dayNo: number }) {
   const route = ROUTES[dayNo] ?? { color: GRAY, steps: [] };
   const visited = new Set<string>(route.steps.flatMap((s) => (s.to ? [s.at, s.to] : [s.at])));
   const stepNos = new Map<string, number[]>();
+  const dirs = new Map<string, Set<"fwd" | "back">>(); // 간선 a→b 방향 = fwd
   route.steps.forEach((s, i) => {
     if (!s.to) return;
     const k = edgeKey(s.at, s.to);
     stepNos.set(k, [...(stepNos.get(k) ?? []), i + 1]);
+    const e = EDGES.find((e) => edgeKey(e.a, e.b) === k);
+    dirs.set(k, (dirs.get(k) ?? new Set()).add(e?.a === s.at ? "fwd" : "back"));
   });
+  const arrow = `arrow-${dayNo}`;
 
   return (
     <div className="route-graph">
       <svg viewBox="0 0 400 470" role="img" aria-label={`Day ${dayNo} 이동 그래프`}>
+        <defs>
+          <marker id={arrow} viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill={route.color} />
+          </marker>
+        </defs>
         {EDGES.map((e) => {
           const A = NODES[e.a], B = NODES[e.b];
-          const nos = stepNos.get(edgeKey(e.a, e.b));
+          const k = edgeKey(e.a, e.b);
+          const nos = stepNos.get(k);
           const on = !!nos;
-          const label = `${on ? nos.map(circled).join("") + " " : ""}${MODE_ICON[e.mode]} ${e.km} · ${e.min}`;
+          const d = dirs.get(k);
+          // 화살촉이 노드 원(r=17)에 가리지 않게 양끝을 20px 줄임
+          const len = Math.hypot(B.x - A.x, B.y - A.y), ux = (B.x - A.x) / len, uy = (B.y - A.y) / len;
+          const cut = on ? 20 : 0;
           const t = e.t ?? 0.5; // 라벨 위치(간선 위 비율) — 노드와 겹치면 조정
           const mx = A.x + (B.x - A.x) * t, my = A.y + (B.y - A.y) * t;
           return (
-            <g key={edgeKey(e.a, e.b)}>
-              <line x1={A.x} y1={A.y} x2={B.x} y2={B.y} stroke={on ? route.color : GRAY} strokeWidth={on ? 4 : 2}
-                strokeDasharray={on ? undefined : "5 4"} strokeLinecap="round" />
+            <g key={k}>
+              <line x1={A.x + ux * cut} y1={A.y + uy * cut} x2={B.x - ux * cut} y2={B.y - uy * cut}
+                stroke={on ? route.color : GRAY} strokeWidth={on ? 4 : 2}
+                strokeDasharray={on ? undefined : "5 4"} strokeLinecap="round"
+                markerEnd={d?.has("fwd") ? `url(#${arrow})` : undefined}
+                markerStart={d?.has("back") ? `url(#${arrow})` : undefined} />
               <text x={mx} y={my} className={on ? "edge-label on" : "edge-label"} fill={on ? route.color : "#8a919c"}>
-                {label}
+                <tspan x={mx}>{nos && nos.map(circled).join("") + " "}{MODE_ICON[e.mode]} {e.min} · {e.cost}</tspan>
+                <tspan x={mx} dy="1.2em">{e.km}</tspan>
               </text>
             </g>
           );
@@ -113,7 +131,7 @@ export function RouteGraph({ dayNo }: { dayNo: number }) {
         </ol>
       )}
       <Text textStyle="t4Regular" color="fg.neutral-subtle">
-        간선 = 거리 · 소요시간 (🚕 Grab ⛴️ 보트 🚶 도보) · 개략도(실제 지도 아님) · 거리·시간은 추정 · 점선 회색 = 이날 안 가는 곳(우천 대안 포함)
+        간선 = 순서 · 소요시간 · 요금(2인 1대) / 거리 · 화살표 = 이동 방향 (🚕 Grab ⛴️ 보트 🚶 도보) · 개략도(실제 지도 아님) · 거리·시간·요금은 추정 · 점선 회색 = 이날 안 가는 곳(우천 대안 포함)
       </Text>
     </div>
   );
