@@ -30,7 +30,7 @@ const OSM = (way: string) => `OSM ${way}`;
 
 export const SIGHTS: Sight[] = [
   { id: "thapba", label: "Thap Ba 온천 머드 스파", kind: "spa", status: "rain", lat: NODES.thapba.lat, lon: NODES.thapba.lon,
-    info: "온천 탕(바닷물 아님) · 약 120분 · 약 30,000원(추정) · Day3 오전, 우천+보트 취소 시 대안(기본 일정 아님) · 입욕 여부 확인 필요, 확정 전엔 족욕·실내 시설만 · 몰에서 도로 약 5.6km·10분",
+    info: "온천 탕(바닷물 아님) · 약 120분 · 약 30,000원(추정) · Day3 오전, 우천+보트 취소 시 대안(기본 일정 아님) · 온천 탕 입욕 가능(바닷물 아님) · 몰에서 도로 약 5.6km·10분",
     src: OSM("way 397966701 Bùn khoáng Tháp Bà") },
   { id: "ponagar", label: "뽀나가르 참탑", kind: "sight", status: "sun", lat: 12.2653884, lon: 109.1951777,
     info: "약 3만동≈1,650원 · 06:00~18:00 (10~12월 17:30 마감 출처 있음) · 45~60분(소요 추정 60) · 무릎·어깨 가리는 복장 · 몰에서 도로 약 3.1km·5분",
