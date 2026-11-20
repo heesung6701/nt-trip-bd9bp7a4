@@ -28,7 +28,7 @@ export const BUDGET: BudgetLine[] = [
   { day: 3, title: "Grab 항구 → Westin", vnd: 500_000, pay: "카드", note: "Grab 앱" },
   { day: 3, title: "Westin 해산물 점심", vnd: 1_000_000, pay: "카드", note: "추정" },
   { day: 3, title: "Westin 저녁", vnd: 1_500_000, pay: "카드", note: "추정" },
-  { day: 3, title: "Westin 무료 공항 셔틀 → 공항 (21:20)", vnd: 0, pay: "카드", note: "무료 (Marriott 공식). Day2 체크인 때 프런트 예약 — 24시간 전 안 하면 운행 취소. 탑승 못 하면 21:45편 기다리지 말고 바로 Grab ≈15만동 (대체)" },
+  { day: 3, title: "Westin 무료 공항 셔틀 → 공항 (21:20)", vnd: 0, pay: "카드", note: "무료 (Marriott 공식). Day2 체크인 때 프런트 예약 — 24시간 전 안 하면 운행 취소. 탑승 못 하면 21:45편 기다리지 말고 바로 Grab ≈15만동 (대체). 레이트 체크아웃 거절 시 Haven Lounge 유료 이용은 가격 미공개 — 예산 별도" },
   { day: 3, title: "물·간식·팁 · 공항 간식", vnd: 400_000, pay: "현금" },
 ];
 

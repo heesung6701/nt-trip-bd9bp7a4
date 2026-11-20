@@ -18,7 +18,7 @@ export const STAY_MOVES: (Item & { day: number })[] = [
   { day: 2, start: "10:45", end: "11:00", title: "Navy Hotel 체크아웃 (정규 12:00, 조식 포함)", kind: "숙소", place: "Navy Hotel Cam Ranh", cost_krw: 0 },
   { day: 2, start: "11:00", end: "11:30", title: "Navy → Westin (약 8.7km, 10~15분 · 호출·대기 포함 30분 잡음, 10~20만동)", kind: "이동", place: "Grab", cost_krw: 11000 },
   { day: 2, start: "11:30", end: "11:45", title: "Westin 도착 · 짐 맡기고 얼리 체크인 요청 (Platinum 보장 혜택 아님, 공실 시) — 안 되면 바로 수영장으로 · 레이트 체크아웃 16:00 가능 여부, 체크아웃 후 시설 이용·샤워 가능 여부(Marriott 미표기)도 이때 확인 · Day3 21:20 무료 공항 셔틀 프런트 예약 (24시간 전 필수, 안 하면 운행 취소 · 내선 5410) — 픽업 장소도 확인", kind: "숙소", place: "The Westin Resort & Spa Cam Ranh", cost_krw: 0 },
-  { day: 2, start: "12:00", end: "12:35", title: "Westin ↔ 모벤픽 리조트 VPBank ATM 왕복 (1.5km, 편도 ≈5만동) — 현금 출금 (예산 탭 추천액), 외국 카드 수수료 없음. 비숙박객 출입 가능한지 프런트 확인", kind: "이동", place: "VPBank ATM (Movenpick Cam Ranh)", cost_krw: 5500 },
+  { day: 2, start: "12:00", end: "12:35", title: "Westin ↔ 모벤픽 리조트 VPBank ATM 왕복 (1.5km, 편도 ≈5만동 · 왕복 10만동) — 현금 출금 (예산 탭 추천액), 외국 카드 수수료 없음. 비숙박객 출입 가능한지 프런트 확인", kind: "이동", place: "VPBank ATM (Movenpick Cam Ranh)", cost_krw: 5500 },
   { day: 2, start: "15:00", end: "15:10", title: "얼리 체크인 실패 시: 정규 체크인 15:00 — 수영장 중간에 프런트에서 키 받기", kind: "숙소", place: "The Westin Resort & Spa Cam Ranh", cost_krw: 0 },
   { day: 3, start: "06:45", end: "07:25", title: "조식 (The Verandah 06:30~10:30, 투숙객 포함 표기)", kind: "숙소", place: "The Westin Resort & Spa Cam Ranh", cost_krw: 0 },
   { day: 3, start: "07:25", end: "07:40", title: "07:40까지 레이트 체크아웃 승인 못 받으면 체크아웃 (정규 12:00인데 Westin 복귀 14:00이라 못 맞춤) · 짐 프런트 보관 (체크아웃 후 시설 이용 가능 여부 Day2 체크인 때 확인) · 21:20 공항 셔틀 예약 재확인", kind: "숙소", place: "The Westin Resort & Spa Cam Ranh", cost_krw: 0 },
