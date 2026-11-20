@@ -122,7 +122,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
         <div className="card">
           <span className="tag sun">16:10 ~ 18:10</span>
           <p>허브찜질 포함 전신 120분</p>
-          <p><b>84만동~93만동 ($36)</b> · 가격 확인 필요(카톡 문의) · 팁 약 10만동 · 현금</p>
+          <p><b>140만동 ($60)</b> · 팁 약 10만동 · 현금</p>
           <p className="sub">Westin에서 200m — 걸어서 3분</p>
           <p className="sub">영업 10~22시 · 카톡 "가든스파 깜란"</p>
         </div>
@@ -181,7 +181,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
         <li className="done">숙소 2곳 확정</li>
         <li>Westin 레이트 체크아웃 16시 요청 — Bonvoy 앱 채팅 (방 있으면만 · 안 되면 {d(3)} 아침 체크아웃·짐 보관)</li>
         <li className="done">공항 → Navy Grab 01:00 예약</li>
-        <li><b>가든 스파 카톡 예약 + 예약금</b> (1인 예약 · 1인 가격 확인)</li>
+        <li><b>가든 스파 카톡 예약 + 예약금</b> (1인 예약)</li>
         <li>eSIM 설치 · 사전입국신고 QR(도착 72시간 전부터 등록) · 여권</li>
         <li>선크림 · 우산/우비 · 220V 그대로</li>
       </ul>
