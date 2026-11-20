@@ -243,7 +243,7 @@ function BudgetTab({ days, travelers }: { days: Day[]; travelers: number }) {
           현금 {vnd(withdraw)} 출금 추천 (≈{krw(withdraw)})
         </Text>
         <Text textStyle="t4Regular" color="fg.neutral-subtle">
-          현금 예상 {vnd(cash)} + 여유 20% · 카드(트래블카드·Grab 앱) {vnd(total - cash)} · VPBank ATM 1회 500만동 이하 수수료 없음 (2025 후기 기준, 현장 확인)
+          현금 예상 {vnd(cash)} + 여유 20% · 카드(트래블카드·Grab 앱) {vnd(total - cash)} · VPBank ATM 외국 카드 수수료 없음, 1회 한도 500만~1,000만동 (2026 블로그 기준) — Westin 근처는 모벤픽 리조트 안, 항구 근처는 Vinmec
         </Text>
         <Text textStyle="t4Regular" color="fg.neutral-subtle">
           {travelers}명 합계 {vnd(total)} ≈ {krw(total)} · 1인 ≈ {krw(total / travelers)} (숙박·항공 제외) · 1만동 ≈ 550원
