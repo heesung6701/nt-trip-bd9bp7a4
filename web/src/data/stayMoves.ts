@@ -4,7 +4,7 @@ import type { Item } from "../types";
 // 시각은 현지 기준. 요금은 Grab 4인승 추정(1만동 ≈ 550원).
 export const STAY_MOVES: (Item & { day: number })[] = [
   // Day1 = 현지 도착~숙소 입실까지 한 밤. 현지 시각(KST-2h), 자정 넘으면 24:xx로 적어 정렬 유지 (화면엔 "+1")
-  { day: 1, start: "24:10", end: "24:25", title: "깜라인 T2 도착 · eSIM 데이터 켜기", kind: "이동", place: "깜라인 공항 CXR T2", cost_krw: 0 },
+  { day: 1, start: "24:10", end: "24:25", title: "깜라인 T2 도착", kind: "이동", place: "깜라인 공항 CXR T2", cost_krw: 0 },
   { day: 1, start: "24:25", end: "25:00", title: "패스트트랙으로 이동 → 안 되면 일반 입국심사", kind: "이동", place: "깜라인 공항 CXR T2", cost_krw: 0 },
   { day: 1, start: "25:00", end: "25:05", title: "입국장 출구에서 Grab 기사 만나기 (01:00 예약)", kind: "이동", place: "깜라인 공항 CXR T2", cost_krw: 0 },
   { day: 1, start: "25:05", end: "25:20", title: "Grab → Navy Hotel (4~5km, 10~15분, 10~15만동)", kind: "이동", place: "Grab (예약 완료)", cost_krw: 7000 },
