@@ -56,7 +56,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
       <div className="grid g4">
         <div className="card"><span className="tag">{d(1)}</span><b className="big">출발</b><p>{hm(out.depart)} 인천 출발 (KST)</p><p className="sub">현지 00:10 도착</p></div>
         <div className="card"><span className="tag sun">{d(2)}</span><b className="big">리조트 + 스파</b><p>Navy에서 자고 → Westin</p><p>수영장 · <b>가든 스파</b> · 해산물 저녁</p></div>
-        <div className="card"><span className="tag leaf">{d(3)}</span><b className="big">보트 + 늦은 체크아웃</b><p>오전 보트 (입수 없음)</p><p>16시까지 방 쓰기 → 저녁 → 공항</p></div>
+        <div className="card"><span className="tag leaf">{d(3)}</span><b className="big">보트 + 늦은 체크아웃</b><p>오전 보트 (입수 없음)</p><p>16시까지 방 쓰기 (방 있으면) → 저녁 → 공항</p></div>
         <div className="card"><span className="tag">{d(4)}</span><b className="big">귀국</b><p>현지 00:30 출발</p><p className="sub">인천 {hm(back.arrive)} 도착</p></div>
       </div>
     </S>,
@@ -75,7 +75,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
           <p><b>① Navy Hotel Cam Ranh</b> — 잠만 자는 곳</p>
           <p className="sub">공항 5분 · 새벽 도착이라 {d(1)}로 예약 · 조식 포함</p>
           <p><b>② Westin Resort &amp; Spa Cam Ranh</b> — 메인</p>
-          <p className="sub">{d(2)} 오전 도착 · <b>레이트 체크아웃 16시 확정</b> · 짐 맡기고 저녁까지 리조트</p>
+          <p className="sub">{d(2)} 오전 도착 · <b>레이트 체크아웃 16시는 방 있으면</b> (보장 아님) · 짐 맡기고 저녁까지 리조트</p>
           <p className="sub">얼리 체크인은 요청만 (방 있으면)</p>
         </div>
       </div>
@@ -86,7 +86,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
         ["01:00", <>Grab 기사님 만나기 (<b>예약 완료</b>) → Navy Hotel 15분</>],
         ["01:15", "체크인 · 바로 잠"],
         ["~10:45", "조식 · 체크아웃"],
-        ["11:00", "Grab으로 Westin (30분)"],
+        ["11:00", "Grab으로 Westin (10~15분)"],
         ["12:00", "현금 뽑기 — 모벤픽 리조트 VPBank ATM (Grab 5분, 수수료 없음)"],
         ["13:00", "점심 후 수영장 · 비치 라운지"],
         ["16:10", <><b>가든 스파 120분</b> · 스파 동안 해변 산책 → 비치바 (다음 장)</>, true],
@@ -114,13 +114,14 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
     </S>,
     <S kicker={`${d(3)} · 둘째 날`} title="보트 → 리조트 → 공항">
       <Tl rows={[
-        ["~08:00", "Grab으로 나트랑 항구 (50분) — 투어 픽업 포함인지 확인"],
+        ["~07:25", "체크아웃 · 짐 보관 (레이트 체크아웃 승인 못 받았으면)"],
+        ["07:45", "Grab으로 나트랑 항구 (50분) — 투어 픽업 포함인지 · 집결 시각 확인"],
         ["09:00", <>몬섬 쪽 선상 관광 보트 · <b>탑승만, 물엔 안 들어감</b></>],
-        ["13:00", "Grab으로 Westin 복귀"],
+        ["13:10", "Grab으로 Westin 복귀 (14:00 도착)"],
         ["14:00", "Westin 해산물 점심"],
-        ["16:00", <><b>레이트 체크아웃</b> · 짐 맡기고 라운지에서 쉬기</>, true],
+        ["16:00", <><b>레이트 체크아웃</b> (방 있으면 · 안 되면 보트 전 아침에 체크아웃) · 짐 맡기고 Haven Lounge(유료)에서 쉬기</>, true],
         ["18:00", "리조트 저녁"],
-        ["20:00", "Grab 공항 (15~30분) → 00:30 출발"],
+        ["21:20", "Westin 무료 공항 셔틀 (21:10 픽업 장소 · 못 타면 21:45편 기다리지 말고 바로 Grab) → 00:30 출발"],
       ]} />
     </S>,
     <S kicker="날씨 · 비 오면" title="소나기 확률 높음 — 실내 플랜 B 있음">
@@ -155,11 +156,12 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
     </S>,
     <S kicker="출발 전 할 일" title="내일까지 끝낼 것">
       <ul className="dots check">
-        <li className="done">숙소 2곳 확정 · Westin 레이트 체크아웃 16시</li>
+        <li className="done">숙소 2곳 확정</li>
+        <li>Westin 레이트 체크아웃 16시 요청 — Bonvoy 앱 채팅 (방 있으면만 · 안 되면 {d(3)} 아침 체크아웃·짐 보관)</li>
         <li className="done">공항 → Navy Grab 01:00 예약</li>
         <li><b>가든 스파 카톡 예약 + 예약금</b> (1인 예약 · 1인 가격 확인)</li>
         <li><b>보트 투어 예약</b> — 혼문 정박하는지 · 항구 픽업 포함인지 물어보기</li>
-        <li>{d(3)} 20:00 Westin → 공항 Grab 예약</li>
+        <li>{d(2)} Westin 체크인 때 {d(3)} 21:20 공항 셔틀 프런트 예약 (무료 · 24시간 전 필수 · 만석·취소면 Grab)</li>
         <li>eSIM 설치 · e-Customs QR · 여권</li>
         <li>선크림 · 우산/우비 · 220V 그대로</li>
       </ul>

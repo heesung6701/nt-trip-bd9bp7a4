@@ -10,12 +10,13 @@ const ICON: Record<NodeKind, string> = { airport: "✈️", stay: "🏨", spot: 
 type NodeId = keyof typeof NODES;
 
 // 교통수단은 아이콘으로 — 라벨에 거리·시간까지 넣으면 길어서
-const MODE_ICON = { Grab: "🚕", 보트: "⛴️", 도보: "🚶" } as const;
-// cost = Grab 4인승 1대 요금(2인 합계), stayMoves·budget.ts와 같은 추정치. 보트는 투어 요금에 포함
+const MODE_ICON = { Grab: "🚕", 셔틀: "🚐", 보트: "⛴️", 도보: "🚶" } as const;
+// cost = Grab 4인승 1대 요금(2인 합계), stayMoves·budget.ts와 같은 추정치. 보트는 투어 요금에 포함, 셔틀은 Westin 무료(탑승 못 하면 Grab ≈15만동)
+// navy↔westin·westin↔cxr 거리는 OSRM 도로 경로(OSM 좌표) 기준, westin↔cxr 시간은 OSRM 9분에 여유 둔 값
 const EDGES: { a: NodeId; b: NodeId; km: string; min: string; cost: string; mode: keyof typeof MODE_ICON; t?: number }[] = [
   { a: "cxr", b: "navy", km: "4~5km", min: "10~15분", cost: "10~15만동", mode: "Grab", t: 0.6 },
-  { a: "navy", b: "westin", km: "≈17km", min: "≈30분", cost: "25~30만동", mode: "Grab" },
-  { a: "westin", b: "cxr", km: "≈15km", min: "15~30분", cost: "≈25만동", mode: "Grab", t: 0.6 },
+  { a: "navy", b: "westin", km: "≈8.7km", min: "10~15분", cost: "10~20만동", mode: "Grab" },
+  { a: "westin", b: "cxr", km: "≈7km", min: "15~30분", cost: "무료", mode: "셔틀", t: 0.6 },
   { a: "westin", b: "port", km: "≈35km", min: "≈50분", cost: "≈50만동", mode: "Grab" },
   { a: "port", b: "honmun", km: "≈10km", min: "≈30분", cost: "투어 포함", mode: "보트" },
   // ATM — VPBank는 외국 카드 출금 수수료 없음(2026 블로그 기준). 공항 T2 24시간 ATM은 은행 미확인이라 노드 없음
@@ -42,8 +43,8 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
   2: {
     color: "#2f6fed",
     steps: [
-      { time: "11:00", at: "navy", to: "westin", text: "Grab · ≈30분 · 25~30만동" },
-      { time: "11:30", at: "westin", text: "도착 · 짐 맡기고 얼리 체크인 요청" },
+      { time: "11:00", at: "navy", to: "westin", text: "Grab · ≈8.7km · 10~15분 · 10~20만동" },
+      { time: "11:30", at: "westin", text: "도착 · 짐 맡기고 얼리 체크인 요청 · 레이트 체크아웃 16:00 가능 여부 확인 · Day3 21:20 공항 셔틀 프런트 예약 (24시간 전 필수)" },
       { time: "12:00", at: "westin", to: "atmMovenpick", text: "Grab ≈5분 · VPBank ATM 현금 출금 (예산 탭 추천액, 수수료 없음)" },
       { time: "12:20", at: "atmMovenpick", to: "westin", text: "Grab 복귀 → 점심 · 수영장 · 16:10 아내 가든 스파 120분 (Westin 200m 도보, 지도 노드 생략) · 그동안 남편 해변 산책 → 비치바 · 해산물 저녁" },
     ],
@@ -51,12 +52,12 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
   3: {
     color: "#f26b1d",
     steps: [
-      { time: "~08:00", at: "westin", to: "port", text: "Grab ≈50분 · 일정표에 없음 — 보트 투어 픽업 포함인지 확인" },
+      { time: "07:45", at: "westin", to: "port", text: "Grab ≈50분 · 투어 픽업 포함이면 생략 · 투어사 집결 시각 확인" },
       { time: "09:00", at: "port", to: "honmun", text: "선상 관광 보트 (입수 없음)" },
-      { time: "~12:30", at: "honmun", to: "port", text: "귀항" },
-      { time: "13:00", at: "port", to: "westin", text: "Grab ≈50분" },
-      { time: "14:00", at: "westin", text: "해산물 점심 · 16:00 레이트 체크아웃 (확정) · 저녁" },
-      { time: "20:00", at: "westin", to: "cxr", text: "Grab 사전 예약 · 15~30분" },
+      { time: "13:00", at: "honmun", to: "port", text: "귀항 (실제 상품 귀항 시각 확인 필요)" },
+      { time: "13:10", at: "port", to: "westin", text: "Grab ≈50분 → 14:00 Westin" },
+      { time: "14:00", at: "westin", text: "해산물 점심 · 레이트 체크아웃 16:00까지 가능 (공실 시, 보장 아님 — 07:40까지 못 받으면 보트 전 체크아웃·짐 보관) · 저녁" },
+      { time: "21:20", at: "westin", to: "cxr", text: "Westin 무료 공항 셔틀 (21:10 픽업 장소 대기) · 15~30분 · 21:50쯤 도착 — 21:20 셔틀 탑승 안 되면 21:45편 기다리지 말고 바로 프런트에 Grab·택시 요청 (≈15만동)" },
       { time: "00:30+1", at: "cxr", text: "출국 (현지 시각) — 새벽이라 이날 일정으로 표시" },
     ],
   },

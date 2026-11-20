@@ -14,7 +14,7 @@ export interface BudgetLine {
 
 export const BUDGET: BudgetLine[] = [
   { day: 1, title: "Grab 공항 → Navy (01:00 예약)", vnd: 150_000, pay: "카드", note: "Grab 앱 결제. 앱에서 현금 선택했으면 현금" },
-  { day: 2, title: "Grab Navy → Westin", vnd: 300_000, pay: "카드", note: "Grab 앱" },
+  { day: 2, title: "Grab Navy → Westin", vnd: 200_000, pay: "카드", note: "Grab 앱 · ≈8.7km, 10~20만동 중 상한" },
   { day: 2, title: "Westin 점심", vnd: 1_000_000, pay: "카드", note: "추정 1인 50만동, 룸차지" },
   { day: 2, title: "Grab Westin ↔ 모벤픽 VPBank ATM 왕복", vnd: 100_000, pay: "카드", note: "편도 ≈5만동 추정" },
   { day: 2, title: "가든 스파 가든스페셜 120분 (아내만)", vnd: 840_000, pay: "현금", note: "84만동/$36 (2025.10 블로그·카톡). 2인 이상 가격일 수 있음 — 1인 예약 가격·무료 픽업 조건 카톡 확인. 예약금 입금 후 현장 현금 결제 시 환불. Westin 200m 도보" },
@@ -28,7 +28,7 @@ export const BUDGET: BudgetLine[] = [
   { day: 3, title: "Grab 항구 → Westin", vnd: 500_000, pay: "카드", note: "Grab 앱" },
   { day: 3, title: "Westin 해산물 점심", vnd: 1_000_000, pay: "카드", note: "추정" },
   { day: 3, title: "Westin 저녁", vnd: 1_500_000, pay: "카드", note: "추정" },
-  { day: 3, title: "Grab Westin → 공항", vnd: 250_000, pay: "카드", note: "Grab 앱 사전 예약" },
+  { day: 3, title: "Westin 무료 공항 셔틀 → 공항 (21:20)", vnd: 0, pay: "카드", note: "무료 (Marriott 공식). Day2 체크인 때 프런트 예약 — 24시간 전 안 하면 운행 취소. 탑승 못 하면 21:45편 기다리지 말고 바로 Grab ≈15만동 (대체)" },
   { day: 3, title: "물·간식·팁 · 공항 간식", vnd: 400_000, pay: "현금" },
 ];
 
