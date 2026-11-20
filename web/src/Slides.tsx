@@ -94,8 +94,8 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
         </div>
         <div className="card">
           <span className="tag">❓ 미확인</span>
-          <p>칫솔 · 치약 · 면도기 · 쉐이빙폼</p>
-          <p className="sub">Navy·Westin 둘 다 공식·예약 사이트에 표기 없음 (Westin은 White Tea 바디 어메니티만 표기) → 챙기거나 체크인 때 프런트 확인. 면도기는 날 있는 일회용으로 챙기고 쉐이빙폼은 100ml 이하</p>
+          <p>칫솔 · 치약 · 면도기</p>
+          <p className="sub">Navy·Westin 둘 다 공식·예약 사이트에 표기 없음 (Westin은 White Tea 바디 어메니티만 표기) → 챙기거나 체크인 때 프런트 확인. 면도기는 날 있는 일회용으로 챙기기</p>
         </div>
         <div className="card">
           <span className="tag">🧳 기내 휴대만</span>
