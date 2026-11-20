@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Badge, Callout, Text } from "@seed-design/react";
 import { STAY_MOVES } from "./data/stayMoves";
-import { BUDGET, VND_PER_KRW, cashToWithdraw, type BudgetLine } from "./data/budget";
+import { BUDGET, VND_PER_KRW, cashToWithdraw, walletToCharge, type BudgetLine } from "./data/budget";
 import { WESTIN_EAT, WESTIN_PLAY, WESTIN_TAX_NOTE, type Facility } from "./data/westin";
 import { RouteGraph } from "./RouteGraph";
 import { SightMap } from "./SightMap";
@@ -249,16 +249,16 @@ const krw = (n: number) => won(Math.round(n / VND_PER_KRW / 1000) * 1000);
 const sum = (ls: BudgetLine[], pay?: BudgetLine["pay"]) => ls.filter((l) => !pay || l.pay === pay).reduce((a, l) => a + l.vnd, 0);
 
 function BudgetTab({ days, travelers }: { days: Day[]; travelers: number }) {
-  const cash = sum(BUDGET, "현금"), total = sum(BUDGET);
-  const withdraw = cashToWithdraw(cash);
+  const cash = sum(BUDGET, "현금"), wallet = sum(BUDGET, "트래블월렛"), total = sum(BUDGET);
+  const withdraw = cashToWithdraw(cash), charge = walletToCharge(wallet);
   return (
     <>
       <Section title="환전·ATM">
         <Text textStyle="t6Bold" color="fg.neutral">
-          현금 {vnd(withdraw)} 출금 추천 (≈{krw(withdraw)})
+          💵 현금 {vnd(withdraw)} 출금 (≈{krw(withdraw)}) + 👛 트래블월렛 {vnd(charge)} 충전 (≈{krw(charge)}) = 환전 {vnd(withdraw + charge)} (≈{krw(withdraw + charge)})
         </Text>
         <Text textStyle="t4Regular" color="fg.neutral-subtle">
-          💵 현금성 {vnd(cash)} + 여유 20% → 환전·출금 필요 · 💳 카드성 {vnd(total - cash)} → 환전 불필요 (Grab·보트·식사. 항공·숙박도 카드 결제, 이 예산엔 미포함) · VPBank ATM 외국 카드 수수료 없음, 1회 한도 500만~1,000만동 (2026 블로그 기준) — Westin 근처는 모벤픽 리조트 안, 항구 근처는 Vinmec
+          💵 현금성 {vnd(cash)} + 여유 20% · 👛 트래블월렛(Grab) {vnd(wallet)} + 여유 20% · 💳 카드 {vnd(total - cash - wallet)} → 환전 불필요 (Westin 룸차지·보트 사전결제. 숙박·항공도 카드, 이 예산엔 미포함) · VPBank ATM 외국 카드 수수료 없음, 1회 한도 500만~1,000만동 (2026 블로그 기준) — Westin 근처는 모벤픽 리조트 안, 항구 근처는 Vinmec
         </Text>
         <Text textStyle="t4Regular" color="fg.neutral-subtle">
           {travelers}명 합계 {vnd(total)} ≈ {krw(total)} · 1인 ≈ {krw(total / travelers)} (숙박·항공 제외) · 1만동 ≈ 550원
@@ -268,7 +268,7 @@ function BudgetTab({ days, travelers }: { days: Day[]; travelers: number }) {
         const ls = BUDGET.filter((l) => l.day === i + 1);
         if (ls.length === 0) return null;
         return (
-          <Section key={d.date} title={`Day ${i + 1} · ${vnd(sum(ls))} (💵 현금 ${vnd(sum(ls, "현금"))} · 💳 카드 ${vnd(sum(ls, "카드"))})`}>
+          <Section key={d.date} title={`Day ${i + 1} · ${vnd(sum(ls))} (💵 ${vnd(sum(ls, "현금"))} · 👛 ${vnd(sum(ls, "트래블월렛"))} · 💳 ${vnd(sum(ls, "카드"))})`}>
             <div className="sheet-wrap">
               <table className="sheet budget">
                 <thead>
@@ -279,13 +279,13 @@ function BudgetTab({ days, travelers }: { days: Day[]; travelers: number }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {(["현금", "카드"] as const).flatMap((pay) => {
+                  {(["현금", "트래블월렛", "카드"] as const).flatMap((pay) => {
                     const g = ls.filter((l) => l.pay === pay);
                     if (g.length === 0) return [];
                     return [
                       <tr key={`h-${pay}`}>
                         <th colSpan={3}>
-                          {pay === "현금" ? "💵 현금 · 환전 필요" : "💳 카드 · 환전 불필요"} · {vnd(sum(g))}
+                          {pay === "현금" ? "💵 현금 · 출금 필요" : pay === "트래블월렛" ? "👛 트래블월렛 · 충전(환전) 필요" : "💳 카드 · 환전 불필요"} · {vnd(sum(g))}
                         </th>
                       </tr>,
                       ...g.map((l) => (
