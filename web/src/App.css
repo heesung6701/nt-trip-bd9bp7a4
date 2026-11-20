@@ -481,3 +481,61 @@ body {
 .deck-exit { position: fixed; top: 10px; right: 12px; border: 0; background: rgba(0,0,0,.35); color: #fff; width: 34px; height: 34px; border-radius: 50%; font-size: 16px; }
 .deck-bar { position: fixed; left: 0; bottom: 0; height: 3px; background: var(--sun); transition: width .2s; }
 .deck-foot { position: fixed; bottom: 8px; right: 14px; color: #9b948b; font-size: 12px; }
+
+/* UI/UX 다듬기: 터치 피드백, 포커스, 활성 탭 표시 */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+.topbar {
+  flex-wrap: wrap;
+  align-items: center;
+}
+.day-tabs {
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+.day-tabs::-webkit-scrollbar {
+  display: none;
+}
+.chip {
+  scroll-snap-align: start;
+  transition: background-color 0.15s, color 0.15s;
+}
+.chip:active,
+.nav-item:active {
+  opacity: 0.7;
+}
+.chip:focus-visible,
+.nav-item:focus-visible,
+.fold summary:focus-visible,
+.slides-link:focus-visible {
+  outline: 2px solid var(--seed-color-fg-informative);
+  outline-offset: 2px;
+}
+/* 활성 탭: 아이콘 뒤 pill (Material 3 방식) */
+.nav-item span:first-child {
+  width: 56px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  transition: background-color 0.15s;
+}
+.nav-item.active span:first-child {
+  background: var(--seed-color-bg-neutral-weak);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+@media (min-width: 600px) {
+  body {
+    padding-left: calc(80px + env(safe-area-inset-left));
+  }
+  .bottom-nav {
+    padding-left: env(safe-area-inset-left);
+    width: calc(80px + env(safe-area-inset-left));
+    box-sizing: border-box;
+  }
+}
