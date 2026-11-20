@@ -189,12 +189,13 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
     <S cover kicker="끝" title="질문 · 바꾸고 싶은 거?">
       <p className="sub">이동 중엔 휴대폰으로 일정 사이트 보면 돼요</p>
     </S>,
-    <S kicker="Appendix" title="카약 제안 — 원하면">
+    <S kicker="Appendix" title={<s>카약 제안 — 원하면</s>}>
+      <p className="sub">취소 — 안 함</p>
       <ul className="dots">
-        <li>{d(3)} 10~11시 Westin 가이드 카약 (일정엔 안 넣음 · 안 해도 됨)</li>
-        <li>예약은 프런트·Service Express로 24시간 전이 안전 → {d(2)} 체크인 때 말하면 끝</li>
-        <li>요금표 기준 1인 15만동++/시 · 2인 20만동++/시</li>
-        <li>무료 주간 프로그램에 들어가는지는 미확인 → 프런트에 물어보기</li>
+        <li><s>{d(3)} 10~11시 Westin 가이드 카약 (일정엔 안 넣음 · 안 해도 됨)</s></li>
+        <li><s>예약은 프런트·Service Express로 24시간 전이 안전 → {d(2)} 체크인 때 말하면 끝</s></li>
+        <li><s>요금표 기준 1인 15만동++/시 · 2인 20만동++/시</s></li>
+        <li><s>무료 주간 프로그램에 들어가는지는 미확인 → 프런트에 물어보기</s></li>
       </ul>
     </S>,
     <S kicker="Appendix" title="보트 투어 — 원하면">

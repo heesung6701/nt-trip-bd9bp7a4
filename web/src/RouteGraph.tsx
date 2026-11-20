@@ -46,7 +46,7 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
     color: "#f26b1d",
     steps: [
       { time: "08:00", at: "westin", text: "조식 · 서두르지 않음 · 프런트에 레이트 체크아웃 16:00 요청 (공실 시, 보장 아님 — 안 되면 12:00 체크아웃·짐 보관)" },
-      { time: "09:30", at: "westin", text: "수영장 · 해변 물가 발 담그기(발목 아래, W) · 비치발리볼·프리스비 (상시 무료) · 원하면 10~11시 카약 (프런트 예약)" },
+      { time: "09:30", at: "westin", text: "수영장 · 해변 물가 발 담그기(발목 아래, W) · 비치발리볼·프리스비 (상시 무료)" },
       { time: "12:30", at: "westin", text: "해산물 점심 · 오후 휴식 · 해변 발 담그기 · 저녁 · 비 오면 Haven Lounge·스파 등 리조트 실내" },
       { time: "21:20", at: "westin", to: "cxr", text: "Westin 공항 셔틀 (예약 완료, 21:10 픽업 장소 대기) · 15~30분 · 21:50쯤 도착 — 놓치면 바로 Grab (≈15만동)" },
       { time: "00:30+1", at: "cxr", text: "출국 (현지 시각) — 새벽이라 이날 일정으로 표시" },
