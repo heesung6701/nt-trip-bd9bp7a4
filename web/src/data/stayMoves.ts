@@ -4,10 +4,9 @@ import type { Item } from "../types";
 // 시각은 현지 기준. 요금은 Grab 4인승 추정(1만동 ≈ 550원).
 export const STAY_MOVES: (Item & { day: number })[] = [
   // Day1 = 현지 도착~숙소 입실까지 한 밤. 현지 시각(KST-2h), 자정 넘으면 24:xx로 적어 정렬 유지 (화면엔 "+1")
-  { day: 1, start: "24:10", end: "24:25", title: "깜라인 T2 도착 · 시계 -2시간 · 비행기 모드 끄고 eSIM 데이터 켜기 (Grab 연락용)", kind: "이동", place: "깜라인 공항 CXR T2", cost_krw: 0 },
-  { day: 1, start: "24:25", end: "24:55", title: "입국심사 — 패스트트랙(바우처 확인) · 한국 여권 45일 무비자 · 귀국편 e-티켓 준비 · 패스트트랙을 못 만나면 일반 줄(30~60분 예상)", kind: "이동", place: "깜라인 공항 CXR T2", cost_krw: 0 },
-  { day: 1, start: "24:55", end: "25:00", title: "사전입국신고 QR 보여주기 (기내 휴대만, 수하물 찾기 없음) · 지연되면 25:00 Grab 기사에게 앱 채팅으로 알리기", kind: "이동", place: "깜라인 공항 CXR T2", cost_krw: 0 },
-  { day: 1, start: "25:00", end: "25:05", title: "입국장 출구에서 Grab 기사 만나기 (01:00 예약 완료) — 앱에서 차량번호·픽업 지점 확인, 늦어지면 앱 채팅으로 알리기", kind: "이동", place: "깜라인 공항 CXR T2", cost_krw: 0 },
+  { day: 1, start: "24:10", end: "24:25", title: "깜라인 T2 도착 · eSIM 데이터 켜기", kind: "이동", place: "깜라인 공항 CXR T2", cost_krw: 0 },
+  { day: 1, start: "24:25", end: "25:00", title: "패스트트랙으로 이동 → 안 되면 일반 입국심사", kind: "이동", place: "깜라인 공항 CXR T2", cost_krw: 0 },
+  { day: 1, start: "25:00", end: "25:05", title: "입국장 출구에서 Grab 기사 만나기 (01:00 예약)", kind: "이동", place: "깜라인 공항 CXR T2", cost_krw: 0 },
   { day: 1, start: "25:05", end: "25:20", title: "Grab → Navy Hotel (4~5km, 10~15분, 10~15만동)", kind: "이동", place: "Grab (예약 완료)", cost_krw: 7000 },
   { day: 1, start: "25:20", end: "25:35", title: "Navy Hotel 체크인 (예약은 Day1 · 06시까지 입실 가능, 프런트 24시간) → 바로 취침", kind: "숙소", place: "Navy Hotel Cam Ranh", cost_krw: 0 },
   { day: 2, start: "09:30", end: "10:45", title: "기상 · Navy 조식 (포함, 운영 시간 체크인 때 프런트 확인) · 짐 정리", kind: "숙소", place: "Navy Hotel Cam Ranh", cost_krw: 0 },
