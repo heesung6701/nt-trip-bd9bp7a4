@@ -55,7 +55,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
     <S kicker="한눈에" title="3박 4일, 실제로 노는 건 이틀">
       <div className="grid g4">
         <div className="card"><span className="tag">{d(1)}</span><b className="big">출발</b><p>{hm(out.depart)} 인천 출발 (KST)</p><p className="sub">현지 00:10 도착</p></div>
-        <div className="card"><span className="tag sun">{d(2)}</span><b className="big">리조트 + 스파</b><p>Navy에서 자고 → Westin</p><p>수영장 · <b>당신 스파</b> · 해산물 저녁</p></div>
+        <div className="card"><span className="tag sun">{d(2)}</span><b className="big">리조트 + 스파</b><p>Navy에서 자고 → Westin</p><p>수영장 · <b>가든 스파</b> · 해산물 저녁</p></div>
         <div className="card"><span className="tag leaf">{d(3)}</span><b className="big">보트 + 늦은 체크아웃</b><p>오전 보트 (입수 없음)</p><p>16시까지 방 쓰기 → 저녁 → 공항</p></div>
         <div className="card"><span className="tag">{d(4)}</span><b className="big">귀국</b><p>현지 00:30 출발</p><p className="sub">인천 {hm(back.arrive)} 도착</p></div>
       </div>
@@ -89,11 +89,11 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
         ["11:00", "Grab으로 Westin (30분)"],
         ["12:00", "현금 뽑기 — 모벤픽 리조트 VPBank ATM (Grab 5분, 수수료 없음)"],
         ["13:00", "점심 후 수영장 · 비치 라운지"],
-        ["16:10", <><b>당신은 가든 스파 120분</b> · 나는 해변 산책 → 비치바 (다음 장)</>, true],
+        ["16:10", <><b>가든 스파 120분</b> · 스파 동안 해변 산책 → 비치바 (다음 장)</>, true],
         ["19:00", "Westin 해산물 저녁"],
       ]} />
     </S>,
-    <S kicker="당신 전용 🌿" title="가든 스파 · 가든스페셜 120분">
+    <S kicker={`${d(2)} 오후 🌿`} title="가든 스파 · 가든스페셜 120분">
       <div className="grid g2">
         <div className="card">
           <span className="tag sun">16:10 ~ 18:10</span>
@@ -103,7 +103,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
           <p className="sub">영업 10~22시 · 카톡 "가든스파 깜란"</p>
         </div>
         <div className="card">
-          <span className="tag">그동안 나는</span>
+          <span className="tag">스파 받는 동안</span>
           <p><b>16:10</b> 스파 앞 길로 150m → Bai Dai 해변 산책</p>
           <p className="sub">17:15 일몰 — 해가 리조트 뒤로 져서 바다 노을빛</p>
           <p><b>17:15</b> Westin 비치바(Hang Ten)에서 한 잔</p>
@@ -157,7 +157,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
       <ul className="dots check">
         <li className="done">숙소 2곳 확정 · Westin 레이트 체크아웃 16시</li>
         <li className="done">공항 → Navy Grab 01:00 예약</li>
-        <li><b>가든 스파 카톡 예약 + 예약금</b> (당신만 · 1인 가격 확인)</li>
+        <li><b>가든 스파 카톡 예약 + 예약금</b> (1인 예약 · 1인 가격 확인)</li>
         <li><b>보트 투어 예약</b> — 혼문 정박하는지 · 항구 픽업 포함인지 물어보기</li>
         <li>{d(3)} 20:00 Westin → 공항 Grab 예약</li>
         <li>eSIM 설치 · e-Customs QR · 여권</li>
