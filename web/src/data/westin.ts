@@ -22,7 +22,7 @@ export const WESTIN_PLAY: Facility[] = [
   { name: "개인 강습 (요가·테니스·PT)", detail: "예약제", price: "80만동++/시 (≈4.4만원)", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
   { name: "시내 셔틀", detail: "리조트→나트랑 시내 주말 11:30·14:30 / 복귀 15:30·18:15 · 5일 전 예약. 공항 무료 셔틀은 2박 이상만 — 1박이라 해당 없음 (한국 여행사 페이지 출처, 호텔 확인 필요)", price: "미확인", src: "https://tripon.kr/accommodation/490" },
   { name: "데이패스 · 데이유즈 룸", detail: "상품 존재만 확인 — 체크아웃 후 시설 이용·샤워 대안. 가격 미확인", price: "미확인", src: `${M}/experiences/` },
-  { name: "체크아웃 후 샤워실 (hospitality room)", detail: "정보 없음 — 체크인 때 프런트에 문의", price: "—" },
+  { name: "체크아웃 후 스파 샤워실", detail: "Heavenly Spa(2층) 샤워실 체크아웃 후 무료, 21:00 마감 · 부대시설도 체크아웃 후 이용 가능. 호텔 제공 정보라고 여행사가 게재(날짜 없음), 공식 marriott.com엔 없음 — 체크인 때 확인", price: "무료 (여행사 표기)", src: "https://www.tourpik.com/item.php?id=TC55430355" },
 ];
 
 export const WESTIN_EAT: Facility[] = [
