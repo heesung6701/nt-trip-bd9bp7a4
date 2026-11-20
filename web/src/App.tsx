@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Badge, Callout, Text } from "@seed-design/react";
 import { STAY_MOVES } from "./data/stayMoves";
 import { BUDGET, VND_PER_KRW, cashToWithdraw, type BudgetLine } from "./data/budget";
+import { WESTIN_EAT, WESTIN_PLAY, WESTIN_TAX_NOTE, type Facility } from "./data/westin";
 import { RouteGraph } from "./RouteGraph";
 import { Slides } from "./Slides";
 import type { Activity, Day, Food, Item, TripData, WeatherDay } from "./types";
@@ -292,6 +293,41 @@ function BudgetTab({ days, travelers }: { days: Day[]; travelers: number }) {
   );
 }
 
+function FacilityList({ items }: { items: Facility[] }) {
+  return (
+    <>
+      <Text textStyle="t4Regular" color="fg.neutral-subtle">
+        {WESTIN_TAX_NOTE}
+      </Text>
+      <ul className="card-list">
+        {items.map((f) => (
+          <li className="card" key={f.name}>
+            <Text textStyle="t5Bold" color="fg.neutral">
+              {f.name}
+            </Text>
+            {f.price && (
+              <Text textStyle="t4Regular" color="fg.neutral">
+                {f.price}
+              </Text>
+            )}
+            <Text textStyle="t4Regular" color="fg.neutral-subtle">
+              {f.detail}
+              {f.src && (
+                <>
+                  {" · "}
+                  <a href={f.src} target="_blank" rel="noreferrer">
+                    출처
+                  </a>
+                </>
+              )}
+            </Text>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
 function ActivityList({ items }: { items: Activity[] }) {
   return (
     <ul className="card-list">
@@ -422,6 +458,9 @@ function App() {
             <Section title="일정에 잡힌 식사">
               <Scheduled days={days} kinds={["meal"]} />
             </Section>
+            <Section title="Westin 식당·바">
+              <FacilityList items={WESTIN_EAT} />
+            </Section>
             {data.food && data.food.length > 0 && (
               <Section title="식당 후보">
                 <FoodList items={data.food} />
@@ -434,6 +473,9 @@ function App() {
           <>
             <Section title="일정에 잡힌 것">
               <Scheduled days={days} kinds={["spa", "activity", "rest"]} />
+            </Section>
+            <Section title="Westin 부대시설">
+              <FacilityList items={WESTIN_PLAY} />
             </Section>
             {data.activities && data.activities.length > 0 && (
               <Section title="추천·대안">
