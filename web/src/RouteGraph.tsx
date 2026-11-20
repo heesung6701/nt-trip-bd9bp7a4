@@ -5,7 +5,7 @@ import { NODES, type NodeKind } from "./data/routeNodes";
 // 날짜 대신 Day 번호 — deploy.sh 마스킹은 itinerary.json만 처리하므로 여기 날짜·편명 쓰면 안 됨.
 // ponytail: 배치는 동서남북만 실제와 맞춘 개략도(routeNodes.ts), 거리는 stayMoves/itinerary 소요시간 기반 추정 — 실측 아님.
 
-const ICON: Record<NodeKind, string> = { airport: "✈️", stay: "🏨", spot: "📍" };
+const ICON: Record<NodeKind, string> = { airport: "✈️", stay: "🏨", spot: "📍", atm: "🏧" };
 type NodeId = keyof typeof NODES;
 
 // 교통수단은 아이콘으로 — 라벨에 거리·시간까지 넣으면 길어서
@@ -17,6 +17,9 @@ const EDGES: { a: NodeId; b: NodeId; km: string; min: string; cost: string; mode
   { a: "westin", b: "cxr", km: "≈15km", min: "15~30분", cost: "≈25만동", mode: "Grab", t: 0.6 },
   { a: "westin", b: "port", km: "≈35km", min: "≈50분", cost: "≈50만동", mode: "Grab" },
   { a: "port", b: "honmun", km: "≈10km", min: "≈30분", cost: "투어 포함", mode: "보트" },
+  // ATM — VPBank는 외국 카드 출금 수수료 없음(2026 블로그 기준). 공항 T2 24시간 ATM은 은행 미확인이라 노드 없음
+  { a: "westin", b: "atmMovenpick", km: "≈1.5km", min: "≈5분", cost: "≈5만동", mode: "Grab" },
+  { a: "port", b: "atmVinmec", km: "≈0.9km", min: "≈12분", cost: "무료", mode: "도보", t: 0.4 },
   // 우천 대안·미배정 장소
   { a: "port", b: "ocean", km: "≈0.5km", min: "≈5분", cost: "무료", mode: "도보", t: 0.45 },
   { a: "port", b: "honchong", km: "≈8km", min: "≈20분", cost: "≈10만동", mode: "Grab", t: 0.65 },
@@ -30,11 +33,13 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
   2: {
     color: "#2f6fed",
     steps: [
-      { time: "00:10", at: "cxr", text: "T2 도착 · 입국·수하물" },
+      { time: "00:10", at: "cxr", text: "T2 도착 · 입국·수하물 · T2 24시간 ATM 있음 (은행 미확인 — 수수료 화면 확인, 비싸면 Day2 모벤픽 VPBank에서)" },
       { time: "01:00", at: "cxr", to: "navy", text: "Grab 예약 완료 (01:00 픽업) · 10~15분 · 10~15만동" },
       { time: "01:15", at: "navy", text: "체크인 · 취침" },
       { time: "11:00", at: "navy", to: "westin", text: "Grab · ≈30분 · 25~30만동" },
-      { time: "11:30", at: "westin", text: "얼리 체크인 요청 · 수영장 · 16:10 가든 스파 120분 (Westin 근처, 좌표 없어 노드 없음) · 해산물 저녁" },
+      { time: "11:30", at: "westin", text: "도착 · 짐 맡기고 얼리 체크인 요청" },
+      { time: "12:00", at: "westin", to: "atmMovenpick", text: "Grab ≈5분 · VPBank ATM 현금 500만동 출금 (수수료 없음, 1회 한도 확인)" },
+      { time: "12:20", at: "atmMovenpick", to: "westin", text: "Grab 복귀 → 점심 · 수영장 · 16:10 가든 스파 120분 · 해산물 저녁" },
     ],
   },
   3: {
@@ -107,7 +112,7 @@ export function RouteGraph({ dayNo }: { dayNo: number }) {
             <g key={id}>
               <circle cx={n.x} cy={n.y} r={17} fill={on ? route.color : "#eef0f3"} stroke={on ? route.color : GRAY} strokeWidth={2} />
               <text x={n.x} y={n.y + 1} className="node-icon">{ICON[n.kind]}</text>
-              <text x={n.x} y={n.y + 32} className={on ? "node-label on" : "node-label"}>{n.label}</text>
+              <text x={n.x} y={n.labelUp ? n.y - 24 : n.y + 32} className={on ? "node-label on" : "node-label"}>{n.label}</text>
             </g>
           );
         })}
@@ -131,7 +136,7 @@ export function RouteGraph({ dayNo }: { dayNo: number }) {
         </ol>
       )}
       <Text textStyle="t4Regular" color="fg.neutral-subtle">
-        간선 = 순서 · 소요시간 · 요금(2인 1대) / 거리 · 화살표 = 이동 방향 (🚕 Grab ⛴️ 보트 🚶 도보) · 개략도(실제 지도 아님) · 거리·시간·요금은 추정 · 점선 회색 = 이날 안 가는 곳(우천 대안 포함)
+        간선 = 순서 · 소요시간 · 요금(2인 1대) / 거리 · 화살표 = 이동 방향 (🚕 Grab ⛴️ 보트 🚶 도보 · 🏧 VPBank ATM 수수료 없음) · 개략도(실제 지도 아님) · 거리·시간·요금은 추정 · 점선 회색 = 이날 안 가는 곳(우천 대안 포함)
       </Text>
     </div>
   );
