@@ -19,6 +19,7 @@ export const BUDGET: BudgetLine[] = [
   { day: 2, title: "Grab Westin ↔ 모벤픽 VPBank ATM 왕복", vnd: 100_000, pay: "카드", note: "편도 ≈5만동 추정" },
   { day: 2, title: "가든 스파 가든스페셜 120분 (아내만)", vnd: 840_000, pay: "현금", note: "84만동/$36 (2025.10 블로그·카톡). 2인 이상 가격일 수 있음 — 1인 예약 가격·무료 픽업 조건 카톡 확인. 예약금 입금 후 현장 현금 결제 시 환불. Westin 200m 도보" },
   { day: 2, title: "스파 팁 (아내)", vnd: 100_000, pay: "현금", note: "가든 스파 팁 정책 미확인 — 근처 헤르메스 120분 필수 팁 10만동 기준" },
+  { day: 2, title: "남편 비치바 한 잔 (스파 대기)", vnd: 200_000, pay: "카드", note: "Westin Hang Ten·Haven Lounge 가격 미공개 — 리조트 칵테일 세금 포함 추정. Bonvoy 10% 할인" },
   { day: 2, title: "Westin 해산물 저녁", vnd: 1_500_000, pay: "카드", note: "뷔페 1인 60만동+ & 세금·봉사료" },
   { day: 2, title: "물·간식·잔돈 팁", vnd: 200_000, pay: "현금" },
   { day: 3, title: "Grab Westin → 나트랑 항구", vnd: 500_000, pay: "카드", note: "보트 투어 픽업 포함이면 0" },
