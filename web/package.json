@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "node src/data/routeNodes.check.mjs && tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

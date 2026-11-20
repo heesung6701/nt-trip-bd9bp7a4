@@ -1,22 +1,11 @@
 import { Text } from "@seed-design/react";
+import { NODES, type NodeKind } from "./data/routeNodes";
 
 // 숙소·관광지·공항 = 노드, 이동 = 간선. 선택한 Day의 경로만 색칠.
 // 날짜 대신 Day 번호 — deploy.sh 마스킹은 itinerary.json만 처리하므로 여기 날짜·편명 쓰면 안 됨.
-// ponytail: 좌표는 손으로 찍은 개략 배치(북쪽 위), 거리는 stayMoves/itinerary 소요시간 기반 추정 — 실측 아님.
+// ponytail: 배치는 동서남북만 실제와 맞춘 개략도(routeNodes.ts), 거리는 stayMoves/itinerary 소요시간 기반 추정 — 실측 아님.
 
-type NodeKind = "airport" | "stay" | "spot";
 const ICON: Record<NodeKind, string> = { airport: "✈️", stay: "🏨", spot: "📍" };
-
-const NODES: Record<string, { label: string; kind: NodeKind; x: number; y: number }> = {
-  thapba: { label: "Thap Ba 온천", kind: "spot", x: 50, y: 40 },
-  honchong: { label: "혼쫑 해변", kind: "spot", x: 200, y: 40 },
-  ocean: { label: "해양학연구소", kind: "spot", x: 40, y: 150 },
-  port: { label: "나트랑 항구", kind: "spot", x: 170, y: 150 },
-  honmun: { label: "몬섬 해상", kind: "spot", x: 300, y: 110 },
-  westin: { label: "Westin", kind: "stay", x: 150, y: 275 },
-  cxr: { label: "깜라인 공항", kind: "airport", x: 260, y: 355 },
-  navy: { label: "Navy Hotel", kind: "stay", x: 90, y: 410 },
-};
 type NodeId = keyof typeof NODES;
 
 // 교통수단은 아이콘으로 — 라벨에 거리·시간까지 넣으면 길어서
@@ -26,10 +15,10 @@ const EDGES: { a: NodeId; b: NodeId; km: string; min: string; mode: keyof typeof
   { a: "navy", b: "westin", km: "≈17km", min: "≈30분", mode: "Grab" },
   { a: "westin", b: "cxr", km: "≈15km", min: "15~30분", mode: "Grab", t: 0.6 },
   { a: "westin", b: "port", km: "≈35km", min: "≈50분", mode: "Grab" },
-  { a: "port", b: "honmun", km: "≈10km", min: "≈30분", mode: "보트", t: 0.45 },
+  { a: "port", b: "honmun", km: "≈10km", min: "≈30분", mode: "보트" },
   // 우천 대안·미배정 장소
-  { a: "port", b: "ocean", km: "≈0.5km", min: "≈5분", mode: "도보" },
-  { a: "port", b: "honchong", km: "≈8km", min: "≈20분", mode: "Grab" },
+  { a: "port", b: "ocean", km: "≈0.5km", min: "≈5분", mode: "도보", t: 0.45 },
+  { a: "port", b: "honchong", km: "≈8km", min: "≈20분", mode: "Grab", t: 0.65 },
   { a: "honchong", b: "thapba", km: "≈3km", min: "≈10분", mode: "Grab" },
 ];
 const edgeKey = (a: string, b: string) => [a, b].sort().join("-");
@@ -76,7 +65,7 @@ export function RouteGraph({ dayNo }: { dayNo: number }) {
 
   return (
     <div className="route-graph">
-      <svg viewBox="0 0 340 450" role="img" aria-label={`Day ${dayNo} 이동 그래프`}>
+      <svg viewBox="0 0 400 470" role="img" aria-label={`Day ${dayNo} 이동 그래프`}>
         {EDGES.map((e) => {
           const A = NODES[e.a], B = NODES[e.b];
           const nos = stepNos.get(edgeKey(e.a, e.b));
