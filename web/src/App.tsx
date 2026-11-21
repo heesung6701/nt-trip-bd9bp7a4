@@ -124,6 +124,55 @@ const dt = (s: string) => s.replace("T", " ").replace(/:\d\d$/, "");
 // 일출·일몰 (Westin 좌표, Open-Meteo 예보 + 천문식 교차 확인) — Day N 기준
 const SUN: Record<number, { rise: string; set: string }> = { 2: { rise: "05:43", set: "17:15" }, 3: { rise: "05:44", set: "17:15" } };
 
+function TimelineItem({ item, w }: { item: Item; w: WeatherDay | undefined }) {
+  const h = item.title.startsWith("[KST]") ? undefined : w?.hourly[parseInt(item.start, 10)]; // 예보는 깜라인 현지 시각 기준 — 인천(KST) 항목엔 안 붙임
+  return (
+    <li>
+            <div className="time">
+              {hhmm(item.start)}
+              <br />
+              {hhmm(item.end)}
+            </div>
+            <div className="item-body">
+              <Text textStyle="t5Bold" color="fg.neutral">
+                {item.title}
+              </Text>
+              <div className="meta">
+                <Badge.Root size="medium" variant="weak" tone="neutral">
+                  <Badge.Label>{item.kind}</Badge.Label>
+                </Badge.Root>
+                {h && (
+                  <Badge.Root size="medium" variant="weak" tone={h.rain_prob >= 60 ? "warning" : "neutral"}>
+                    <Badge.Label>
+                      {wx(h.code).split(" ")[0]} {Math.round(h.temp)}° · 비 {h.rain_prob}%
+                    </Badge.Label>
+                  </Badge.Root>
+                )}
+                <Text textStyle="t4Regular" color="fg.neutral-subtle">
+                  {item.place} · {won(item.cost_krw)}
+                </Text>
+              </div>
+            </div>
+    </li>
+  );
+}
+
+// 연속된 who 항목(M·W 병렬)은 한 덩어리로 묶어 2열로 그림
+type Group = { item: Item } | { M: Item[]; W: Item[] };
+function groupByWho(items: Item[]): Group[] {
+  const out: Group[] = [];
+  for (const item of items) {
+    if (!item.who) {
+      out.push({ item });
+      continue;
+    }
+    let last = out[out.length - 1];
+    if (!last || "item" in last) out.push((last = { M: [], W: [] }));
+    last[item.who].push(item);
+  }
+  return out;
+}
+
 function Timeline({ data, day, dayNo }: { data: TripData; day: Day | undefined; dayNo: number }) {
   if (!day) return null;
   const items = [...day.items, ...STAY_MOVES.filter((m) => m.day === dayNo)].sort((a, b) => a.start.localeCompare(b.start));
@@ -153,38 +202,25 @@ function Timeline({ data, day, dayNo }: { data: TripData; day: Day | undefined; 
         </Text>
       )}
       <ol className="timeline">
-        {items.map((item) => {
-          const h = item.title.startsWith("[KST]") ? undefined : w?.hourly[parseInt(item.start, 10)]; // 예보는 깜라인 현지 시각 기준 — 인천(KST) 항목엔 안 붙임
-          return (
-          <li key={`${item.start}-${item.title}`}>
-            <div className="time">
-              {hhmm(item.start)}
-              <br />
-              {hhmm(item.end)}
-            </div>
-            <div className="item-body">
-              <Text textStyle="t5Bold" color="fg.neutral">
-                {item.title}
-              </Text>
-              <div className="meta">
-                <Badge.Root size="medium" variant="weak" tone="neutral">
-                  <Badge.Label>{item.kind}</Badge.Label>
-                </Badge.Root>
-                {h && (
-                  <Badge.Root size="medium" variant="weak" tone={h.rain_prob >= 60 ? "warning" : "neutral"}>
-                    <Badge.Label>
-                      {wx(h.code).split(" ")[0]} {Math.round(h.temp)}° · 비 {h.rain_prob}%
-                    </Badge.Label>
-                  </Badge.Root>
-                )}
-                <Text textStyle="t4Regular" color="fg.neutral-subtle">
-                  {item.place} · {won(item.cost_krw)}
-                </Text>
-              </div>
-            </div>
-          </li>
-          );
-        })}
+        {groupByWho(items).map((g, i) =>
+          "item" in g ? (
+            <TimelineItem key={`${g.item.start}-${g.item.title}`} item={g.item} w={w} />
+          ) : (
+            <li key={`split-${i}`} className="split">
+              {(["M", "W"] as const).map((who) => (
+                <div key={who} className="split-col">
+                  <span className="split-who">{who}</span>
+                  {g[who].length === 0 && <span className="split-empty">—</span>}
+                  <ol className="timeline">
+                    {g[who].map((item) => (
+                      <TimelineItem key={`${item.start}-${item.title}`} item={item} w={w} />
+                    ))}
+                  </ol>
+                </div>
+              ))}
+            </li>
+          ),
+        )}
       </ol>
     </div>
   );

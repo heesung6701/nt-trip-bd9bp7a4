@@ -15,6 +15,7 @@ export interface Item {
   kind: string;
   place: string;
   cost_krw: number;
+  who?: "M" | "W"; // 둘이 따로 움직이는 구간(일정 탭에서 2열로 나눔). 없으면 둘 다
 }
 
 export interface Day {

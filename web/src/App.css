@@ -542,3 +542,39 @@ html {
   display: flex;
   align-items: center;
 }
+
+/* M·W가 따로 움직이는 구간: 2열 (좁은 화면은 세로로) */
+.timeline li.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.split-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--seed-color-bg-neutral-weak);
+}
+.split-who {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--seed-color-fg-neutral-subtle);
+}
+.split-empty {
+  color: var(--seed-color-fg-neutral-subtle);
+}
+.split .timeline li {
+  grid-template-columns: 1fr;
+  gap: 2px;
+}
+.split .time {
+  font-size: 13px;
+}
+@media (max-width: 479px) {
+  .timeline li.split {
+    grid-template-columns: 1fr;
+  }
+}
