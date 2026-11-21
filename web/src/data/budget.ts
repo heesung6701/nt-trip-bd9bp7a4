@@ -19,7 +19,7 @@ export const BUDGET: BudgetLine[] = [
   { day: 2, title: "Grab Westin ↔ 모벤픽 VPBank ATM 왕복", vnd: 100_000, pay: "트래블월렛", note: "편도 ≈5만동 추정" },
   { day: 2, title: "가든 스파 가든스페셜 120분 (W만)", vnd: 1_400_000, pay: "현금", note: "메뉴가 140만동($60) · 예약금 입금 후 현장 현금 결제 시 환불 · Westin 200m 도보" },
   { day: 2, title: "스파 팁 (W)", vnd: 100_000, pay: "현금", note: "가든 스파 팁 정책 미확인 — 근처 헤르메스 120분 필수 팁 10만동 기준" },
-  { day: 2, title: "M 비치바 한 잔 (스파 대기)", vnd: 200_000, pay: "카드", note: "Westin Hang Ten·Haven Lounge 가격 미공개 — 리조트 칵테일 세금 포함 추정. 할인 미적용 가정(Bonvoy 베트남 F&B 등급 할인은 약관상 미확인, 호텔 자체 할인 확인 필요)" },
+  { day: 2, title: "M Haven Lounge 칵테일 (해피아워 18~20시)", vnd: 100_000, pay: "카드", note: "메뉴 가격 미공개 — 기존 추정 20만동의 50%(해피아워 칵테일 반값) · 세금·봉사료 별도" },
   { day: 2, title: "Westin 해산물 저녁", vnd: 1_500_000, pay: "카드", note: "추정 (60만동++는 Verandah Hot Pot Night 세트(금·토만) 가격이라 일·월 저녁엔 해당 없음, 뷔페 가격은 Marriott 공식에 없음) · 세금·봉사료 별도" },
   { day: 2, title: "물·간식·잔돈 팁", vnd: 200_000, pay: "현금" },
   { day: 3, title: "Westin 해산물 점심", vnd: 1_000_000, pay: "카드", note: "2인 합계 (1인 50만동 추정)" },

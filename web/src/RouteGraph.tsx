@@ -39,7 +39,7 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
       { time: "11:00", at: "navy", to: "westin", text: "Grab · ≈8.7km · 10~15분 · 10~20만동" },
       { time: "11:30", at: "westin", text: "도착 · 짐 맡기고 얼리 체크인 요청 (안 돼도 체크인 전 수영장·Haven Lounge 이용 가능, Westin 확인) · 레이트 체크아웃 16:00 가능 여부 확인" },
       { time: "12:00", at: "westin", to: "atmMovenpick", text: "Grab ≈5분 · VPBank ATM 현금 출금 (예산 탭 추천액, 수수료 없음)" },
-      { time: "12:20", at: "atmMovenpick", to: "westin", text: "Grab 복귀 → 점심 · 수영장 · 해변 입수(W는 직후 바로 씻기) · 16:10 W 가든 스파 120분 (Westin 200m 도보, 지도 노드 생략) · 그동안 M 해변 산책 → 비치바 · 해산물 저녁" },
+      { time: "12:20", at: "atmMovenpick", to: "westin", text: "Grab 복귀 → 점심 · 수영장 · 해변 입수(W는 직후 바로 씻기) · 16:10 W 가든 스파 120분 (Westin 200m 도보, 지도 노드 생략) · 그동안 M 해변 산책 → 18:10 마중 → Haven Lounge 해피아워(~20시) · 해산물 저녁" },
     ],
   },
   3: {

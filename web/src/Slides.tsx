@@ -124,7 +124,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
         ["11:00", "Grab으로 Westin (10~15분)"],
         ["12:00", "현금 뽑기 — 모벤픽 리조트 VPBank ATM (Grab 5분, 수수료 없음)"],
         ["13:00", "점심 후 수영장 · 해변 입수(W는 직후 바로 씻기) · 체크인 전에도 수영장 이용 가능, Haven Lounge는 14시 이후 (Westin 확인)"],
-        ["16:10", <><b>가든 스파 120분</b> · 스파 동안 해변 산책 → 비치바 (다음 장)</>, true],
+        ["16:10", <><b>가든 스파 120분</b> · 스파 동안 해변 산책 → Haven Lounge 해피아워 (다음 장)</>, true],
         ["19:00", "Westin 해산물 저녁"],
       ]} />
     </S>,
@@ -141,8 +141,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
           <span className="tag">스파 받는 동안</span>
           <p><b>16:10</b> 스파 앞 길로 150m → Bai Dai 해변 산책</p>
           <p className="sub">17:15 일몰 — 해가 리조트 뒤로 져서 바다 노을빛</p>
-          <p><b>17:15</b> Westin 비치바(Hang Ten)에서 한 잔</p>
-          <p><b>18:10</b> 스파로 마중 → 같이 Westin 복귀</p>
+          <p><b>18:10</b> 스파로 마중 → Haven Lounge 해피아워 (~20시, 칵테일 50%)</p>
         </div>
       </div>
       <p className="sub">⚠ 예약금 입금해야 확정 → <b>오늘 밤 카톡 예약</b> · 1인 가격도 같이 확인</p>
