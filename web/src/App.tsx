@@ -486,7 +486,7 @@ function App() {
                   ① 배달은 배달K 앱 — 현금·동 계좌이체만 되니(원화 불가) 현금 준비
                 </Text>
                 <Text textStyle="t4Regular" color="fg.neutral">
-                  ② 수령 위치는 못 찾음 — 프런트에 로비·게이트 수령 가능한지, 버기 되는지 확인(인근 리조트는 로비·정문 수령 사례)
+                  ② 객실까지 배달 안 됨 — 정문까지 직접 나가서 받아야 함(Westin 확인). 정문까지 버기가 되는지는 프런트에 확인
                 </Text>
                 <Text textStyle="t4Regular" color="fg.neutral">
                   ③ 안 되면 Westin 인룸다이닝 (룸서비스 24/7 여부는 Marriott 페이지에 상충, 확인 필요)
