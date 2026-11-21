@@ -381,10 +381,10 @@ function FoodList({ items }: { items: Food[] }) {
           </Text>
           {!f.guide && (
             <dl className="facts">
-              <Fact k="가격" v={f.cost_krw > 0 ? `1인 ≈ ${won(f.cost_krw)}` : "미확인"} />
+              <Fact k="가격" v={f.price_text ?? (f.cost_krw > 0 ? `1인 ≈ ${won(f.cost_krw)}` : "미확인")} />
               <Fact k="평점" v={f.rating && `⭐ ${f.rating}${f.reviews ? ` (${f.reviews.toLocaleString("ko-KR")})` : ""}`} />
               <Fact k="영업" v={f.hours} />
-              <Fact k="거리" v={f.dist_km && `Westin ${f.dist_km}km`} />
+              <Fact k="거리" v={f.dist ?? (f.dist_km && `Westin ${f.dist_km}km`)} />
               <Fact k="연락" v={f.kakao ? `카톡 ${f.kakao}` : f.phone} />
             </dl>
           )}

@@ -68,6 +68,8 @@ export interface Food {
   reviews?: number;
   hours?: string; // 영업시간 또는 마감
   dist_km?: number; // Westin까지 직선 거리
+  dist?: string; // dist_km 대신 쓰는 거리 문구 (도로·직선 구분)
+  price_text?: string; // 1인 환산이 어려운 가격 (메뉴 범위 등)
   kakao?: string;
   phone?: string;
 }
