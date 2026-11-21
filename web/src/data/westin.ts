@@ -18,7 +18,7 @@ export const WESTIN_PLAY: Facility[] = [
   { name: "Heavenly Spa", detail: "시그니처 Bamboo Body Therapy · 트리트먼트룸 6개(커플 2) · 객실 전화 0번 예약. 60/90/120분 가격은 공식 미공개", price: "가격 미확인", src: `${M}/experiences/` },
   { name: "WestinWORKOUT 피트니스", detail: "24시간 · 요가 스튜디오 · 스팀/사우나 정보 없음 · 러닝화로 이용 가능 (인도어화 불필요, Westin 확인) · 신발 대여는 Marriott 미표기", price: "투숙객 무료", src: `${M}/experiences/` },
   { name: "테니스 · 피클볼", detail: "06~17시 / 17~21시 요금 다름", price: "테니스 20만동++/시 (17시 이후 30만) · 피클볼 15만동++ (17시 이후 25만)", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
-  { name: "카약 · 바디보드 · SUP 대여", detail: "06~16시 · 워터 액티비티 센터 06~18시. 주간 프로그램 PDF에 월·금 10~11시 카약이 있으나 무료인지 불명 — 유료로 보고 계획", price: "카약 1인 15만동++/시 · 2인 20만동++/시 · 바디보드 10만동++ · SUP 20만동++", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
+  { name: "바디보드 · SUP 대여", detail: "06~16시 · 워터 액티비티 센터 06~18시 · 카약은 위험으로 운영 중단 (Westin 확인)", price: "바디보드 10만동++ · SUP 20만동++", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
   { name: "자전거 대여", detail: "06~17시", price: "10만동++/시 (≈5,500원)", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
   { name: "개인 강습 (요가·테니스·PT)", detail: "예약제", price: "80만동++/시 (≈4.4만원)", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
   { name: "공항 셔틀", detail: "공항→리조트 10:45 · 리조트→공항 21:20, 21:45 (하나만 예약 가능) · 21:20 예약 완료 · 24시간 전 예약 필수 · +84 258-3993888 내선 5410 · 출발 10분 전 픽업 장소 대기. 숙박일수 조건 표기 없음", price: "무료 (Complimentary)", src: `${M}/overview/` },
