@@ -1,0 +1,19 @@
+.td-app { display: flex; flex-direction: column; height: 500px; padding-top: 54px; }
+.td-head { padding: 8px 20px 12px; display: flex; flex-direction: column; gap: 12px; }
+.td-chips { display: flex; gap: 8px; }
+.td-chip { padding: 6px 14px; border-radius: 99px; font-size: 14px; background: var(--ss-fill); color: var(--ss-text-faint); }
+.td-chip[data-on] { background: var(--ss-text-strong); color: var(--ss-surface); font-weight: 700; }
+.td-body { flex: 1; min-height: 0; padding: 0 8px; }
+.td-budget { display: flex; flex-direction: column; gap: 10px; padding: 8px 12px; }
+.td-budget__label { font-size: 14px; color: var(--ss-text-faint); }
+.td-budget__sum { font-size: 40px; font-weight: 700; display: flex; align-items: baseline; gap: 4px; }
+.td-budget__unit { font-size: 20px; }
+.td-tabs { display: grid; grid-template-columns: repeat(3, 1fr); padding: 8px 0 26px; border-top: 1px solid var(--ss-line); }
+.td-tab { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 11px; color: var(--ss-text-faint); }
+.td-tab[data-on] { color: var(--ss-text-strong); font-weight: 700; }
+.td-body .ss-states, .td-body .ss-states__item { width: 100%; }
+.td-list { width: 100%; }
+.td-list .ss-row { width: 100%; box-sizing: border-box; }
+.td-list .ss-row__meta { margin-left: auto; }
+.td-tab { font-size: 12px; }
+.td-budget, .td-budget .ss-row { width: 100%; box-sizing: border-box; } .td-budget .ss-row__meta { margin-left: auto; }

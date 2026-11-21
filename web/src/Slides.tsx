@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BUDGET, VND_PER_KRW, cashToWithdraw } from "./data/budget";
 import type { Day, TripData } from "./types";
+import { TripDemo } from "./TripDemo";
 
 // 저녁 브리핑용 슬라이드 (#slides). ←/→·스페이스·클릭으로 넘김, F = 전체화면.
 // 날짜·편명은 itinerary.json에서만 읽음 — 배포 때 deploy.sh가 DayN으로 마스킹하므로 여기 날짜 쓰면 안 됨.
@@ -58,6 +59,16 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
         <div className="card"><span className="tag sun">{d(2)}</span><b className="big">리조트 + 스파</b><p>Navy에서 자고 → Westin</p><p>수영장 · <b>가든 스파</b> · 해산물 저녁</p></div>
         <div className="card"><span className="tag leaf">{d(3)}</span><b className="big">리조트에서 느긋하게</b><p>오전 수영장 · 해변 · 예약 없음</p><p>16시까지 방 쓰기 (방 있으면) → 저녁 → 공항</p></div>
         <div className="card"><span className="tag">{d(4)}</span><b className="big">귀국</b><p>현지 00:30 출발</p><p className="sub">인천 {hm(back.arrive)} 도착</p></div>
+      </div>
+    </S>,
+    <S kicker="이 사이트" title="폰으로 보는 여행 안내">
+      <div className="grid g2">
+        <div className="card">
+          <p><b>일정 · 먹기 · 놀기 · 이동 · 예산 · 준비</b></p>
+          <p className="sub">Day별 시간표, 이동 경로, 현지 지출을 한 곳에서</p>
+          <p className="sub">폴드 펼치면 좌측 메뉴, 접으면 하단 바</p>
+        </div>
+        <div className="demo-wrap"><TripDemo total={total} cash={cash} /></div>
       </div>
     </S>,
     <S kicker="비행기 · 숙소" title="둘 다 예약 끝">

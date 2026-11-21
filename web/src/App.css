@@ -571,3 +571,5 @@ html {
     background: var(--seed-color-bg-neutral-weak);
   }
 }
+.deck .demo-wrap { display: grid; place-items: center; min-height: 0;  }
+.deck .g2 > .card { align-self: start; }
