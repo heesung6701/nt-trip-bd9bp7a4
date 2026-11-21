@@ -37,7 +37,7 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
     color: "#2f6fed",
     steps: [
       { time: "11:00", at: "navy", to: "westin", text: "Grab · ≈8.7km · 10~15분 · 10~20만동" },
-      { time: "11:30", at: "westin", text: "도착 · 짐 맡기고 얼리 체크인 요청 (안 돼도 체크인 전 수영장·Haven Lounge 이용 가능, Westin 확인) · 레이트 체크아웃 16:00 가능 여부 확인" },
+      { time: "11:30", at: "westin", text: "도착 · 짐 맡기고 얼리 체크인 요청 (안 돼도 체크인 전 수영장·Haven Lounge 이용 가능, Westin 확인) · 레이트 체크아웃 16:00 확인" },
       { time: "12:00", at: "westin", to: "atmMovenpick", text: "Grab ≈5분 · VPBank ATM 현금 출금 (예산 탭 추천액, 수수료 없음)" },
       { time: "12:20", at: "atmMovenpick", to: "westin", text: "Grab 복귀 → 점심 · 수영장 · 해변 입수(W는 직후 바로 씻기) · 16:10 W 가든 스파 120분 (Westin 200m 도보, 지도 노드 생략) · 그동안 M 해변 산책 → 18:10 마중 → Haven Lounge 해피아워(~20시) · 해산물 저녁 · M만 14:30 시내 셔틀 후보는 일정 탭 '비 오면' 의 'Day2 후보 - 시내'" },
     ],
@@ -46,7 +46,7 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
     color: "#f26b1d",
     steps: [
       { time: "06:30", at: "westin", text: "M RunWESTIN 러닝 ~07:30 (신청함 · 비 오면 취소)" },
-      { time: "08:00", at: "westin", text: "조식 · 서두르지 않음 · 프런트에 레이트 체크아웃 16:00 요청 (공실 시, 보장 아님 — 안 되면 12:00 체크아웃·짐 보관)" },
+      { time: "08:00", at: "westin", text: "조식 · 서두르지 않음 · 프런트에 레이트 체크아웃 16:00 요청 (안 되면 빈 방 이동 요청 → 그래도 안 되면 0.5박 예약)" },
       { time: "09:30", at: "westin", text: "수영장 · 해변 입수(W는 직후 바로 씻기) · 비치발리볼·프리스비 (상시 무료)" },
       { time: "12:30", at: "westin", text: "해산물 점심 · 오후 휴식 · 해변 입수(W는 직후 바로 씻기) · 저녁 · 비 오면 Haven Lounge·스파 등 리조트 실내 · 11:30 무료 시내 셔틀 Gold Coast 몰 → 18:15 복귀는 일정 탭 '비 오면' 의 'Day3 후보 - 시내' (확인 필요)" },
       { time: "21:20", at: "westin", to: "cxr", text: "Westin 공항 셔틀 (예약 완료, 21:10 픽업 장소 대기) · 15~30분 · 21:50쯤 도착 — 놓치면 바로 Grab (≈15만동)" },
