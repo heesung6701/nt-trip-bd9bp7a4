@@ -537,9 +537,14 @@ function App() {
             <Section title="Westin 부대시설">
               <FacilityList items={WESTIN_PLAY} />
             </Section>
-            {data.activities && data.activities.length > 0 && (
+            {data.activities && data.activities.some((a) => a.name.includes("후보 - 시내")) && (
+              <Section title="시내 후보 (Westin 무료 셔틀)">
+                <ActivityList items={data.activities.filter((a) => a.name.includes("후보 - 시내"))} />
+              </Section>
+            )}
+            {data.activities && data.activities.some((a) => !a.name.includes("후보 - 시내")) && (
               <Section title="추천·대안">
-                <ActivityList items={data.activities} />
+                <ActivityList items={data.activities.filter((a) => !a.name.includes("후보 - 시내"))} />
               </Section>
             )}
           </>
