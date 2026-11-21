@@ -578,3 +578,35 @@ html {
     grid-template-columns: 1fr;
   }
 }
+
+/* 오픈카톡 맛집 목록 */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.jj-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.jj-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+  padding: 8px 0;
+  border-top: 1px solid var(--seed-color-stroke-neutral-muted);
+}
+.jj-note {
+  flex-basis: 100%;
+  font-size: 14px;
+  color: var(--seed-color-fg-neutral-subtle);
+}
+.jj-cat summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  cursor: pointer;
+}

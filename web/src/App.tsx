@@ -3,6 +3,7 @@ import { Badge, Callout, Text } from "@seed-design/react";
 import { STAY_MOVES } from "./data/stayMoves";
 import { BUDGET, VND_PER_KRW, cashToWithdraw, walletToCharge, type BudgetLine } from "./data/budget";
 import { WESTIN_EAT, WESTIN_PLAY, WESTIN_TAX_NOTE, type Facility } from "./data/westin";
+import { JJONG, JJONG_CATS, JJONG_SOURCE, type JjongPlace } from "./data/jjongsong";
 import { RouteGraph } from "./RouteGraph";
 import type { Activity, Day, Food, Item, TripData, WeatherDay } from "./types";
 import itinerary from "./data/itinerary.json";
@@ -449,6 +450,72 @@ function Fact({ k, v }: { k: string; v?: string | number | false }) {
   );
 }
 
+function JjongTags({ tags }: { tags: string[] }) {
+  return tags.length > 0 ? (
+    <span className="tags">
+      {tags.map((t) => (
+        <Badge.Root key={t} size="medium" variant="weak" tone="neutral">
+          <Badge.Label>{t}</Badge.Label>
+        </Badge.Root>
+      ))}
+    </span>
+  ) : null;
+}
+
+// 오픈카톡 맛집 리스트: 깜란(숙소 근처)은 카드, 나머지는 종류별 접힘 목록
+function JjongSection() {
+  const near = JJONG.filter((p) => p.area === "깜란");
+  const rest = JJONG.filter((p) => p.area !== "깜란");
+  const cats = JJONG_CATS.filter((c) => rest.some((p) => p.cat === c));
+  const row = (p: JjongPlace) => (
+    <li key={p.name} className="jj-row">
+      <b>{p.name}</b>
+      <JjongTags tags={p.tags} />
+      {p.note && <span className="jj-note">{p.note}</span>}
+    </li>
+  );
+  return (
+    <Section title="🍄 죄송이 버섯 맛집 (오픈카톡)">
+      <Text textStyle="t3Regular" color="fg.neutral-subtle">
+        출처: {JJONG_SOURCE} 리스트 · 개인 취향, 가격·영업 미검증. 깜란 말고는 대부분 시내(차로 30분 넘게)
+      </Text>
+      <Text as="h3" textStyle="t5Bold" color="fg.neutral">
+        깜란 (숙소 근처)
+      </Text>
+      <ul className="card-list">
+        {near.map((p) => (
+          <li className="card" key={p.name}>
+            <Text textStyle="t5Bold" color="fg.neutral">
+              {p.name}
+            </Text>
+            <JjongTags tags={p.tags} />
+            {p.menu && (
+              <dl className="facts">
+                {p.menu.map((m) => (
+                  <Fact key={m.name} k={m.name} v={m.price} />
+                ))}
+              </dl>
+            )}
+            {p.note && (
+              <Text textStyle="t4Regular" color="fg.neutral">
+                {p.note}
+              </Text>
+            )}
+          </li>
+        ))}
+      </ul>
+      {cats.map((c) => (
+        <details className="fold jj-cat" key={c}>
+          <summary>
+            {c} ({rest.filter((p) => p.cat === c).length})
+          </summary>
+          <ul className="jj-list">{rest.filter((p) => p.cat === c).map(row)}</ul>
+        </details>
+      ))}
+    </Section>
+  );
+}
+
 const TABS = [
   { id: "plan", label: "일정", icon: "🗓" },
   { id: "eat", label: "먹기", icon: "🍤" },
@@ -563,6 +630,7 @@ function App() {
                 <FoodList items={data.food.filter((f) => !f.delivery)} />
               </Section>
             )}
+            <JjongSection />
           </>
         )}
 
