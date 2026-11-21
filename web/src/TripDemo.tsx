@@ -9,7 +9,7 @@ type S = { view: View; n: number };
 const REST = { x: 330, y: 470 };
 const DAYS: Record<"d2" | "d3", [string, string, string][]> = {
   d2: [
-    ["12:20", "Westin 점심 · 수영장", "해변 물가 발 담그기"],
+    ["12:20", "Westin 점심 · 수영장", "해변 입수 · W는 직후 바로 씻기"],
     ["16:10", "가든 스파 120분", "Westin에서 도보 3분"],
     ["19:00", "해산물 저녁", "스파 끝나고 합류"],
   ],
