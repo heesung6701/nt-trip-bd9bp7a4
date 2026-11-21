@@ -149,6 +149,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
     </S>,
     <S kicker={`${d(3)} · 둘째 날`} title="리조트 → 공항">
       <Tl rows={[
+        ["06:30", "M RunWESTIN 러닝 ~07:30 (신청함 · 비 오면 취소)"],
         ["08:00", "조식 · 서두르지 않음 · 프런트에 레이트 체크아웃 16시 요청 (Day2 체크인 때 했으면 확인만)"],
         ["09:30", "수영장 · 해변 입수(W는 직후 바로 씻기) · 비치발리볼·프리스비 (무료, 예약 없음)"],
         ["12:30", "Westin 해산물 점심"],

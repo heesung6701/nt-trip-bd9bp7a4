@@ -45,6 +45,7 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
   3: {
     color: "#f26b1d",
     steps: [
+      { time: "06:30", at: "westin", text: "M RunWESTIN 러닝 ~07:30 (신청함 · 비 오면 취소)" },
       { time: "08:00", at: "westin", text: "조식 · 서두르지 않음 · 프런트에 레이트 체크아웃 16:00 요청 (공실 시, 보장 아님 — 안 되면 12:00 체크아웃·짐 보관)" },
       { time: "09:30", at: "westin", text: "수영장 · 해변 입수(W는 직후 바로 씻기) · 비치발리볼·프리스비 (상시 무료)" },
       { time: "12:30", at: "westin", text: "해산물 점심 · 오후 휴식 · 해변 입수(W는 직후 바로 씻기) · 저녁 · 비 오면 Haven Lounge·스파 등 리조트 실내" },

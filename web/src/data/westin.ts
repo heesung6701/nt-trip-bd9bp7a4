@@ -14,7 +14,7 @@ export const WESTIN_TAX_NOTE = "가격 뒤 ++ = VAT 8% + 봉사료 5% 별도 (�
 
 export const WESTIN_PLAY: Facility[] = [
   { name: "수영장 3개 (리조트·인피니티·키즈)", detail: "Fitness Pool·Kids Pool·Resort Pool · 운영시간 Marriott 미표기 — 체크인 때 확인. 카바나 있음", price: "투숙객 무료", src: `${M}/experiences/` },
-  { name: "무료 액티비티 (24시간 전 등록)", detail: "Day2(일): 08:30 필라테스, 10~11 풀 미니게임, 16~17 비치발리볼, 19~20:30 야외영화 · Day3(월): 07~08 RunWESTIN, 08:30~09:30 모닝 스트레칭 · 상시 06~17 스노클링·비치발리볼·프리스비 등 (07·08:30 수업만 24시간 전 등록)", price: "무료", src: `${PDF}/wi-cxrwi-free-weekly-activities-40688.pdf` },
+  { name: "무료 액티비티 (24시간 전 등록)", detail: "Day2(일): 08:30 필라테스, 10~11 풀 미니게임, 16~17 비치발리볼, 19~20:30 야외영화 · Day3(월): 06:30~07:30 RunWESTIN, 08:30~09:30 모닝 스트레칭 · 상시 06~17 스노클링·비치발리볼·프리스비 등 (07·08:30 수업만 24시간 전 등록)", price: "무료", src: `${PDF}/wi-cxrwi-free-weekly-activities-40688.pdf` },
   { name: "Heavenly Spa", detail: "시그니처 Bamboo Body Therapy · 트리트먼트룸 6개(커플 2) · 객실 전화 0번 예약. 60/90/120분 가격은 공식 미공개", price: "가격 미확인", src: `${M}/experiences/` },
   { name: "WestinWORKOUT 피트니스", detail: "24시간 · 요가 스튜디오 · 스팀/사우나 정보 없음", price: "투숙객 무료", src: `${M}/experiences/` },
   { name: "테니스 · 피클볼", detail: "06~17시 / 17~21시 요금 다름", price: "테니스 20만동++/시 (17시 이후 30만) · 피클볼 15만동++ (17시 이후 25만)", src: `${PDF}/wi-cxrwi-activities-price-list-43826.pdf` },
