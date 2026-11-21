@@ -174,7 +174,9 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
             <li>첫날 수영장 → Westin 실내 휴식 (스파는 그대로)</li>
             <li>둘째 날 오전 → Haven Lounge · 스파 등 리조트 실내</li>
             <li>식사는 리조트 실내</li>
-            <li>둘째 날 러닝 취소 시 → 리조트 실내 또는 시내 후보(놀기 탭 · 날씨 무관, 확인 필요)</li>
+            <li><b>시내 후보 {d(2)}</b> (M만) 14:30 셔틀 → Gold Coast 몰 → 18:15 복귀, 19:05쯤 Haven Lounge 합류</li>
+            <li><b>시내 후보 {d(3)}</b> (M·W) 러닝 취소 시 11:30 셔틀 → 몰 점심·구경 → 18:15 복귀 · 체크아웃·짐 먼저 정리</li>
+            <li className="sub">셔틀 24시간 전 예약 · 요금·소요시간·11월 운행 확인 필요 (상세: 놀기 탭)</li>
           </ul>
         </div>
       </div>
