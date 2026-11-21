@@ -48,7 +48,7 @@ const ROUTES: Record<number, { color: string; note?: string; steps: Step[] }> = 
       { time: "06:30", at: "westin", text: "M RunWESTIN 러닝 ~07:30 (신청함 · 비 오면 취소)" },
       { time: "08:00", at: "westin", text: "조식 · 서두르지 않음 · 프런트에 레이트 체크아웃 16:00 요청 (공실 시, 보장 아님 — 안 되면 12:00 체크아웃·짐 보관)" },
       { time: "09:30", at: "westin", text: "수영장 · 해변 입수(W는 직후 바로 씻기) · 비치발리볼·프리스비 (상시 무료)" },
-      { time: "12:30", at: "westin", text: "해산물 점심 · 오후 휴식 · 해변 입수(W는 직후 바로 씻기) · 저녁 · 비 오면 Haven Lounge·스파 등 리조트 실내" },
+      { time: "12:30", at: "westin", text: "해산물 점심 · 오후 휴식 · 해변 입수(W는 직후 바로 씻기) · 저녁 · 비 오면 Haven Lounge·스파 등 리조트 실내 또는 11:30 무료 시내 셔틀 Gold Coast 몰 → 18:15 복귀 (지도 노드 생략 · 24시간 전 예약 · 요금·소요시간 확인 필요)" },
       { time: "21:20", at: "westin", to: "cxr", text: "Westin 공항 셔틀 (예약 완료, 21:10 픽업 장소 대기) · 15~30분 · 21:50쯤 도착 — 놓치면 바로 Grab (≈15만동)" },
       { time: "00:30+1", at: "cxr", text: "출국 (현지 시각) — 새벽이라 이날 일정으로 표시" },
     ],
