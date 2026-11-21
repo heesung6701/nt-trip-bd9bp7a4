@@ -63,6 +63,13 @@ export interface Food {
   delivery?: boolean; // 먹기 탭 "배달·주문 추천" 섹션에 표시
   delivery_mention?: boolean; // 블로그·공지에 배달 언급이 있는 곳
   guide?: boolean; // 섹션 맨 앞 안내 카드
+  // 카드 요약 칩 (note에서 뽑은 값, 없으면 표시 안 함)
+  rating?: number; // 구글 평점
+  reviews?: number;
+  hours?: string; // 영업시간 또는 마감
+  dist_km?: number; // Westin까지 직선 거리
+  kakao?: string;
+  phone?: string;
 }
 
 export interface TransportLeg {

@@ -378,16 +378,39 @@ function FoodList({ items }: { items: Food[] }) {
             {f.name}
           </Text>
           <Text textStyle="t4Regular" color="fg.neutral-subtle">
-            {f.region} · {f.meal_type}{!f.guide && ` · ${f.cost_krw > 0 ? won(f.cost_krw) : "가격 미확인"}`}
+            {f.region} · {f.meal_type}
           </Text>
+          {!f.guide && (
+            <dl className="facts">
+              <Fact k="가격" v={f.cost_krw > 0 ? `1인 ≈ ${won(f.cost_krw)}` : "미확인"} />
+              <Fact k="평점" v={f.rating && `⭐ ${f.rating}${f.reviews ? ` (${f.reviews.toLocaleString("ko-KR")})` : ""}`} />
+              <Fact k="영업" v={f.hours} />
+              <Fact k="거리" v={f.dist_km && `Westin ${f.dist_km}km`} />
+              <Fact k="연락" v={f.kakao ? `카톡 ${f.kakao}` : f.phone} />
+            </dl>
+          )}
           {f.note && (
-            <Text textStyle="t4Regular" color="fg.neutral">
-              {f.note}
-            </Text>
+            <details className="food-note">
+              <summary>{f.guide ? "안내" : "메모"}</summary>
+              <Text textStyle="t4Regular" color="fg.neutral">
+                {f.note}
+              </Text>
+            </details>
           )}
         </li>
       ))}
     </ul>
+  );
+}
+
+// 값 없으면 줄 자체를 안 그림
+function Fact({ k, v }: { k: string; v?: string | number | false }) {
+  if (!v) return null;
+  return (
+    <div>
+      <dt>{k}</dt>
+      <dd>{v}</dd>
+    </div>
   );
 }
 

@@ -573,3 +573,30 @@ html {
 }
 .deck .demo-wrap { display: grid; place-items: center; min-height: 0;  }
 .deck .g2 > .card { align-self: start; }
+
+/* 먹기 카드: 라벨-값 요약 */
+.facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+  margin: 6px 0 0;
+  font-size: 14px;
+}
+.facts div {
+  display: contents;
+}
+.facts dt {
+  color: var(--seed-color-fg-neutral-subtle);
+}
+.facts dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.food-note summary {
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--seed-color-fg-neutral-subtle);
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
