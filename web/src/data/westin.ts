@@ -30,7 +30,7 @@ export const WESTIN_PLAY: Facility[] = [
 export const WESTIN_EAT: Facility[] = [
   { name: "The Verandah (올데이)", detail: "07~22시 · 베트남식·해산물 단품 · 조식 06:30~10:30 · 캐주얼. Hot Pot Night는 금·토만 (Day2 일요일 없음)", price: "조식 투숙객 포함 표기 · 외부 구매 60만동+ (연도 불명)", src: `${M}/dining/` },
   { name: "Hang Ten Beach Bar & Grill", detail: "11~21시 · 해산물·숯불 그릴 · 예약 SevenRooms 또는 내선 5608 · 해산물 플래터 주문 시 와인 1병 증정", price: "커플 5코스 400만동~ (24시간 전 예약) · Ocean to Table 사전주문 Club Marriott 30% 할인", src: `${M}/dining/` },
-  { name: "Haven Lounge", detail: "14~22시 · 커피·애프터눈티·선셋 칵테일 · 체크인 전 이용 가능(Westin 문의 결과), 체크아웃 후는 미확인 · 해피아워 매일 18~20시 프리미엄 칵테일 50% 할인 (Haven Bar 프로모션, Marriott 페이지엔 없음 — 확인 필요)", price: "가격 미공개", src: `${M}/dining/` },
+  { name: "Haven Lounge", detail: "14~22시 · 커피·애프터눈티·선셋 칵테일 · 체크인 전 이용 가능(Westin 문의 결과), 체크아웃 후는 미확인 · 해피아워 매일 18~20시 프리미엄 칵테일 50% 할인 · 19~21시 스낵(나초 22만동~, 세금·봉사료 별도) · Bonvoy 10%·Club Marriott 30% 할인", price: "칵테일 해피아워 50% 할인", src: "https://www.marriott.com/ko/offers/haven-lounger-offers-off-222472/cxrwi-the-westin-resort-and-spa-cam-ranh" },
   { name: "Plunge Bar (풀바)", detail: "음료·스낵 · 시간 미표기", price: "가격 미공개", src: `${M}/dining/` },
   { name: "Westin Fresh by The Juicery", detail: "주스·스무디", price: "가격 미공개", src: `${M}/dining/` },
   { name: "룸서비스", detail: "공식 페이지에 24/7과 미제공이 둘 다 있음 — 체크인 때 확인", price: "—", src: `${M}/dining/` },
