@@ -610,3 +610,8 @@ html {
   font-weight: 700;
   cursor: pointer;
 }
+
+/* 후보(예비) 일정 칩 */
+.chip.alt {
+  border-style: dashed;
+}

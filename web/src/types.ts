@@ -23,8 +23,18 @@ export interface Day {
   items: Item[];
 }
 
+// 같은 날의 예비 일정(후보). 일정 탭 Day 칩 옆에 '후보' 칩으로 나옴. from~to 구간의 숙소·이동 항목은 후보 쪽 항목으로 대체
+export interface Alternative {
+  date: string;
+  label: string;
+  from: string;
+  to: string;
+  items: Item[];
+}
+
 export interface Itinerary {
   days: Day[];
+  alternatives?: Alternative[];
   rain_alternatives: string[];
   budget_total_krw: number;
   budget_total_note?: string;

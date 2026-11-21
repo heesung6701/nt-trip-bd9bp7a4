@@ -5,7 +5,7 @@ import { BUDGET, VND_PER_KRW, cashToWithdraw, walletToCharge, type BudgetLine } 
 import { WESTIN_EAT, WESTIN_PLAY, WESTIN_TAX_NOTE, type Facility } from "./data/westin";
 import { JJONG, JJONG_CATS, JJONG_SOURCE, type JjongPlace } from "./data/jjongsong";
 import { RouteGraph } from "./RouteGraph";
-import type { Activity, Day, Food, Item, TripData, WeatherDay } from "./types";
+import type { Activity, Alternative, Day, Food, Item, TripData, WeatherDay } from "./types";
 import itinerary from "./data/itinerary.json";
 import "./App.css";
 
@@ -91,20 +91,49 @@ function Notices({ data }: { data: TripData }) {
   );
 }
 
-function DayTabs({ days, value, onChange }: { days: { date: string }[]; value: number; onChange: (i: number) => void }) {
+function DayTabs({
+  days,
+  value,
+  onChange,
+  alts = [],
+  alt = null,
+  onAlt,
+}: {
+  days: { date: string }[];
+  value: number;
+  onChange: (i: number) => void;
+  alts?: Alternative[];
+  alt?: number | null;
+  onAlt?: (j: number) => void;
+}) {
   return (
     <div className="day-tabs" role="tablist">
-      {days.map((d, i) => (
+      {days.flatMap((d, i) => [
         <button
           key={d.date}
           role="tab"
-          aria-selected={i === value}
-          className={i === value ? "chip active" : "chip"}
+          aria-selected={alt === null && i === value}
+          className={alt === null && i === value ? "chip active" : "chip"}
           onClick={() => onChange(i)}
         >
           {d.date.startsWith("Day") ? `Day ${i + 1}` : `Day ${i + 1} · ${d.date.slice(5)}`}
-        </button>
-      ))}
+        </button>,
+        ...alts.flatMap((a, j) =>
+          a.date === d.date
+            ? [
+                <button
+                  key={`${d.date}-alt-${j}`}
+                  role="tab"
+                  aria-selected={alt === j}
+                  className={alt === j ? "chip active alt" : "chip alt"}
+                  onClick={() => onAlt?.(j)}
+                >
+                  Day {i + 1} · {a.label}
+                </button>,
+              ]
+            : [],
+        ),
+      ])}
     </div>
   );
 }
@@ -174,9 +203,10 @@ function groupByWho(items: Item[]): Group[] {
   return out;
 }
 
-function Timeline({ data, day, dayNo }: { data: TripData; day: Day | undefined; dayNo: number }) {
+function Timeline({ data, day, dayNo, alt }: { data: TripData; day: Day | undefined; dayNo: number; alt?: Alternative }) {
   if (!day) return null;
-  const items = [...day.items, ...STAY_MOVES.filter((m) => m.day === dayNo)].sort((a, b) => a.start.localeCompare(b.start));
+  const stay = STAY_MOVES.filter((m) => m.day === dayNo && !(alt && m.start >= alt.from && m.start < alt.to));
+  const items = [...(alt ? alt.items : day.items), ...stay].sort((a, b) => a.start.localeCompare(b.start));
   const total = items.reduce((sum, i) => sum + i.cost_krw, 0);
   // ponytail: 항공 시각은 KST 기준 날짜로 매칭
   const flights = data.trip.flights.filter((f) => f.depart.startsWith(day.date) || f.arrive.startsWith(day.date));
@@ -530,6 +560,8 @@ function App() {
   const data = itinerary as TripData;
   const [tab, setTab] = useState<TabId>("plan");
   const [dayIndex, setDayIndex] = useState(0);
+  const [altIdx, setAltIdx] = useState<number | null>(null); // 일정 탭에서 선택한 후보(예비) 일정
+  const alts = data.itinerary?.alternatives ?? [];
   const days = allDays(data);
   const rain = data.itinerary?.rain_alternatives ?? [];
   const transport = data.transport ? Object.values(data.transport) : [];
@@ -553,14 +585,29 @@ function App() {
         {tab === "plan" && (
           <>
             <Notices data={data} />
-            <DayTabs days={days} value={dayIndex} onChange={setDayIndex} />
+            <DayTabs
+              days={days}
+              value={dayIndex}
+              alts={alts}
+              alt={altIdx}
+              onChange={(i) => {
+                setDayIndex(i);
+                setAltIdx(null);
+              }}
+              onAlt={(j) => {
+                setDayIndex(days.findIndex((d) => d.date === alts[j].date));
+                setAltIdx(j);
+              }}
+            />
             <section className="section">
-              <Timeline data={data} day={days[dayIndex]} dayNo={dayIndex + 1} />
+              <Timeline data={data} day={days[dayIndex]} dayNo={dayIndex + 1} alt={altIdx === null ? undefined : alts[altIdx]} />
             </section>
-            <details className="section fold" open>
-              <summary>🗺 이동 그래프</summary>
-              <RouteGraph dayNo={dayIndex + 1} />
-            </details>
+            {altIdx === null && (
+              <details className="section fold" open>
+                <summary>🗺 이동 그래프</summary>
+                <RouteGraph dayNo={dayIndex + 1} />
+              </details>
+            )}
             {rain.length > 0 && (
               <details className="section fold">
                 <summary>☔ 비 오면 이렇게</summary>
@@ -569,9 +616,6 @@ function App() {
                     <li key={r}>{r}</li>
                   ))}
                 </ul>
-                {data.activities?.some((a) => a.name.includes("후보 - 시내")) && (
-                  <ActivityList items={data.activities.filter((a) => a.name.includes("후보 - 시내"))} />
-                )}
               </details>
             )}
             <details className="section fold">
