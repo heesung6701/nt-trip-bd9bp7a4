@@ -482,7 +482,7 @@ function App() {
             {data.food?.some((f) => f.delivery) && (
               <Section title="🛵 배달·주문 안내 (Westin 숙박 중 · Day2~3)">
                 <Text textStyle="t4Regular" color="fg.neutral">
-                  ① Grab 해외 카드 등록은 베트남 도착 후(한국 카드 사례 못 찾음), 현금 준비. 배달K는 현금·동 계좌이체만
+                  ① 배달은 배달K 앱 — 현금·동 계좌이체만 되니(원화 불가) 현금 준비
                 </Text>
                 <Text textStyle="t4Regular" color="fg.neutral">
                   ② 수령 위치는 못 찾음 — 프런트에 로비·게이트 수령 가능한지, 버기 되는지 확인(인근 리조트는 로비·정문 수령 사례)
