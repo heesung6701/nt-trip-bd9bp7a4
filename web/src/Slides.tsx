@@ -51,7 +51,7 @@ export function Slides({ data, days, onExit }: { data: TripData; days: Day[]; on
   const slides = [
     <S cover kicker="TRIP BRIEFING" title={<>나트랑 · 깜란<br />2박 쉬러 가기</>}>
       <p className="sub">{d(1)} 밤 출발 → {d(4)} 아침 도착 · 둘이서</p>
-      <p className="sub">바다엔 안 들어가요 · 리조트에서 오래 놀기 · 해산물 많이</p>
+      <p className="sub">바다는 들어가도 바로 씻기(W 알러지) · 리조트에서 오래 놀기 · 해산물 많이</p>
     </S>,
     <S kicker="한눈에" title="3박 4일, 실제로 노는 건 이틀">
       <div className="grid g4">
