@@ -394,7 +394,7 @@ function ActivityList({ items }: { items: Activity[] }) {
             {a.region} · {a.duration_min}분 · {won(a.cost_krw)} · {a.indoor ? "실내" : "야외"} · {a.recommended_time}
           </Text>
           {a.note && (
-            <Text textStyle="t4Regular" color="fg.neutral">
+            <Text textStyle="t4Regular" color="fg.neutral" style={{ whiteSpace: "pre-line" }}>
               {a.note}
             </Text>
           )}

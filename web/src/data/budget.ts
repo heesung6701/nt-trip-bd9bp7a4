@@ -25,7 +25,7 @@ export const BUDGET: BudgetLine[] = [
   { day: 3, title: "Westin 해산물 점심", vnd: 1_000_000, pay: "카드", note: "2인 합계 (1인 50만동 추정)" },
   { day: 3, title: "Westin 저녁", vnd: 1_500_000, pay: "카드", note: "추정" },
   { day: 3, title: "Westin 무료 공항 셔틀 → 공항 (21:20)", vnd: 0, pay: "카드", note: "무료 (Marriott 표기), 21:20 예약 완료. 놓치면 Grab ≈15만동. Haven Lounge 유료 이용은 가격 미공개 — 예산 별도" },
-  // 시내 후보(Day2 M만·Day3, Gold Coast 몰): 시내 셔틀 요금 확인 필요, Grab 대안 요금 추정치 없음 — 합계에 넣지 않음, 몰 식사·쇼핑은 별도
+  // 시내 후보(Day2 M·W·Day3, Gold Coast 몰): 시내 셔틀 무료, Day2 W 시내 스파 가격 확인 필요, Grab 대안 요금 추정치 없음 — 합계에 넣지 않음, 몰 식사·쇼핑은 별도
   // 21:20 셔틀을 놓칠 때의 Grab ≈15만동은 최악 케이스라 별도 줄로 넣지 않고 위 셔틀 줄 note에만 둠(합계·현금 추천액에 섞이지 않게)
   { day: 3, title: "물·간식·팁 · 공항 간식", vnd: 400_000, pay: "현금" },
 ];
